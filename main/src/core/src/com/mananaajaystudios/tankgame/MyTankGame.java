@@ -43,9 +43,3 @@ public class MyTankGame extends ApplicationAdapter {
 //		sprite.draw(batch);
 //		batch.end();
 	}
-	
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
-}
