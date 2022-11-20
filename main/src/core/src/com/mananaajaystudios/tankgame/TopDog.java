@@ -1,9 +1,7 @@
 package com.mananaajaystudios.tankgame;
 
 import com.badlogic.gdx.Game;
-import com.mananaajaystudios.tankgame.screens.EndGame;
-import com.mananaajaystudios.tankgame.screens.GameModeSelector;
-import com.mananaajaystudios.tankgame.screens.MainPage;
+import com.mananaajaystudios.tankgame.screens.*;
 
 public class TopDog extends Game {
     private MainPage mainPage;
@@ -11,6 +9,8 @@ public class TopDog extends Game {
     private PauseMenu pauseMenu;
     private MyTankGame tankGame;
     private EndGame endGame;
+    private TankSelectorPlayer2 tankSelectorp2;
+    private TankSelectorPlayer1 tankSelectorp1;
 
     public MainPage init(){
         mainPage = new MainPage(this);
@@ -33,11 +33,11 @@ public class TopDog extends Game {
                 if(gameMode == null) gameMode = new GameModeSelector(this);
                 this.setScreen(gameMode);
                 break;
-            /*case "GAME":
-                if(tankGame == null) tankGame = new MyTankGame(this);
-                this.setScreen(tankGame);
+            case "TANKP1":
+                if(tankSelectorp1 == null) tankSelectorp1 = new TankSelectorPlayer1(this);
+                this.setScreen(tankSelectorp1);
                 break;
-            case "PAUSE":
+            /*case "TANKP2":
                 if(pauseMenu == null) pauseMenu = new PauseMenu(this);
                 this.setScreen(pauseMenu);
                 break;

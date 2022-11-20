@@ -3,8 +3,6 @@ package com.mananaajaystudios.tankgame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,12 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.TopDog;
 
-public class GameModeSelector implements Screen{
+public class TankSelectorPlayer2 implements Screen{
 
     private TopDog parent;
     private Stage stage;
 
-    public GameModeSelector(TopDog temp){
+    public TankSelectorPlayer2(TopDog temp){
         parent = temp;
 
         /// create stage and set it as input processor
@@ -41,18 +39,18 @@ public class GameModeSelector implements Screen{
 
         //create buttons
         TextButton newGame = new TextButton("1V1", skin);
-        TextButton pve = new TextButton("P V COMPUTER", skin);
-        TextButton loadgame = new TextButton("LOAD GAME", skin);
+        TextButton preferences = new TextButton("P V COMPUTER", skin);
+        TextButton exit = new TextButton("LOAD GAME", skin);
 
         //add buttons to table
         table.add(newGame).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
-        table.add(pve).fillX().uniformX();
+        table.add(preferences).fillX().uniformX();
         table.row();
-        table.add(loadgame).fillX().uniformX();
+        table.add(exit).fillX().uniformX();
 
         // create button listeners
-        loadgame.addListener(new ChangeListener() {
+        exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
@@ -62,11 +60,11 @@ public class GameModeSelector implements Screen{
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("TANKP1");
+                parent.changeScreen("");
             }
         });
 
-        pve.addListener(new ChangeListener() {
+        preferences.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen("");
@@ -83,14 +81,6 @@ public class GameModeSelector implements Screen{
 
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        Texture backgroundTexture = new Texture("assets/epicUkraineMoment.jpg");
-        Sprite backgroundSprite =new Sprite(backgroundTexture);
-        // tell our stage to do actions and draw itself
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.getBatch().begin();
-        stage.getBatch().draw(backgroundSprite, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.getBatch().end();
-
         stage.draw();
     }
 
