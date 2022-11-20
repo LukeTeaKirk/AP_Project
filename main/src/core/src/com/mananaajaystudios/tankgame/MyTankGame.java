@@ -42,4 +42,4 @@ public class MyTankGame extends ApplicationAdapter {
 //		ground.draw(batch);
 //		sprite.draw(batch);
 //		batch.end();
-	}
+	}}
