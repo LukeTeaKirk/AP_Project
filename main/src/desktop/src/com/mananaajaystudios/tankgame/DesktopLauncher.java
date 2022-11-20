@@ -13,12 +13,6 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("TankGame");
-		new Lwjgl3Application(new GameInit(), config);
-	}
-}
-public class GameInit extends Game {
-	@Override
-	public void create () {
-		setScreen(new MainPage(this));
+		new Lwjgl3Application(new TopDog(), config);
 	}
 }

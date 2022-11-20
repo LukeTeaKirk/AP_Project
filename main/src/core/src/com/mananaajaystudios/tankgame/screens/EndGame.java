@@ -13,12 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.TopDog;
 
-public class MainPage implements Screen{
+public class EndGame implements Screen{
 
     private TopDog parent;
     private Stage stage;
 
-    public MainPage(TopDog temp){
+    public EndGame(TopDog temp){
         parent = temp;
 
         /// create stage and set it as input processor
@@ -29,8 +29,6 @@ public class MainPage implements Screen{
     @Override
     public void show() {
         // Create a table that fills the screen. Everything else will go inside this table.
-        Gdx.input.setInputProcessor(stage);
-        stage.clear();
         Table table = new Table();
         table.setFillParent(true);
         table.setDebug(true);
@@ -41,7 +39,7 @@ public class MainPage implements Screen{
 
         //create buttons
         TextButton newGame = new TextButton("New Game", skin);
-        TextButton preferences = new TextButton("Settings", skin);
+        TextButton preferences = new TextButton("Preferences", skin);
         TextButton exit = new TextButton("Exit", skin);
 
         //add buttons to table
@@ -62,7 +60,7 @@ public class MainPage implements Screen{
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("GAMEMODE");
+                parent.changeScreen("");
             }
         });
 
