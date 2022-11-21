@@ -42,6 +42,8 @@ public class TankSelectorPlayer1 implements Screen{
         Label abramsLabel = new Label("Abrams",skin);
         Label arjunLabel = new Label("Arjun", skin);
         Label TLabel = new Label("T90", skin);
+        Label player1 = new Label("Player 1",skin);
+        Label filler = new Label(" ",skin);
 
         Texture abramsTexture = new Texture("assets/abrams.png");
         Drawable abramsDrawable = new TextureRegionDrawable(new TextureRegion(abramsTexture));
@@ -64,6 +66,10 @@ public class TankSelectorPlayer1 implements Screen{
         //create buttons
 
         //add buttons to table
+        table.add(filler);
+        table.add(player1);
+        table.add(filler);
+        table.row();
         table.add(button1).size(300,200);
         table.add(button2).size(300,200);
         table.add(button3).size(300,200);
@@ -77,21 +83,21 @@ public class TankSelectorPlayer1 implements Screen{
         button1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                parent.changeScreen("TANKP2");
             }
         });
 
         button2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("");
+                parent.changeScreen("TANKP2");
             }
         });
 
         button3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("");
+                parent.changeScreen("TANKP2");
             }
         });
 
