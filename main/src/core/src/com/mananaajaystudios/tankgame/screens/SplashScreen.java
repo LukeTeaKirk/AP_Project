@@ -1,102 +1,60 @@
 package com.mananaajaystudios.tankgame.screens;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.TopDog;
 
-public class GameModeSelector implements Screen{
+public class SplashScreen implements Screen{
 
     private TopDog parent;
     private Stage stage;
+    long startTime = 0;
 
-    public GameModeSelector(TopDog temp){
+    public SplashScreen(TopDog temp){
         parent = temp;
 
         /// create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
-        // Create a table that fills the screen. Everything else will go inside this table.
-        Gdx.input.setInputProcessor(stage);
-        stage.clear();
-        Table table = new Table();
-        table.center().right();
-        table.setFillParent(true);
-        stage.addActor(table);
+        startTime = TimeUtils.nanoTime();
 
-        // temporary until we have asset manager in
-        Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-
-        //create buttons
-        TextButton newGame = new TextButton("1V1", skin);
-        TextButton pve = new TextButton("P V COMP", skin);
-        TextButton loadgame = new TextButton("LOAD", skin);
-
-        //add buttons to table
-        table.add(newGame).fillX().uniformX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(pve).fillX().uniformX();
-        table.row();
-        table.add(loadgame).fillX().uniformX();
-
-        // create button listeners
-        loadgame.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
-            }
-        });
-
-        newGame.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("TANKP1");
-            }
-        });
-
-        pve.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("");
-            }
-        });
 
     }
     public static Texture backgroundTexture;
-    public static Texture tankTexture;
-    public static Sprite tankSprite;
     public static Sprite backgroundSprite;
-
+    private SpriteBatch spriteBatch;
     @Override
     public void render(float delta) {
         // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        backgroundTexture = new Texture("assets/mainBG.png");
+        backgroundTexture = new Texture("assets/splash.jpg");
         backgroundSprite =new Sprite(backgroundTexture);
-        tankTexture = new Texture("assets/m5a1.png");
-        tankSprite =new Sprite(tankTexture);
-
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
-        stage.getBatch().enableBlending();
         stage.getBatch().draw(backgroundSprite, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.getBatch().draw(tankSprite, 100, 100, 220*2, 142*2);
         stage.getBatch().end();
         stage.draw();
+        if (TimeUtils.timeSinceNanos(startTime) > 1500000000) {
+            parent.changeScreen("MAIN");
+        }
+
     }
 
     @Override
