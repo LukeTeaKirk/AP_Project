@@ -84,7 +84,7 @@ public class MainPage implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         backgroundTexture = new Texture("assets/mainBG.png");
         backgroundSprite =new Sprite(backgroundTexture);
-        tankTexture = new Texture("assets/m5a1.png");
+        tankTexture = new Texture("assets/tank1.png");
         tankSprite =new Sprite(tankTexture);
 
         // tell our stage to do actions and draw itself
