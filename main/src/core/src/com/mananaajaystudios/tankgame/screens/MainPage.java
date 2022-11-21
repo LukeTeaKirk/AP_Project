@@ -42,13 +42,13 @@ public class MainPage implements Screen{
 
         //create buttons
         TextButton newGame = new TextButton("New Game", skin);
-        TextButton preferences = new TextButton("Settings", skin);
-        TextButton exit = new TextButton("Exit", skin);
+        TextButton loadGameButton = new TextButton("Load Game", skin);
+        TextButton exit = new TextButton("Exit Game", skin);
         newGame.setScaleX(0.5f);
         //add buttons to table
         table.add(newGame).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
-        table.add(preferences).fillX().uniformX();
+        table.add(loadGameButton).fillX().uniformX();
         table.row();
         table.add(exit).fillX().uniformX();
         // create button listeners
@@ -58,18 +58,16 @@ public class MainPage implements Screen{
                 Gdx.app.exit();
             }
         });
-
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen("GAMEMODE");
             }
         });
-
-        preferences.addListener(new ChangeListener() {
+        loadGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("");
+                parent.changeScreen("LOAD");
             }
         });
 

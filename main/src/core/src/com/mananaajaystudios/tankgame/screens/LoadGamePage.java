@@ -1,10 +1,10 @@
 package com.mananaajaystudios.tankgame.screens;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,16 +14,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.TopDog;
 
-public class GameModeSelector implements Screen{
+public class LoadGamePage implements Screen{
 
     private TopDog parent;
     private Stage stage;
 
-    public GameModeSelector(TopDog temp){
+    public LoadGamePage(TopDog temp){
         parent = temp;
 
         /// create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -40,34 +41,27 @@ public class GameModeSelector implements Screen{
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
         //create buttons
-        TextButton newGame = new TextButton("1V1", skin);
-        TextButton pve = new TextButton("P V COMP", skin);
-
+        TextButton newGame = new TextButton("RETURN", skin);
+        newGame.setScaleX(0.5f);
         //add buttons to table
         table.add(newGame).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
-        table.add(pve).fillX().uniformX();
+        // create button listeners
 
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("TANKP1");
+                parent.changeScreen("MAIN");
             }
         });
 
-        pve.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen("");
-            }
-        });
 
     }
     public static Texture backgroundTexture;
     public static Texture tankTexture;
     public static Sprite tankSprite;
     public static Sprite backgroundSprite;
-
+    private SpriteBatch spriteBatch;
     @Override
     public void render(float delta) {
         // clear the screen ready for next set of images to be drawn
