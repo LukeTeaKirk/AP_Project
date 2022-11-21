@@ -34,7 +34,6 @@ public class TankSelectorPlayer2 implements Screen{
         stage.clear();
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
         stage.addActor(table);
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 

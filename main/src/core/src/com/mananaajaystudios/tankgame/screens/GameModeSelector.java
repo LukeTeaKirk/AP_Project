@@ -32,8 +32,8 @@ public class GameModeSelector implements Screen{
         Gdx.input.setInputProcessor(stage);
         stage.clear();
         Table table = new Table();
+        table.center().right();
         table.setFillParent(true);
-        table.setDebug(true);
         stage.addActor(table);
 
         // temporary until we have asset manager in
@@ -41,8 +41,8 @@ public class GameModeSelector implements Screen{
 
         //create buttons
         TextButton newGame = new TextButton("1V1", skin);
-        TextButton pve = new TextButton("P V COMPUTER", skin);
-        TextButton loadgame = new TextButton("LOAD GAME", skin);
+        TextButton pve = new TextButton("P V COMP", skin);
+        TextButton loadgame = new TextButton("LOAD", skin);
 
         //add buttons to table
         table.add(newGame).fillX().uniformX();
@@ -74,23 +74,28 @@ public class GameModeSelector implements Screen{
         });
 
     }
+    public static Texture backgroundTexture;
+    public static Texture tankTexture;
+    public static Sprite tankSprite;
+    public static Sprite backgroundSprite;
 
     @Override
     public void render(float delta) {
         // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        backgroundTexture = new Texture("assets/mainBG.png");
+        backgroundSprite =new Sprite(backgroundTexture);
+        tankTexture = new Texture("assets/m5a1.png");
+        tankSprite =new Sprite(tankTexture);
 
-        // tell our stage to do actions and draw itself
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        Texture backgroundTexture = new Texture("assets/epicUkraineMoment.jpg");
-        Sprite backgroundSprite =new Sprite(backgroundTexture);
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
+        stage.getBatch().enableBlending();
         stage.getBatch().draw(backgroundSprite, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.getBatch().draw(tankSprite, 100, 100, 220*2, 142*2);
         stage.getBatch().end();
-
         stage.draw();
     }
 
