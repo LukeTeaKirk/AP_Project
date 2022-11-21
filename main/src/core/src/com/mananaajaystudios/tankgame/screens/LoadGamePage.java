@@ -4,44 +4,114 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.TopDog;
 
+import java.util.ArrayList;
+
 public class LoadGamePage implements Screen{
-    private TextureAtlas atlas;
     private TopDog parent;
     private Stage stage;
 
+    private ArrayList<VerticalGroup> TankGroups;
+    private TextureAtlas atlas;
+    private TextureRegion ChooseBackground;
+    private TextureRegionDrawable ChooseBackgroundDrawable;
+    Skin TextSkin,skin;
+    private BitmapFont white, black;
     public LoadGamePage(TopDog temp){
         parent = temp;
-
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
+        atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
+        white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
+        black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
+        TextSkin = new Skin(atlas);
+
+        //Load Tank Images
+        TextureRegion TankCoalition = atlas.findRegion("Coalition");
+        TextureRegion TankBuratino = atlas.findRegion("Buratino");
+        TextureRegion TankHelios = atlas.findRegion("Helios");
+        Texture CoalitionBadge = new Texture(Gdx.files.internal("CoalitionBadge.png"));
+        Texture BuratinoBadge = new Texture(Gdx.files.internal("BurantinoBadge.png"));
+        Texture HeliosBadge = new Texture(Gdx.files.internal("HeliosBadge.png"));
+        TextureRegionDrawable TankCoalitionDrawable = new TextureRegionDrawable(TankCoalition);
+        TextureRegionDrawable TankBuratinoDrawable = new TextureRegionDrawable(TankBuratino);
+        TextureRegionDrawable TankHeliosDrawable = new TextureRegionDrawable(TankHelios);
+        TextureRegionDrawable CoalitionBadgeDrawable = new TextureRegionDrawable(CoalitionBadge);
+        TextureRegionDrawable BuratinoBadgeDrawable = new TextureRegionDrawable(BuratinoBadge);
+        TextureRegionDrawable HeliosBadgeDrawable = new TextureRegionDrawable(HeliosBadge);
+
+        final VerticalGroup TankGroupCoalition = new VerticalGroup();
+        final VerticalGroup TankGroupBuratino = new VerticalGroup();
+        final VerticalGroup TankGroupHelios = new VerticalGroup();
+        TankGroupCoalition.addActor(new Image(CoalitionBadgeDrawable));
+        TankGroupCoalition.space(10);
+        TankGroupCoalition.addActor(new Image(TankCoalitionDrawable));
+        TankGroupCoalition.center();
+
+        TankGroupBuratino.addActor(new Image(BuratinoBadgeDrawable));
+        TankGroupBuratino.space(10);
+        TankGroupBuratino.addActor(new Image(TankBuratinoDrawable));
+        TankGroupBuratino.center();
+
+        TankGroupHelios.addActor(new Image(HeliosBadgeDrawable));
+        TankGroupHelios.space(10);
+        TankGroupHelios.addActor(new Image(TankHeliosDrawable));
+        TankGroupHelios.center();
+
+        TankGroups = new ArrayList<VerticalGroup>();
+        TankGroups.add(TankGroupCoalition);
+        TankGroups.add(TankGroupBuratino);
+        TankGroups.add(TankGroupHelios);
+
         Gdx.input.setInputProcessor(stage);
         stage.clear();
-        Table table = new Table();
-        table.center().right();
-        table.setFillParent(true);
-        stage.addActor(table);
-        Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-        TextButton newGame = new TextButton("RETURN", skin);
-        newGame.setScaleX(0.5f);
-        table.add(newGame).fillX().uniformX();
-        table.row().pad(10, 0, 10, 0);
+        final Table table1 = new Table();
+        table1.setSize(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
+        table1.setPosition(0,0);
+        Table table2 = new Table();
+        table2.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
+        table2.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3,0);
+        stage.addActor(table1);
+        stage.addActor(table2);
+        skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.up = TextSkin.getDrawable("button_up");
+        textButtonStyle.down = TextSkin.getDrawable("button_down");
+        textButtonStyle.pressedOffsetX = 1;
+        textButtonStyle.pressedOffsetY = -1;
+        textButtonStyle.font = black;
+
+
+
+
+        TextButton newGame = new TextButton("RETURN", textButtonStyle);
+        newGame.setSize(300, 50);
+
+        ChooseBackground = atlas.findRegion("PopUp");
+        ChooseBackgroundDrawable = new TextureRegionDrawable(ChooseBackground);
+        Texture ChoooseTankBackground = new Texture(Gdx.files.internal("ChooseTankBackground.png"));
+        TextureRegionDrawable ChoooseTankBackgroundDrawable = new TextureRegionDrawable(ChoooseTankBackground);
+
+        table2.setBackground(ChooseBackgroundDrawable);
+        table2.add(newGame).size(300,50).pad(10).padLeft(20).padRight(10).align(Align.center);
+        table2.row();
+        table1.setBackground(ChoooseTankBackgroundDrawable);
+        table1.add(TankGroupCoalition).size(200,200).pad(10).padLeft(20).padRight(10).align(Align.center);
+
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -51,37 +121,18 @@ public class LoadGamePage implements Screen{
             }
         });
 
-
     }
-    public static TextureRegion backgroundTexture;
-    public static TextureRegion tankTexture;
-    public static Sprite tankSprite;
-    public static Sprite backgroundSprite;
-    public static TextureRegion groundTexture;
-    public static Sprite groundSprite;
-    private SpriteBatch spriteBatch;
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
-        backgroundTexture = atlas.findRegion("background");
-        backgroundSprite =new Sprite(backgroundTexture);
-        groundTexture = atlas.findRegion("ground");
-        groundSprite =new Sprite(groundTexture);
-        tankTexture = atlas.findRegion("Abrams");
-        tankSprite =new Sprite(tankTexture);
-        TextureRegion PauseMenu = atlas.findRegion("PausePopUp");
-        Sprite purpleSprite =new Sprite(PauseMenu);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        Texture logo = new Texture("assets/tankstars.png");
+        Sprite logoSprite = new Sprite(logo);
+        stage.draw();
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
-        stage.getBatch().draw(backgroundSprite, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.getBatch().draw(groundSprite, 0, 0, Gdx.graphics.getWidth(), 200);
-        stage.getBatch().draw(tankSprite, 100, 100, 220*2, 142*2);
-        stage.getBatch().draw(purpleSprite, 700, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.getBatch().draw(logoSprite, 250, 425, 220, 142);
         stage.getBatch().end();
-        stage.draw();
     }
 
     @Override
