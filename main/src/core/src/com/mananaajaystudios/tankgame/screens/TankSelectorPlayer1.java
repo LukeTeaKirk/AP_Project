@@ -182,13 +182,7 @@ public class TankSelectorPlayer1 implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Texture logo = new Texture("assets/tankstars.png");
-        Sprite logoSprite = new Sprite(logo);
         stage.draw();
-        stage.getBatch().begin();
-        stage.getBatch().enableBlending();
-        stage.getBatch().draw(logoSprite, 250, 425, 220, 142);
-        stage.getBatch().end();
     }
 
     @Override
