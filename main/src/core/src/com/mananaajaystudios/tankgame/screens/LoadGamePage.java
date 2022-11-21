@@ -1,6 +1,7 @@
 package com.mananaajaystudios.tankgame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -24,35 +25,28 @@ public class LoadGamePage implements Screen{
     public LoadGamePage(TopDog temp){
         parent = temp;
 
-        /// create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
-        // Create a table that fills the screen. Everything else will go inside this table.
         Gdx.input.setInputProcessor(stage);
         stage.clear();
         Table table = new Table();
         table.center().right();
         table.setFillParent(true);
         stage.addActor(table);
-
-        // temporary until we have asset manager in
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-
-        //create buttons
         TextButton newGame = new TextButton("RETURN", skin);
         newGame.setScaleX(0.5f);
-        //add buttons to table
         table.add(newGame).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
-        // create button listeners
-
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
+                sound.play(1F);
                 parent.changeScreen("MAIN");
             }
         });
@@ -68,7 +62,6 @@ public class LoadGamePage implements Screen{
     private SpriteBatch spriteBatch;
     @Override
     public void render(float delta) {
-        // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
@@ -76,13 +69,10 @@ public class LoadGamePage implements Screen{
         backgroundSprite =new Sprite(backgroundTexture);
         groundTexture = atlas.findRegion("ground");
         groundSprite =new Sprite(groundTexture);
-
         tankTexture = atlas.findRegion("Abrams");
         tankSprite =new Sprite(tankTexture);
-
         TextureRegion PauseMenu = atlas.findRegion("PausePopUp");
         Sprite purpleSprite =new Sprite(PauseMenu);
-        // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
@@ -96,7 +86,6 @@ public class LoadGamePage implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        // change the stage's viewport when teh screen size is changed
         stage.getViewport().update(width, height, true);
     }
 
@@ -120,7 +109,6 @@ public class LoadGamePage implements Screen{
 
     @Override
     public void dispose() {
-        // dispose of assets when not needed anymore
         stage.dispose();
     }
 

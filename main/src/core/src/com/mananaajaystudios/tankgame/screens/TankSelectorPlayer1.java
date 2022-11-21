@@ -31,14 +31,11 @@ public class TankSelectorPlayer1 implements Screen{
     int tank = 0;
     public TankSelectorPlayer1(TopDog temp){
         parent = temp;
-
-        /// create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
     }
 
     @Override
     public void show() {
-        // Create a table that fills the screen. Everything else will go inside this table.
         label = new Label(texty, new Label.LabelStyle(new BitmapFont(), Color.BROWN));
         label.setPosition(140,200);
         Gdx.input.setInputProcessor(stage);
@@ -48,19 +45,13 @@ public class TankSelectorPlayer1 implements Screen{
         table.setFillParent(true);
         stage.addActor(table);
         stage.addActor(label);
-        // temporary until we have asset manager in
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-
-        //create buttons
         TextButton newGame = new TextButton("<--", skin);
         TextButton pve = new TextButton("-->", skin);
-
-        //add buttons to table
         table.add(newGame);
         table.row().pad(10, 0, 10, 0);
         table.add(pve);
         table.row().pad(10, 0, 10, 0);
-
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -69,7 +60,6 @@ public class TankSelectorPlayer1 implements Screen{
                 tankSprite =new Sprite(tankTexture);
             }
         });
-
         pve.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -78,7 +68,6 @@ public class TankSelectorPlayer1 implements Screen{
                 tankSprite =new Sprite(tankTexture);
             }
         });
-
     }
     private Texture getTankTexture(int tankid){
         if(tankid > 3){
@@ -100,7 +89,6 @@ public class TankSelectorPlayer1 implements Screen{
     }
     @Override
     public void render(float delta) {
-        // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         backgroundTexture = new Texture("assets/mainBG.png");
@@ -110,8 +98,6 @@ public class TankSelectorPlayer1 implements Screen{
             tankSprite =new Sprite(tankTexture);
             label.setText("M5A1");
         }
-
-        // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
@@ -123,7 +109,6 @@ public class TankSelectorPlayer1 implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        // change the stage's viewport when teh screen size is changed
         stage.getViewport().update(width, height, true);
     }
 
@@ -147,7 +132,6 @@ public class TankSelectorPlayer1 implements Screen{
 
     @Override
     public void dispose() {
-        // dispose of assets when not needed anymore
         stage.dispose();
     }
 
