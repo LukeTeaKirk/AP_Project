@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.mananaajaystudios.tankgame.screens.*;
 
 public class TopDog extends Game {
+    private SplashScreen splashScreen;
     private MainPage mainPage;
     private GameModeSelector gameMode;
     private MyTankGame tankGame;
@@ -11,14 +12,10 @@ public class TopDog extends Game {
     private TankSelectorPlayer2 tankSelectorp2;
     private TankSelectorPlayer1 tankSelectorp1;
     private MyTankGame mytankGame;
-    public MainPage init(){
-        mainPage = new MainPage(this);
-        return mainPage;
-    }
     @Override
     public void create() {
-        mainPage = new MainPage(this);
-        setScreen(mainPage);
+        splashScreen = new SplashScreen(this);
+        setScreen(splashScreen);
     }
 
     public void changeScreen(String screen){
