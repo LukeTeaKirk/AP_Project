@@ -8,21 +8,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mananaajaystudios.tankgame.TopDog;
+import com.mananaajaystudios.tankgame.*;
 
 import java.util.ArrayList;
 
@@ -30,7 +26,10 @@ public class TankSelectorPlayer1 implements Screen{
 
     private TopDog parent;
     private Stage stage;
+    private Integer Index = 0;
+    private Boolean Player1Chosen = false;
 
+    private player player1, player2;
     private ArrayList<VerticalGroup> TankGroups;
     private TextureAtlas atlas;
     private TextureRegion ChooseBackground;
@@ -39,6 +38,8 @@ public class TankSelectorPlayer1 implements Screen{
     private BitmapFont white, black;
     public TankSelectorPlayer1(TopDog temp){
         parent = temp;
+
+        /// create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
     }
 
@@ -50,9 +51,9 @@ public class TankSelectorPlayer1 implements Screen{
         TextSkin = new Skin(atlas);
 
         //Load Tank Images
-        TextureRegion TankCoalition = atlas.findRegion("Coalition");
-        TextureRegion TankBuratino = atlas.findRegion("Buratino");
-        TextureRegion TankHelios = atlas.findRegion("Helios");
+        final TextureRegion TankCoalition = atlas.findRegion("Coalition");
+        final TextureRegion TankBuratino = atlas.findRegion("Buratino");
+        final TextureRegion TankHelios = atlas.findRegion("Helios");
         Texture CoalitionBadge = new Texture(Gdx.files.internal("CoalitionBadge.png"));
         Texture BuratinoBadge = new Texture(Gdx.files.internal("BurantinoBadge.png"));
         Texture HeliosBadge = new Texture(Gdx.files.internal("HeliosBadge.png"));
@@ -92,7 +93,7 @@ public class TankSelectorPlayer1 implements Screen{
         table1.setSize(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
         table1.setPosition(0,0);
         table1.setDebug(true);
-        Table table2 = new Table();
+        final Table table2 = new Table();
         table2.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
         table2.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3,0);
         table2.setDebug(true);
@@ -110,7 +111,7 @@ public class TankSelectorPlayer1 implements Screen{
 
 
 
-        TextButton Choose = new TextButton("Choose", textButtonStyle);
+        final TextButton Choose = new TextButton("Choose", textButtonStyle);
         Choose.setSize(100, 50);
         ChooseBackground = atlas.findRegion("PopUp");
         ChooseBackgroundDrawable = new TextureRegionDrawable(ChooseBackground);
@@ -124,14 +125,14 @@ public class TankSelectorPlayer1 implements Screen{
         Texture leftArrow = new Texture(Gdx.files.internal("leftarrow.png"));
         TextureRegionDrawable rightArrowDrawable = new TextureRegionDrawable(new TextureRegion(rightArrow));
         TextureRegionDrawable leftArrowDrawable = new TextureRegionDrawable(new TextureRegion(leftArrow));
-        ImageButton rightArrowButton = new ImageButton(rightArrowDrawable);
-        ImageButton leftArrowButton = new ImageButton(leftArrowDrawable);
+        final ImageButton rightArrowButton = new ImageButton(rightArrowDrawable);
+        final ImageButton leftArrowButton = new ImageButton(leftArrowDrawable);
 //        rightArrowButton.setSize(50,50);
 //        leftArrowButton.setSize(50,50);
 
-        Texture PlayerOneButton = new Texture(Gdx.files.internal("PlayerOneChoose.png"));
-        TextureRegionDrawable PlayerOneButtonDrawable = new TextureRegionDrawable(new TextureRegion(PlayerOneButton));
-        ImageButton PlayerOneChoose = new ImageButton(PlayerOneButtonDrawable);
+        final Texture PlayerOneButton = new Texture(Gdx.files.internal("PlayerOneChoose.png"));
+        final TextureRegionDrawable PlayerOneButtonDrawable = new TextureRegionDrawable(new TextureRegion(PlayerOneButton));
+        final ImageButton PlayerOneChoose = new ImageButton(PlayerOneButtonDrawable);
         PlayerOneChoose.setSize(100,100);
 
         table2.setBackground(ChooseBackgroundDrawable);
@@ -149,61 +150,94 @@ public class TankSelectorPlayer1 implements Screen{
         rightArrowButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (TankGroups.indexOf(TankGroupCoalition) == 0) {
+                if (Index<2) {
+                    Index++;
                     table1.clear();
-                    table1.add(TankGroupBuratino).size(200,200).pad(10).padLeft(60).padRight(10).align(Align.center);
-                }
-                if (TankGroups.indexOf(TankGroupBuratino) == 1) {
-                    table1.clear();
-                    table1.add(TankGroupHelios).size(200,200).pad(10).padLeft(60).padRight(10).align(Align.center);
-                }
-                if (TankGroups.indexOf(TankGroupHelios) == 2) {
-                    table1.clear();
-                    table1.add(TankGroupCoalition).size(200,200).pad(10).padLeft(60).padRight(10).align(Align.center);
+                    table1.add(TankGroups.get(Index)).size(200,200).pad(10).padLeft(60).padRight(10).align(Align.center);
                 }
             }
         });
+        leftArrowButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (Index>0) {
+                    Index--;
+                    table1.clear();
+                    table1.add(TankGroups.get(Index)).size(200,200).pad(10).padLeft(60).padRight(10).align(Align.center);
+                }
+            }
+        });
+        Choose.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!Player1Chosen) {
+                    if (Index == 0) {
+                        player1 = new player(new TankCoalition(1));
+                    }
+                    if (Index == 1) {
+                        player1 = new player(new TankBurantino(1));
+
+                    }
+                    if (Index == 2) {
+                        player1 = new player(new TankHelios(1));
+                    }
+                    //clear table2 for next player
+                    table2.clear();
+                    //add new player to table2
+                    Texture PlayerTwoButton = new Texture(Gdx.files.internal("PlayerTwoChoose.png"));
+                    TextureRegionDrawable PlayerTwoButtonDrawable = new TextureRegionDrawable(new TextureRegion(PlayerTwoButton));
+                    ImageButton PlayerTwoChoose = new ImageButton(PlayerTwoButtonDrawable);
+                    PlayerTwoChoose.setSize(100, 100);
+                    table2.add(PlayerTwoChoose).size(200, 50).padTop(10).padLeft(60).padRight(10);
+                    table2.row();
+                    table2.add(leftArrowButton).size(50, 50).pad(10).align(Align.left);
+                    table2.add(rightArrowButton).size(50, 50).pad(10).align(Align.right);
+                    table2.row();
+                    //add Choose button to centre of table2
+                    table2.add(Choose).size(100, 50).pad(10).padLeft(60).padRight(10).align(Align.center);
+                    //add new tank to table1
+                    table1.clear();
+                    table1.add(TankGroupCoalition).size(200, 200).pad(10).padLeft(60).padRight(10).align(Align.center);
+                    //reset index
+                    Index = 0;
+                    Player1Chosen = true;
+                }
+                else if(Player1Chosen){
+                    if (Index == 0) {
+                        player2 = new player(new TankCoalition(2));
+                    }
+                    if (Index == 1) {
+                        player2 = new player(new TankBurantino(2));
+
+                    }
+                    if (Index == 2) {
+                        player2 = new player(new TankHelios(2));
+                    }
+                    //set screen to game
+                    parent.changeScreen("INGAME",player1,player2);
+
+            }
+
+            }
+
+        });
+
     }
-    private Texture getTankTexture(int tankid){
-        if(tankid > 3){
-            tankid = 1;
-        }
-        if(tankid < 1){
-            tankid = 3;
-        }
-        if(tankid == 1){
-            return new Texture("assets/t90.jpg");
-        }
-        if(tankid == 2){
-            return new Texture("assets/m5a1.png");
-        }
-        if(tankid == 3){
-            return new Texture("assets/arjun.jpg");
-        }
-        return null;
-    }
+
     @Override
     public void render(float delta) {
+        // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        backgroundTexture = new Texture("assets/mainBG.png");
-        backgroundSprite =new Sprite(backgroundTexture);
-        if(tankTexture == null){
-            tankTexture = new Texture("assets/m5a1.png");
-            tankSprite =new Sprite(tankTexture);
-            label.setText("M5A1");
-        }
+
+        // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.getBatch().begin();
-        stage.getBatch().enableBlending();
-        stage.getBatch().draw(backgroundSprite, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.getBatch().draw(tankSprite, 100, 100, 220*2, 142*2);
-        stage.getBatch().end();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        // change the stage's viewport when teh screen size is changed
         stage.getViewport().update(width, height, true);
     }
 
@@ -227,6 +261,7 @@ public class TankSelectorPlayer1 implements Screen{
 
     @Override
     public void dispose() {
+        // dispose of assets when not needed anymore
         stage.dispose();
     }
 
