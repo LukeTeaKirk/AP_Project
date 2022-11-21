@@ -12,10 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -91,11 +88,9 @@ public class TankSelectorPlayer1 implements Screen{
         final Table table1 = new Table();
         table1.setSize(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
         table1.setPosition(0,0);
-        table1.setDebug(true);
         Table table2 = new Table();
         table2.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
         table2.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3,0);
-        table2.setDebug(true);
         stage.addActor(table1);
         stage.addActor(table2);
         skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
@@ -182,24 +177,18 @@ public class TankSelectorPlayer1 implements Screen{
         }
         return null;
     }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        backgroundTexture = new Texture("assets/mainBG.png");
-        backgroundSprite =new Sprite(backgroundTexture);
-        if(tankTexture == null){
-            tankTexture = new Texture("assets/m5a1.png");
-            tankSprite =new Sprite(tankTexture);
-            label.setText("M5A1");
-        }
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        Texture logo = new Texture("assets/tankstars.png");
+        Sprite logoSprite = new Sprite(logo);
+        stage.draw();
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
-        stage.getBatch().draw(backgroundSprite, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.getBatch().draw(tankSprite, 100, 100, 220*2, 142*2);
+        stage.getBatch().draw(logoSprite, 250, 425, 220, 142);
         stage.getBatch().end();
-        stage.draw();
     }
 
     @Override
