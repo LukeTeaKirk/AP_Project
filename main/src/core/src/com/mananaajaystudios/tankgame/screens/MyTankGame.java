@@ -2,6 +2,7 @@ package com.mananaajaystudios.tankgame.screens;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,13 +18,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mananaajaystudios.tankgame.Tank;
+import com.mananaajaystudios.tankgame.TopDog;
 import com.mananaajaystudios.tankgame.World;
 import org.w3c.dom.Text;
 
 import java.awt.*;
 
 //pause menu button to populate screen and close it
-public class MyTankGame extends ApplicationAdapter {
+public class MyTankGame implements Screen {
 	private Stage stage;
 	private TextureAtlas atlas;
 	private Skin skin,textSkin;
@@ -31,6 +34,7 @@ public class MyTankGame extends ApplicationAdapter {
 	private TextButton buttonPause, buttonResume;
 	private SpriteBatch batch;
 	private Sprite sprite, ground, background;
+	private TopDog parent;
 
 //	private Texture img;
 
@@ -38,10 +42,14 @@ public class MyTankGame extends ApplicationAdapter {
 	private TextureRegion pauseButton, PauseMenu;
 	private TextureRegionDrawable pauseButtonDrawable, PauseMenuDrawable;
 	ImageButton pauseButtonImage;
+	public MyTankGame(TopDog temp){
+		parent = temp;
 
-	public void create () {
-		ScreenViewport viewport = new ScreenViewport();
-		stage = new Stage(viewport);
+		/// create stage and set it as input processor
+		stage = new Stage(new ScreenViewport());
+	}
+	@Override
+	public void show() {
 		Gdx.input.setInputProcessor(stage);
 		atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
 		skin = new Skin(atlas);
@@ -138,13 +146,40 @@ public class MyTankGame extends ApplicationAdapter {
 				});
 			}
 		});
+
 	}
 
-	public void render () {
+	@Override
+	public void render(float delta) {
 		ScreenUtils.clear(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
+
+	}
+
+	@Override
+	public void resize(int width, int height) {
+
+	}
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
+	@Override
+	public void hide() {
+
+	}
+
+	@Override
+	public void dispose() {
 
 	}
 }
