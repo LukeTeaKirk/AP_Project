@@ -4,21 +4,20 @@ import com.badlogic.gdx.Game;
 import com.mananaajaystudios.tankgame.screens.*;
 
 public class TopDog extends Game {
+    private SplashScreen splashScreen;
     private MainPage mainPage;
     private GameModeSelector gameMode;
     private MyTankGame tankGame;
+    private LoadGamePage loadGame;
+
     private EndGame endGame;
     private TankSelectorPlayer2 tankSelectorp2;
     private TankSelectorPlayer1 tankSelectorp1;
     private MyTankGame mytankGame;
-    public MainPage init(){
-        mainPage = new MainPage(this);
-        return mainPage;
-    }
     @Override
     public void create() {
-        mainPage = new MainPage(this);
-        setScreen(mainPage);
+        splashScreen = new SplashScreen(this);
+        setScreen(splashScreen);
     }
 
     public void changeScreen(String screen){
@@ -44,6 +43,11 @@ public class TopDog extends Game {
                 if(mytankGame == null) mytankGame = new MyTankGame(this);
                 this.setScreen(mytankGame);
                 break;
+            case "LOAD":
+                if(loadGame == null) loadGame = new LoadGamePage(this);
+                this.setScreen(loadGame);
+                break;
+
         }
     }
 }
