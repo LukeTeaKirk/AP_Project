@@ -92,11 +92,12 @@ public class TankSelectorPlayer1 implements Screen{
         final Table table1 = new Table();
         table1.setSize(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
         table1.setPosition(0,0);
+
         table1.setDebug(true);
         final Table table2 = new Table();
+
         table2.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
         table2.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3,0);
-        table2.setDebug(true);
         stage.addActor(table1);
         stage.addActor(table2);
         skin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
@@ -224,15 +225,18 @@ public class TankSelectorPlayer1 implements Screen{
 
     }
 
+
     @Override
     public void render(float delta) {
         // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
     }
 
     @Override
