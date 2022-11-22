@@ -5,71 +5,81 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mananaajaystudios.tankgame.Tank;
-import com.mananaajaystudios.tankgame.TopDog;
-import com.mananaajaystudios.tankgame.World;
-import org.w3c.dom.Text;
-
-import java.awt.*;
+//import tank class
+import com.mananaajaystudios.tankgame.*;
 
 //pause menu button to populate screen and close it
-public class MyTankGame implements Screen {
+public class MyTankGame extends ApplicationAdapter implements Screen {
 	private Stage stage;
 	private TextureAtlas atlas;
-	private Skin skin,textSkin;
+	private Skin skin,textSkin,buttonSkin;
 	private Table table, PauseTable;
 	private TextButton buttonPause, buttonResume;
 	private SpriteBatch batch;
 	private Sprite sprite, ground, background;
-	private TopDog parent;
-
-//	private Texture img;
-
-
 	private TextureRegion pauseButton, PauseMenu;
 	private TextureRegionDrawable pauseButtonDrawable, PauseMenuDrawable;
 	ImageButton pauseButtonImage;
-	public MyTankGame(TopDog temp){
+	private player player1, player2;
+
+	private TopDog parent;
+
+
+	public MyTankGame(TopDog temp, player player1, player player2) {
 		parent = temp;
+		this.player1 = player1;
+		this.player2 = player2;
 
 		/// create stage and set it as input processor
 		stage = new Stage(new ScreenViewport());
 	}
+
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 		atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
 		skin = new Skin(atlas);
-		table = new Table(skin);
+		table = new Table();
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		pauseButton = atlas.findRegion("Menu");
 		final ImageButton pauseIcon = new ImageButton(new TextureRegionDrawable(pauseButton));
 		//set position of pause button to top left corner
-		pauseIcon.setPosition(0, Gdx.graphics.getHeight() - pauseIcon.getHeight());
-		pauseIcon.setSize(50, 50);
-
+		pauseIcon.setPosition(-10, Gdx.graphics.getHeight() - pauseIcon.getHeight());
+		pauseIcon.setSize(75, 75);
 		final World world = new World();
 		stage.addActor(world);
-
-		final Tank tank1 = new Tank(1);
-		stage.addActor(tank1);
-		final Tank tank2 = new Tank(2);
-		stage.addActor(tank2);
 		stage.addActor(pauseIcon);
+
+		stage.addActor(this.player1.getTank());
+		stage.addActor(this.player2.getTank());
+
+		buttonSkin= new Skin(atlas);
+		TextButton.TextButtonStyle textButtonStyle1 = new TextButton.TextButtonStyle();
+		textButtonStyle1.up = buttonSkin.getDrawable("button_up");
+		textButtonStyle1.down = buttonSkin.getDrawable("button_down");
+		textButtonStyle1.pressedOffsetX = 1;
+		textButtonStyle1.pressedOffsetY = -1;
+		BitmapFont black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
+		textButtonStyle1.font = black;
+
+		//create change weapon button
+		TextButton buttonChangeWeapon = new TextButton("Change Weapon", textButtonStyle1);
+		buttonChangeWeapon.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/2 -30, 25);
+		buttonChangeWeapon.setSize(240, 50);
+		stage.addActor(buttonChangeWeapon);
+
+		//add health bars as actors
+
 
 		pauseIcon.addListener(new ClickListener(){
 			@Override
@@ -159,27 +169,7 @@ public class MyTankGame implements Screen {
 	}
 
 	@Override
-	public void resize(int width, int height) {
-
-	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
 	public void hide() {
-
-	}
-
-	@Override
-	public void dispose() {
 
 	}
 }
