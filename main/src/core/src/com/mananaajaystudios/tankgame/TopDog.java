@@ -50,4 +50,12 @@ public class TopDog extends Game {
 
         }
     }
+    public void changeScreen(String screen, player player1, player player2){
+        switch(screen){
+            case "INGAME":
+                if(tankGame == null) tankGame = new MyTankGame(this, player1, player2);
+                this.setScreen(tankGame);
+                break;
+        }
+    }
 }
