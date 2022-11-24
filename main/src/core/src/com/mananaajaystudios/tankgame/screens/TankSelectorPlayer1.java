@@ -93,7 +93,6 @@ public class TankSelectorPlayer1 implements Screen{
         table1.setSize(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
         table1.setPosition(0,0);
 
-        table1.setDebug(true);
         final Table table2 = new Table();
 
         table2.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
