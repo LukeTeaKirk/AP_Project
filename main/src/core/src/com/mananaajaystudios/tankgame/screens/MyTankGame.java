@@ -38,7 +38,6 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 		this.player1 = player1;
 		this.player2 = player2;
 
-		/// create stage and set it as input processor
 		stage = new Stage(new ScreenViewport());
 	}
 
@@ -53,7 +52,6 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 
 		pauseButton = atlas.findRegion("Menu");
 		final ImageButton pauseIcon = new ImageButton(new TextureRegionDrawable(pauseButton));
-		//set position of pause button to top left corner
 		pauseIcon.setPosition(-10, Gdx.graphics.getHeight() - pauseIcon.getHeight());
 		pauseIcon.setSize(75, 75);
 		final World world = new World();
