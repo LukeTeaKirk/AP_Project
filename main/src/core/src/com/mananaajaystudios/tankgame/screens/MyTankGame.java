@@ -129,6 +129,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 					@Override
 					public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
 						super.clicked(event, x, y);
+						parent.changeScreen("MAIN");
 						//go back to main menu
 					}
 				});
