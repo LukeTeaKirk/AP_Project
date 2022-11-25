@@ -6,11 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -26,7 +24,7 @@ public class MainPage implements Screen{
     private TextureAtlas atlas;
     private TextureRegion ChooseBackground;
     private TextureRegionDrawable ChooseBackgroundDrawable;
-    Skin TextSkin,skin;
+    private Skin TextSkin,skin;
     private BitmapFont white, black;
     public MainPage(TopDog temp){
         parent = temp;
@@ -41,7 +39,6 @@ public class MainPage implements Screen{
         black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
         TextSkin = new Skin(atlas);
 
-        //Load Tank Images
         TextureRegion TankCoalition = atlas.findRegion("Coalition");
         TextureRegion TankBuratino = atlas.findRegion("Buratino");
         TextureRegion TankHelios = atlas.findRegion("Helios");

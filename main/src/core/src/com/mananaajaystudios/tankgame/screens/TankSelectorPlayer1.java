@@ -39,7 +39,6 @@ public class TankSelectorPlayer1 implements Screen{
     public TankSelectorPlayer1(TopDog temp){
         parent = temp;
 
-        /// create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
     }
 

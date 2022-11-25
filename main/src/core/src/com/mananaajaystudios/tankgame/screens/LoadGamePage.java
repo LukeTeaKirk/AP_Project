@@ -38,8 +38,6 @@ public class LoadGamePage implements Screen{
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
         TextSkin = new Skin(atlas);
-
-        //Load Tank Images
         TextureRegion TankCoalition = atlas.findRegion("Coalition");
         TextureRegion TankBuratino = atlas.findRegion("Buratino");
         TextureRegion TankHelios = atlas.findRegion("Helios");

@@ -22,13 +22,11 @@ public class TankSelectorPlayer2 implements Screen{
     public TankSelectorPlayer2(TopDog temp){
         parent = temp;
 
-        /// create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
     }
 
     @Override
     public void show() {
-        // Create a table that fills the screen. Everything else will go inside this table.
         Gdx.input.setInputProcessor(stage);
         stage.clear();
         Table table = new Table();
@@ -36,14 +34,11 @@ public class TankSelectorPlayer2 implements Screen{
         table.setFillParent(true);
         stage.addActor(table);
 
-        // temporary until we have asset manager in
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-        //create buttons
         TextButton newGame = new TextButton("1V1", skin);
         TextButton pve = new TextButton("P V COMP", skin);
 
-        //add buttons to table
         table.add(newGame).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(pve).fillX().uniformX();
@@ -70,16 +65,12 @@ public class TankSelectorPlayer2 implements Screen{
 
     @Override
     public void render(float delta) {
-        // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         backgroundTexture = new Texture("assets/mainBG.png");
         backgroundSprite =new Sprite(backgroundTexture);
         tankTexture = new Texture("assets/m5a1.png");
         tankSprite =new Sprite(tankTexture);
-
-        // tell our stage to do actions and draw itself
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
         stage.getBatch().draw(backgroundSprite, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -90,7 +81,6 @@ public class TankSelectorPlayer2 implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        // change the stage's viewport when teh screen size is changed
         stage.getViewport().update(width, height, true);
     }
 
@@ -114,7 +104,6 @@ public class TankSelectorPlayer2 implements Screen{
 
     @Override
     public void dispose() {
-        // dispose of assets when not needed anymore
         stage.dispose();
     }
 
