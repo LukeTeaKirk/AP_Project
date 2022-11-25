@@ -10,10 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mananaajaystudios.tankgame.*;
 import com.mananaajaystudios.tankgame.Game;
-import com.mananaajaystudios.tankgame.TopDog;
-import com.mananaajaystudios.tankgame.World;
-import com.mananaajaystudios.tankgame.player;
 
 //pause menu button to populate screen and close it
 public class MyTankGame extends ApplicationAdapter implements Screen, InputProcessor {
@@ -93,7 +91,6 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 				super.clicked(event, x, y);
 				PauseTable = new Table();
 				PauseTable.setBounds(Gdx.graphics.getWidth()/2 - 150, Gdx.graphics.getHeight()/2 - 125, 300, 300);
-				PauseTable.debug();
 
 				PauseMenu = atlas.findRegion("PausePopUp");
 				PauseMenuDrawable = new TextureRegionDrawable(PauseMenu);
@@ -141,7 +138,6 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 						PauseTable.remove();
 						ConfirmTable = new Table();
 						ConfirmTable.setBounds(Gdx.graphics.getWidth()/2 - 150, Gdx.graphics.getHeight()/2 - 50, 350, 200);
-						ConfirmTable.debug();
 
 						ConfirmTable.setBackground(PauseMenuDrawable);
 
