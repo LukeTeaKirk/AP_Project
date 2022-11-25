@@ -45,6 +45,7 @@ public class TopDog extends Game {
                 break;
             case "LOAD":
                 if(loadGame == null) loadGame = new LoadGamePage(this);
+                System.out.println("test");
                 this.setScreen(loadGame);
                 break;
 

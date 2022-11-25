@@ -95,10 +95,10 @@ public class MainPage implements Screen{
 
         TextButton newGame = new TextButton("NEW GAME", textButtonStyle);
         newGame.setSize(300, 100);
-        TextButton exit = new TextButton("LOAD", textButtonStyle);
-        exit.setSize(300, 100);
-        TextButton load = new TextButton("EXIT", textButtonStyle);
+        TextButton load = new TextButton("LOAD", textButtonStyle);
         load.setSize(300, 100);
+        TextButton exit = new TextButton("EXIT", textButtonStyle);
+        exit.setSize(300, 100);
 
         ChooseBackground = atlas.findRegion("PopUp");
         ChooseBackgroundDrawable = new TextureRegionDrawable(ChooseBackground);
@@ -134,6 +134,7 @@ public class MainPage implements Screen{
         load.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("test");
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
                 sound.play(1F);
                 parent.changeScreen("LOAD");
