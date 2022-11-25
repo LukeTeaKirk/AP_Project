@@ -3,17 +3,17 @@ package com.mananaajaystudios.tankgame.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-//import tank class
-import com.mananaajaystudios.tankgame.*;
+import com.mananaajaystudios.tankgame.Game;
+import com.mananaajaystudios.tankgame.TopDog;
+import com.mananaajaystudios.tankgame.World;
+import com.mananaajaystudios.tankgame.player;
 
 //pause menu button to populate screen and close it
 public class MyTankGame extends ApplicationAdapter implements Screen, InputProcessor {
@@ -35,10 +35,10 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 	private TopDog parent;
 
 
-	public MyTankGame(TopDog temp, player player1, player player2) {
+	public MyTankGame(TopDog temp, Game game) {
 		parent = temp;
-		this.player1 = player1;
-		this.player2 = player2;
+		this.player1 = game.getPlayer1();
+		this.player2 = game.getPlayer2();
 
 		/// create stage and set it as input processor
 		stage = new Stage(new ScreenViewport());
