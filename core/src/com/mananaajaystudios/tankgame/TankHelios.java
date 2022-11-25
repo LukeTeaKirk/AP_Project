@@ -14,19 +14,11 @@ public class TankHelios extends Tank{
         tankSprite = new Sprite(tankRegion);
         tankSprite.setSize(150, 150);
         if(PlayerNumber == 1){
-<<<<<<< HEAD
             tankSprite.setPosition(50, 40);
         }
         else if(PlayerNumber == 2){
             tankSprite.setPosition(850, 40);
             tankSprite.flip(true, false);
-=======
-            tank.setPosition(50, 80);
-        }
-        else if(PlayerNumber == 2){
-            tank.setPosition(850, 80);
-            tank.flip(true, false);
->>>>>>> 3c8f3fd3bd0029aa772fad594b0e2eba75b5310e
         }
     }
     @Override
