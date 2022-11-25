@@ -26,14 +26,28 @@ public class MainPage implements Screen{
     private TextureRegionDrawable ChooseBackgroundDrawable;
     private Skin TextSkin,skin;
     private BitmapFont white, black;
+
+    private Sound BgMusic;
+    long id;
+
     public MainPage(TopDog temp){
         parent = temp;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
 
+    public long getId() {
+        return id;
+    }
+    public Sound getBgMusic() {
+        return BgMusic;
+    }
     @Override
     public void show() {
+        BgMusic = Gdx.audio.newSound(Gdx.files.internal("Assets/TankStarsBGM.mp3"));
+        id = BgMusic.play();
+        BgMusic.setLooping(id,true);
+
         atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
@@ -150,7 +164,7 @@ public class MainPage implements Screen{
         stage.draw();
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
-        stage.getBatch().draw(logoSprite, 200, 475, 300, 200);
+        stage.getBatch().draw(logoSprite, 200, 475, 325, 200);
         stage.getBatch().end();
     }
 
@@ -179,6 +193,7 @@ public class MainPage implements Screen{
 
     @Override
     public void dispose() {
+        BgMusic.dispose();
         stage.dispose();
     }
 

@@ -34,6 +34,7 @@ public class LoadGamePage implements Screen{
 
     @Override
     public void show() {
+        parent.getMainPage().getBgMusic().stop(parent.getMainPage().getId());
         atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
