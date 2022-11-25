@@ -13,10 +13,10 @@ public class TankBurantino extends Tank{
         tankSprite = new Sprite(tankRegion);
         tankSprite.setSize(150, 150);
         if(PlayerNumber == 1){
-            tankSprite.setPosition(50, 40);
+            tankSprite.setPosition(50, 80);
         }
         else if(PlayerNumber == 2){
-            tankSprite.setPosition(850, 40);
+            tankSprite.setPosition(850, 80);
             tankSprite.flip(true, false);
         }
 
