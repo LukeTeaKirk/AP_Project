@@ -2,12 +2,14 @@ package com.mananaajaystudios.tankgame.screens;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -27,9 +29,10 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 	private Sprite sprite, ground, background;
 	private TextureRegion pauseButton, PauseMenu;
 	private TextureRegionDrawable pauseButtonDrawable, PauseMenuDrawable;
-	ImageButton pauseButtonImage;
+	private ImageButton pauseButtonImage;
 	private player player1, player2;
-
+	private Tank tank1;
+	private Tank tank2;
 	private TopDog parent;
 
 
@@ -57,10 +60,10 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 		final World world = new World();
 		stage.addActor(world);
 		stage.addActor(pauseIcon);
-
-		stage.addActor(this.player1.getTank());
-		stage.addActor(this.player2.getTank());
-
+		tank1 = this.player1.getTank();
+		tank2 = this.player2.getTank();
+		stage.addActor(tank1);
+		stage.addActor(tank2);
 		buttonSkin= new Skin(atlas);
 		TextButton.TextButtonStyle textButtonStyle1 = new TextButton.TextButtonStyle();
 		textButtonStyle1.up = buttonSkin.getDrawable("button_up");
@@ -156,13 +159,28 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 			}
 		});
 
+
 	}
 
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(Gdx.graphics.getDeltaTime());
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+			// your actions
+			System.out.println("a");
+			System.out.println(tank1.getX());
+			tank1.set
+			tank1.setX(tank1.getX()-10);
+			//tank1.addAction(Actions.moveTo(tank1.getX()-100, tank1.getY(), 1f));
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			// your actions
+			tank1.setX(tank1.getX()+10);
+
+			tank2.addAction(Actions.moveTo(tank2.getX()+100, tank2.getY(), 1f));
+		}
+		stage.act(delta);
 		stage.draw();
 
 	}

@@ -25,7 +25,7 @@ public class GameModeSelector implements Screen{
     private TextureAtlas atlas;
     private TextureRegion ChooseBackground;
     private TextureRegionDrawable ChooseBackgroundDrawable;
-    Skin TextSkin,skin;
+    private Skin TextSkin,skin;
     private BitmapFont white, black;
     public GameModeSelector(TopDog temp){
         parent = temp;

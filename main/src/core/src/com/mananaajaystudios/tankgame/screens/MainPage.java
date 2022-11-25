@@ -24,7 +24,7 @@ public class MainPage implements Screen{
     private TextureAtlas atlas;
     private TextureRegion ChooseBackground;
     private TextureRegionDrawable ChooseBackgroundDrawable;
-    Skin TextSkin,skin;
+    private Skin TextSkin,skin;
     private BitmapFont white, black;
     public MainPage(TopDog temp){
         parent = temp;
