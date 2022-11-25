@@ -32,7 +32,7 @@ public class TopDog extends Game {
                 this.setScreen(gameMode);
                 break;
             case "TANKP1":
-                if(tankSelectorp1 == null) tankSelectorp1 = new TankSelectorPlayer1(this);
+                tankSelectorp1 = new TankSelectorPlayer1(this);
                 this.setScreen(tankSelectorp1);
                 break;
             case "TANKP2":
@@ -50,10 +50,10 @@ public class TopDog extends Game {
 
         }
     }
-    public void changeScreen(String screen, player player1, player player2){
+    public void changeScreen(String screen, com.mananaajaystudios.tankgame.Game game){
         switch(screen){
             case "INGAME":
-                if(tankGame == null) tankGame = new MyTankGame(this, player1, player2);
+                tankGame = new MyTankGame(this, game);
                 this.setScreen(tankGame);
                 break;
         }
