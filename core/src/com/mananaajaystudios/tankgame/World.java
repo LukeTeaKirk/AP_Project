@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class World extends Actor {
-    private Sprite ground, background,healthBar;
+    private Sprite ground, background;
     private TextureAtlas Atlas;
     private TextureRegion region, groundRegion, backgroundRegion;
     private Table table;
@@ -20,10 +20,11 @@ public class World extends Actor {
         groundRegion = Atlas.findRegion("ground");
         backgroundRegion = Atlas.findRegion("background");
         ground = new Sprite(groundRegion);
-        ground.setSize(1200, 140);
+        ground.setSize(1200, 91);
         ground.setPosition(0, -5);
         background = new Sprite(backgroundRegion);
         background.setSize(1200, 675);
+        //set postion of background to centre of screen
         background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2, Gdx.graphics.getHeight() / 2 - background.getHeight() / 2 +25);
 
     }
