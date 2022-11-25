@@ -210,6 +210,7 @@ public class TankSelectorPlayer1 implements Screen{
                     }
                     //set screen to game
                     Game game = new Game(player1,player2);
+                    parent.getMainPage().getBgMusic().stop(parent.getMainPage().getId());
                     parent.changeScreen("INGAME",game);
 
             }

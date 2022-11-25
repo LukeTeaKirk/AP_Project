@@ -1,18 +1,20 @@
 package com.mananaajaystudios.tankgame.screens;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.*;
 import com.mananaajaystudios.tankgame.Game;
-
 //pause menu button to populate screen and close it
 public class MyTankGame extends ApplicationAdapter implements Screen, InputProcessor {
 	private Stage stage;
@@ -141,17 +143,23 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 						ConfirmTable.setBackground(PauseMenuDrawable);
 
-						Label label = new Label("Do you Want to Save the Game?", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-						ConfirmTable.add(label).size(200, 50).padBottom(20).expand(200,0);
+//						Label label = new Label("Do you Want to Save the Game?", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+//						ConfirmTable.add(label).size(200, 50).padBottom(20).expand(200,0);
+//						ConfirmTable.row();
+						Texture SaveGame = new Texture(Gdx.files.internal("SaveGame.png"));
+						TextureRegionDrawable SaveGameDrawable = new TextureRegionDrawable(new TextureRegion(SaveGame));
+						final ImageButton SaveGameImage = new ImageButton(SaveGameDrawable);
+						ConfirmTable.add(SaveGameImage).size(300, 75).center();
 						ConfirmTable.row();
 
 						TextButton buttonYes = new TextButton("Yes", textButtonStyle1);
 						buttonYes.setSize(100, 50);
-						ConfirmTable.add(buttonYes).size(buttonYes.getWidth(), buttonYes.getHeight()).padBottom(20).padLeft(40).padRight(40);
+						ConfirmTable.add(buttonYes).size(buttonYes.getWidth(), buttonYes.getHeight());
+						ConfirmTable.row();
 
 						TextButton buttonNo = new TextButton("No", textButtonStyle1);
 						buttonNo.setSize(100, 50);
-						ConfirmTable.add(buttonNo).size(buttonNo.getWidth(), buttonNo.getHeight()).padBottom(20).padRight(40);
+						ConfirmTable.add(buttonNo).size(buttonNo.getWidth(), buttonNo.getHeight());
 
 						stage.addActor(ConfirmTable);
 

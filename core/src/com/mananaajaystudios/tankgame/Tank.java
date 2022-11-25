@@ -1,7 +1,7 @@
 package com.mananaajaystudios.tankgame;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 //fuel bar
 //switch weapon
 public class Tank extends Actor {
-    protected Sprite tank, fireButton, fuelBar, weaponSelect;
+    protected Sprite tank, fireButton, fuelBar, weaponSelect, healthBar, healthBar2;
     protected int health, fuel, weapon;
     protected TextureAtlas Atlas;
     MoveToAction action = new MoveToAction();
@@ -24,13 +24,15 @@ public class Tank extends Actor {
     public Tank(Integer PlayerNumber) {
         this.PlayerNumber = PlayerNumber;
         Atlas = new TextureAtlas("Spritesheets/Spritesheet1.atlas");
-//        tankRegion = Atlas.findRegion("Buratino");
+
         fuelRegion = Atlas.findRegion("FuelBar");
         weaponRegion = Atlas.findRegion("SplitterChain");
         fireRegion = Atlas.findRegion("FireButton");
-//        tank = new Sprite(tankRegion);
-//        tank.setSize(100, 100);
-//        tank.setPosition(0, 0);
+        Texture healthBarTexture = new Texture("HealthBar.jpeg");
+        TextureRegion healthRegion = new TextureRegion(healthBarTexture);
+        healthBar = new Sprite(healthRegion);
+        healthBar2 = new Sprite(healthRegion);
+
 
         if(PlayerNumber == 1){
             fuelBar = new Sprite(fuelRegion);
@@ -42,21 +44,25 @@ public class Tank extends Actor {
             fireButton = new Sprite(fireRegion);
             fireButton.setSize(100, 64);
             fireButton.setPosition(Gdx.graphics.getWidth()- Gdx.graphics.getWidth()/4 +50, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()+20);
-//            tank.setPosition(50, 50);
+            healthBar.setSize(400, 50);
+            healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            healthBar2.setSize(400, 50);
+            healthBar2.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+
         }
         else if(PlayerNumber == 2){
-//            tank.setPosition(500, 50);
-//            tank.flip(true, false);
+
         }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-//        tank.draw(batch);
         if(PlayerNumber == 1){
             fuelBar.draw(batch);
             weaponSelect.draw(batch);
             fireButton.draw(batch);
+            healthBar.draw(batch);
+            healthBar2.draw(batch);
         }
     }
 

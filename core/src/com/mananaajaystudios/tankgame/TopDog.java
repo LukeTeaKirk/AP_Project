@@ -19,6 +19,9 @@ public class TopDog extends Game {
         splashScreen = new SplashScreen(this);
         setScreen(splashScreen);
     }
+    public MainPage getMainPage(){
+        return this.mainPage;
+    }
 
     public void changeScreen(String screen){
         switch(screen){

@@ -138,7 +138,7 @@ public class GameModeSelector implements Screen{
         stage.draw();
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
-        stage.getBatch().draw(logoSprite, 200, 475, 300, 200);
+        stage.getBatch().draw(logoSprite, 200, 475, 325, 200);
         stage.getBatch().end();
     }
 
@@ -167,6 +167,7 @@ public class GameModeSelector implements Screen{
 
     @Override
     public void dispose() {
+
         stage.dispose();
     }
 
