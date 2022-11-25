@@ -25,7 +25,7 @@ public class GameModeSelector implements Screen{
     private TextureAtlas atlas;
     private TextureRegion ChooseBackground;
     private TextureRegionDrawable ChooseBackgroundDrawable;
-    Skin TextSkin,skin;
+    private Skin TextSkin,skin;
     private BitmapFont white, black;
     public GameModeSelector(TopDog temp){
         parent = temp;
@@ -44,23 +44,19 @@ public class GameModeSelector implements Screen{
         TextureRegion TankCoalition = atlas.findRegion("Coalition");
         TextureRegion TankBuratino = atlas.findRegion("Buratino");
         TextureRegion TankHelios = atlas.findRegion("Helios");
-        Texture CoalitionBadge = new Texture(Gdx.files.internal("CoalitionBadge.png"));
         Texture BuratinoBadge = new Texture(Gdx.files.internal("BurantinoBadge.png"));
         Texture HeliosBadge = new Texture(Gdx.files.internal("HeliosBadge.png"));
         TextureRegionDrawable TankCoalitionDrawable = new TextureRegionDrawable(TankCoalition);
         TextureRegionDrawable TankBuratinoDrawable = new TextureRegionDrawable(TankBuratino);
         TextureRegionDrawable TankHeliosDrawable = new TextureRegionDrawable(TankHelios);
-        TextureRegionDrawable CoalitionBadgeDrawable = new TextureRegionDrawable(CoalitionBadge);
         TextureRegionDrawable BuratinoBadgeDrawable = new TextureRegionDrawable(BuratinoBadge);
         TextureRegionDrawable HeliosBadgeDrawable = new TextureRegionDrawable(HeliosBadge);
 
         final VerticalGroup TankGroupCoalition = new VerticalGroup();
         final VerticalGroup TankGroupBuratino = new VerticalGroup();
         final VerticalGroup TankGroupHelios = new VerticalGroup();
-        TankGroupCoalition.addActor(new Image(CoalitionBadgeDrawable));
-        TankGroupCoalition.space(10);
         TankGroupCoalition.addActor(new Image(TankCoalitionDrawable));
-        TankGroupCoalition.center();
+        TankGroupCoalition.center().padTop(130);
 
         TankGroupBuratino.addActor(new Image(BuratinoBadgeDrawable));
         TankGroupBuratino.space(10);
@@ -100,9 +96,9 @@ public class GameModeSelector implements Screen{
 
 
         TextButton newGame = new TextButton("1 V 1", textButtonStyle);
-        newGame.setSize(300, 50);
+        newGame.setSize(300, 100);
         TextButton exit = new TextButton("P V COMP", textButtonStyle);
-        exit.setSize(300, 50);
+        exit.setSize(300, 100);
 
         ChooseBackground = atlas.findRegion("PopUp");
         ChooseBackgroundDrawable = new TextureRegionDrawable(ChooseBackground);
@@ -110,9 +106,9 @@ public class GameModeSelector implements Screen{
         TextureRegionDrawable ChoooseTankBackgroundDrawable = new TextureRegionDrawable(ChoooseTankBackground);
 
         table2.setBackground(ChooseBackgroundDrawable);
-        table2.add(newGame).size(300,50).pad(10).padLeft(20).padRight(10).align(Align.center);
+        table2.add(newGame).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table2.row();
-        table2.add(exit).size(300,50).pad(10).padLeft(20).padRight(10).align(Align.center);
+        table2.add(exit).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table2.row();
         table1.setBackground(ChoooseTankBackgroundDrawable);
         table1.add(TankGroupCoalition).size(200,200).pad(10).padLeft(20).padRight(10).align(Align.center);
@@ -142,7 +138,7 @@ public class GameModeSelector implements Screen{
         stage.draw();
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
-        stage.getBatch().draw(logoSprite, 250, 425, 220, 142);
+        stage.getBatch().draw(logoSprite, 200, 475, 300, 200);
         stage.getBatch().end();
     }
 

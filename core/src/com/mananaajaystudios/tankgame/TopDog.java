@@ -39,10 +39,10 @@ public class TopDog extends Game {
                 if(tankSelectorp2 == null) tankSelectorp2 = new TankSelectorPlayer2(this);
                 this.setScreen(tankSelectorp2);
                 break;
-//            case "GAME":
-//                if(mytankGame == null) mytankGame = new MyTankGame(this);
-//                this.setScreen(mytankGame);
-//                break;
+            case "GAME":
+                //if(mytankGame == null) mytankGame = new MyTankGame(this);
+                this.setScreen(mytankGame);
+                break;
             case "LOAD":
                 if(loadGame == null) loadGame = new LoadGamePage(this);
                 this.setScreen(loadGame);

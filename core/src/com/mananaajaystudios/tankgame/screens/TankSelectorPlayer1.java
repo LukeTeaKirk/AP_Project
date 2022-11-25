@@ -35,7 +35,6 @@ public class TankSelectorPlayer1 implements Screen{
     public TankSelectorPlayer1(TopDog temp){
         parent = temp;
 
-        /// create stage and set it as input processor
         stage = new Stage(new ScreenViewport());
     }
 
@@ -89,7 +88,6 @@ public class TankSelectorPlayer1 implements Screen{
         table1.setSize(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
         table1.setPosition(0,0);
 
-        table1.setDebug(true);
         final Table table2 = new Table();
 
         table2.setSize(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight());
@@ -228,12 +226,7 @@ public class TankSelectorPlayer1 implements Screen{
         // clear the screen ready for next set of images to be drawn
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
-        // tell our stage to do actions and draw itself
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
     }
 
     @Override
