@@ -1,8 +1,6 @@
 package com.mananaajaystudios.tankgame.screens;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,11 +16,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.*;
 
 //pause menu button to populate screen and close it
-public class MyTankGame extends ApplicationAdapter implements Screen {
+public class MyTankGame extends ApplicationAdapter implements Screen, InputProcessor {
 	private Stage stage;
 	private TextureAtlas atlas;
 	private Skin skin,textSkin,buttonSkin;
-
+	private Tank tank1;
+	private Tank tank2;
 	private TextButton.TextButtonStyle textButtonStyle1;
 	private Table table, PauseTable, ConfirmTable;
 	private TextButton buttonPause, buttonResume,buttonSave,buttonExit;
@@ -48,7 +47,10 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
+		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor( stage );
+		multiplexer.addProcessor( this ); // Your screen
+		Gdx.input.setInputProcessor( multiplexer );
 		atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
 		skin = new Skin(atlas);
 		table = new Table();
@@ -62,9 +64,10 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 		final World world = new World();
 		stage.addActor(world);
 		stage.addActor(pauseIcon);
-
-		stage.addActor(this.player1.getTank());
-		stage.addActor(this.player2.getTank());
+		tank1 = this.player1.getTank();
+		tank2 = this.player2.getTank();
+		stage.addActor(tank1);
+		stage.addActor(tank2);
 
 		buttonSkin= new Skin(atlas);
 		textButtonStyle1 = new TextButton.TextButtonStyle();
@@ -201,4 +204,45 @@ public class MyTankGame extends ApplicationAdapter implements Screen {
 	public void hide() {
 
 	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(float amountX, float amountY) {
+		return false;
+	}
+
 }

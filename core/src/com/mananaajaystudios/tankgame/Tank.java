@@ -1,11 +1,13 @@
 package com.mananaajaystudios.tankgame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 //health bar
 //fuel bar
@@ -14,6 +16,7 @@ public class Tank extends Actor {
     protected Sprite tank, fireButton, fuelBar, weaponSelect;
     protected int health, fuel, weapon;
     protected TextureAtlas Atlas;
+    MoveToAction action = new MoveToAction();
 
     Integer PlayerNumber;
     protected TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
@@ -59,6 +62,7 @@ public class Tank extends Actor {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
     }
 }
