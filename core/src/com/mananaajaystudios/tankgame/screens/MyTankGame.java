@@ -2,8 +2,11 @@ package com.mananaajaystudios.tankgame.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,6 +22,11 @@ import com.mananaajaystudios.tankgame.*;
 //pause menu button to populate screen and close it
 public class MyTankGame extends ApplicationAdapter implements Screen, InputProcessor {
 	private Stage stage;
+	private World world;
+	private Box2DDebugRenderer debugRenderer;
+	private OrthographicCamera camera;
+	private final float TIMESTEP = 1 / 60f;
+	private final int VELOCITYITERATIONS = 8, POSITIONITERATIONS = 3;
 	private TextureAtlas atlas;
 	private Skin skin,textSkin,buttonSkin;
 	private Tank tank1;
@@ -48,6 +56,72 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 	@Override
 	public void show() {
+		world = new World(new Vector2(0, -9.81f), true);
+		debugRenderer = new Box2DDebugRenderer();
+
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		//Ground
+		//body definition
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyDef.BodyType.StaticBody;
+		bodyDef.position.set(0, 0);
+
+		ChainShape groundShape = new ChainShape();
+		groundShape.createChain(new Vector2[]{
+				new Vector2(-640, -37),
+				new Vector2(-600, -50),
+				new Vector2(-550, -55),
+				new Vector2(-500, -70),
+				new Vector2(-450, -85),
+				new Vector2(-420, -90),
+				new Vector2(-400, -85),
+				new Vector2(-350, -75),
+				new Vector2(-300, -65),
+				new Vector2(-250, -50),
+				new Vector2(-220, -45),
+				new Vector2(-200, -47),
+				new Vector2(-150, -60),
+				new Vector2(-125, -68),
+				new Vector2(-100, -68),
+				new Vector2(-50, -54),
+				new Vector2(-35, -52),
+				new Vector2(-20, -53),
+				new Vector2(0, -57),
+				new Vector2(20, -65),
+				new Vector2(50, -68),
+				new Vector2(70, -75),
+				new Vector2(85, -77),
+				new Vector2(100, -75),
+				new Vector2(120, -72),
+				new Vector2(150, -63),
+				new Vector2(200, -48),
+				new Vector2(220, -46),
+				new Vector2(230, -45),
+				new Vector2(250, -40),
+				new Vector2(275, -37),
+				new Vector2(300, -40),
+				new Vector2(320, -45),
+				new Vector2(350, -55),
+				new Vector2(400, -68),
+				new Vector2(425, -71),
+				new Vector2(450, -67),
+				new Vector2(500, -52),
+				new Vector2(525, -50),
+				new Vector2(550, -52),
+				new Vector2(600, -69),
+				new Vector2(640, -80),
+		});
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = groundShape;
+		fixtureDef.friction = 0.5f;
+		fixtureDef.restitution = 0;
+
+		world.createBody(bodyDef).createFixture(fixtureDef);
+		groundShape.dispose();
+
+
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor( stage );
 		multiplexer.addProcessor( this ); // Your screen
@@ -62,8 +136,8 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		//set position of pause button to top left corner
 		pauseIcon.setPosition(-10, Gdx.graphics.getHeight() - pauseIcon.getHeight());
 		pauseIcon.setSize(75, 75);
-		final World world = new World();
-		stage.addActor(world);
+		final GameWorld GameWorld = new GameWorld();
+		stage.addActor(GameWorld);
 		stage.addActor(pauseIcon);
 		tank1 = this.player1.getTank();
 		tank2 = this.player2.getTank();
@@ -188,14 +262,8 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 					}
 				});
-
-
-
-
-
 			}
 		});
-
 	}
 
 	@Override
@@ -204,12 +272,19 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-
+		debugRenderer.render(world, camera.combined);
+		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
+	}
+	@Override
+	public void dispose() {
+		stage.dispose();
+		world.dispose();
+		debugRenderer.dispose();
 	}
 
 	@Override
 	public void hide() {
-
+		dispose();
 	}
 
 	@Override

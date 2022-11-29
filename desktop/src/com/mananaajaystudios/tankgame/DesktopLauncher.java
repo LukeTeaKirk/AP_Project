@@ -1,10 +1,7 @@
 package com.mananaajaystudios.tankgame;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.mananaajaystudios.tankgame.screens.MyTankGame;
-import com.mananaajaystudios.tankgame.screens.MainPage;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
@@ -12,7 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("TankGame");
-		config.setWindowedMode(1080,720);
+		config.setWindowedMode(1280,720);
 		config.setResizable(false);
 		new Lwjgl3Application(new TopDog(), config);
 	}

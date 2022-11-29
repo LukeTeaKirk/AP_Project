@@ -117,14 +117,14 @@ public class GameModeSelector implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
-                sound.play(1F);
+//                sound.play(1F);
             }
         });
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
-                sound.play(1F);
+//                sound.play(1F);
                 parent.changeScreen("TANKP1");
             }
         });
@@ -138,7 +138,7 @@ public class GameModeSelector implements Screen{
         stage.draw();
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
-        stage.getBatch().draw(logoSprite, 200, 475, 325, 200);
+        stage.getBatch().draw(logoSprite, 200, 475, 350, 200);
         stage.getBatch().end();
     }
 
