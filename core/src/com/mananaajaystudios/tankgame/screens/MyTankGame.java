@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -46,7 +47,9 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 	public MyTankGame(TopDog temp, Game game) {
 		parent = temp;
 		this.player1 = game.getPlayer1();
+		player1.setCurrentTurn(true);
 		this.player2 = game.getPlayer2();
+		player2.setCurrentTurn(false);
 
 		/// create stage and set it as input processor
 		stage = new Stage(new ScreenViewport());
@@ -60,65 +63,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		//Ground
-		//body definition
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.StaticBody;
-		bodyDef.position.set(0, 0);
 
-		ChainShape groundShape = new ChainShape();
-		groundShape.createChain(new Vector2[]{
-				new Vector2(-640, -37),
-				new Vector2(-600, -50),
-				new Vector2(-550, -55),
-				new Vector2(-500, -70),
-				new Vector2(-450, -85),
-				new Vector2(-420, -90),
-				new Vector2(-400, -85),
-				new Vector2(-350, -75),
-				new Vector2(-300, -65),
-				new Vector2(-250, -50),
-				new Vector2(-220, -45),
-				new Vector2(-200, -47),
-				new Vector2(-150, -60),
-				new Vector2(-125, -68),
-				new Vector2(-100, -68),
-				new Vector2(-50, -54),
-				new Vector2(-35, -52),
-				new Vector2(-20, -53),
-				new Vector2(0, -57),
-				new Vector2(20, -65),
-				new Vector2(50, -68),
-				new Vector2(70, -75),
-				new Vector2(85, -77),
-				new Vector2(100, -75),
-				new Vector2(120, -72),
-				new Vector2(150, -63),
-				new Vector2(200, -48),
-				new Vector2(220, -46),
-				new Vector2(230, -45),
-				new Vector2(250, -40),
-				new Vector2(275, -37),
-				new Vector2(300, -40),
-				new Vector2(320, -45),
-				new Vector2(350, -55),
-				new Vector2(400, -68),
-				new Vector2(425, -71),
-				new Vector2(450, -67),
-				new Vector2(500, -52),
-				new Vector2(525, -50),
-				new Vector2(550, -52),
-				new Vector2(600, -69),
-				new Vector2(640, -80),
-		});
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = groundShape;
-		fixtureDef.friction = 0.5f;
-		fixtureDef.restitution = 0;
-
-		world.createBody(bodyDef).createFixture(fixtureDef);
-		groundShape.dispose();
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor( stage );
 		multiplexer.addProcessor( this ); // Your screen
@@ -133,7 +78,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		//set position of pause button to top left corner
 		pauseIcon.setPosition(-10, Gdx.graphics.getHeight() - pauseIcon.getHeight());
 		pauseIcon.setSize(75, 75);
-		final GameWorld GameWorld = new GameWorld();
+		final GameWorld GameWorld = new GameWorld(world);
 		stage.addActor(GameWorld);
 		stage.addActor(pauseIcon);
 		tank1 = this.player1.getTank();
@@ -154,11 +99,33 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 		//create change weapon button
 		TextButton buttonChangeWeapon = new TextButton("Change Weapon", textButtonStyle1);
-		buttonChangeWeapon.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/2 -30, 25);
+		buttonChangeWeapon.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/2 -200, 25);
 		buttonChangeWeapon.setSize(240, 50);
 		stage.addActor(buttonChangeWeapon);
 
-		//add health bars as actors
+		TextButton buttonFireWeapon = new TextButton("Fire!", textButtonStyle1);
+		buttonFireWeapon.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3 - 50, 25);
+		buttonFireWeapon.setSize(120, 100);
+		stage.addActor(buttonFireWeapon);
+
+		buttonFireWeapon.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (player1.isCurrentTurn()) {
+//					tank1.fire();
+					player1.setCurrentTurn(false);
+					player1.getTank().disableTank();
+					player2.setCurrentTurn(true);
+					player2.getTank().enableTank();
+				} else {
+//					tank2.fire();
+					player2.setCurrentTurn(false);
+					player2.getTank().disableTank();
+					player1.setCurrentTurn(true);
+					player1.getTank().enableTank();
+				}
+			}
+		});
 
 
 		pauseIcon.addListener(new ClickListener(){
@@ -217,9 +184,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 						ConfirmTable.setBackground(PauseMenuDrawable);
 
-//						Label label = new Label("Do you Want to Save the Game?", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-//						ConfirmTable.add(label).size(200, 50).padBottom(20).expand(200,0);
-//						ConfirmTable.row();
+
 						Texture SaveGame = new Texture(Gdx.files.internal("SaveGame.png"));
 						TextureRegionDrawable SaveGameDrawable = new TextureRegionDrawable(new TextureRegion(SaveGame));
 						final ImageButton SaveGameImage = new ImageButton(SaveGameDrawable);
