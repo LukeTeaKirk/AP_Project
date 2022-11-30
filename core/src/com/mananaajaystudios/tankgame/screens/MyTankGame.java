@@ -119,8 +119,6 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 		world.createBody(bodyDef).createFixture(fixtureDef);
 		groundShape.dispose();
-
-
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor( stage );
 		multiplexer.addProcessor( this ); // Your screen
@@ -140,6 +138,8 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		stage.addActor(pauseIcon);
 		tank1 = this.player1.getTank();
 		tank2 = this.player2.getTank();
+		tank1.setBody(world);
+		tank2.setBody(world);
 		stage.addActor(tank1);
 		stage.addActor(tank2);
 
@@ -271,6 +271,8 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		stage.draw();
 		debugRenderer.render(world, camera.combined);
 		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
+		tank1.updateBodyPosition();
+		tank2.updateBodyPosition();
 	}
 	@Override
 	public void dispose() {
