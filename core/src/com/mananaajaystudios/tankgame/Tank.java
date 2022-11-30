@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
@@ -17,7 +20,7 @@ public class Tank extends Actor {
     protected int health, fuel, weapon;
     protected TextureAtlas Atlas;
     MoveToAction action = new MoveToAction();
-
+    protected Body body;
     Integer PlayerNumber;
     protected TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
 
@@ -54,8 +57,14 @@ public class Tank extends Actor {
 
         }
     }
+    public void setBody(World world) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(0, 0);
+        this.body = world.createBody(bodyDef);
+    }
 
-    @Override
+        @Override
     public void draw(Batch batch, float parentAlpha) {
         if(PlayerNumber == 1){
             fuelBar.draw(batch);
