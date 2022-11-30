@@ -63,19 +63,21 @@ public class TankSelectorPlayer1 implements Screen{
         final VerticalGroup TankGroupBuratino = new VerticalGroup();
         final VerticalGroup TankGroupHelios = new VerticalGroup();
         TankGroupCoalition.addActor(new Image(CoalitionBadgeDrawable));
-        TankGroupCoalition.space(10);
+        TankGroupCoalition.space(25);
         TankGroupCoalition.addActor(new Image(TankCoalitionDrawable));
         TankGroupCoalition.center();
 
         TankGroupBuratino.addActor(new Image(BuratinoBadgeDrawable));
-        TankGroupBuratino.space(10);
+        TankGroupBuratino.space(5);
         TankGroupBuratino.addActor(new Image(TankBuratinoDrawable));
         TankGroupBuratino.center();
+        TankGroupBuratino.padBottom(25);
 
         TankGroupHelios.addActor(new Image(HeliosBadgeDrawable));
-        TankGroupHelios.space(10);
+        TankGroupHelios.space(35);
         TankGroupHelios.addActor(new Image(TankHeliosDrawable));
         TankGroupHelios.center();
+        TankGroupHelios.padTop(10);
 
         TankGroups = new ArrayList<VerticalGroup>();
         TankGroups.add(TankGroupCoalition);
@@ -210,7 +212,7 @@ public class TankSelectorPlayer1 implements Screen{
                     }
                     //set screen to game
                     Game game = new Game(player1,player2);
-                    parent.getMainPage().getBgMusic().stop(parent.getMainPage().getId());
+//                    parent.getMainPage().getBgMusic().stop(parent.getMainPage().getId());
                     parent.changeScreen("INGAME",game);
 
             }

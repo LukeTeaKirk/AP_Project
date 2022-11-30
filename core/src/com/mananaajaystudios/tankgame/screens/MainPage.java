@@ -44,9 +44,9 @@ public class MainPage implements Screen{
     }
     @Override
     public void show() {
-        BgMusic = Gdx.audio.newSound(Gdx.files.internal("Assets/TankStarsBGM.mp3"));
-        id = BgMusic.play();
-        BgMusic.setLooping(id,true);
+//        BgMusic = Gdx.audio.newSound(Gdx.files.internal("Assets/TankStarsBGM.mp3"));
+//        id = BgMusic.play();
+//        BgMusic.setLooping(id,true);
 
         atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
@@ -133,7 +133,7 @@ public class MainPage implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
-                sound.play(1F);
+//                sound.play(1F);
                 Gdx.app.exit();
             }
         });
@@ -141,7 +141,7 @@ public class MainPage implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
-                sound.play(1F);
+//                sound.play(1F);
                 parent.changeScreen("GAMEMODE");
             }
         });
@@ -150,7 +150,7 @@ public class MainPage implements Screen{
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("test");
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
-                sound.play(1F);
+//                sound.play(1F);
                 parent.changeScreen("LOAD");
             }
         });
@@ -165,7 +165,7 @@ public class MainPage implements Screen{
         stage.draw();
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
-        stage.getBatch().draw(logoSprite, 200, 475, 325, 200);
+        stage.getBatch().draw(logoSprite, 200, 475, 350, 200);
         stage.getBatch().end();
     }
 
