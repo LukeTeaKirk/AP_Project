@@ -46,7 +46,12 @@ public class TankBurantino extends Tank{
     public void setBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(-500, 0);
+        if(PlayerNumber == 1){
+            bodyDef.position.set(-500, 0);
+        }
+        else{
+            bodyDef.position.set(500, 0);
+        }
         FixtureDef fixturedef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setPosition(new Vector2(0,0));
