@@ -74,6 +74,8 @@ public class Tank extends Actor {
             healthBar2.draw(batch);
         }
     }
+    public void updateBodyPosition() {
+    }
 
     @Override
     public void act(float delta) {
