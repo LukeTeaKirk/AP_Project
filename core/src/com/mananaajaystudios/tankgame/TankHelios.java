@@ -54,9 +54,11 @@ public class TankHelios extends Tank{
         }
         FixtureDef fixturedef = new FixtureDef();
         CircleShape shape = new CircleShape();
+        PolygonShape shape2 = new PolygonShape();
+        shape2.setAsBox(40f,12f);
         shape.setPosition(new Vector2(0,0));
         shape.setRadius(3f);
-        fixturedef.shape = shape;
+        fixturedef.shape = shape2;
         fixturedef.density = 1.0f;
         fixturedef.friction = 0.3f;
         this.body = world.createBody(bodyDef);
@@ -67,7 +69,10 @@ public class TankHelios extends Tank{
     }
     @Override
     public void updateBodyPosition() {
-        this.tankSprite.setPosition(this.body.getPosition().x + 570, this.body.getPosition().y + 320);
+        this.tankSprite.setPosition(this.body.getPosition().x + 570, this.body.getPosition().y + 310);
+        tankSprite.setOriginCenter();
+        tankSprite.setRotation(this.body.getAngle()*70);
+        System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
         //this.body = world.createBody(bodyDef);
     }
 }
