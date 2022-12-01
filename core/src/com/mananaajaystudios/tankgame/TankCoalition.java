@@ -25,6 +25,7 @@ public class TankCoalition extends Tank {
             tankSprite.setPosition(850, 250);
             tankSprite.flip(true, false);
         }
+        setTankSprite(tankSprite);
     }
     @Override
     public void act(float delta) {
@@ -40,11 +41,14 @@ public class TankCoalition extends Tank {
         super.act(delta);
     }
 
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         tankSprite.draw(batch);
     }
+
+
 
     @Override
     public void setBody(World world) {
