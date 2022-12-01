@@ -17,23 +17,23 @@ public class TankCoalition extends Tank {
         super(PlayerNumber);
         super.tankRegion = Atlas.findRegion("Coalition");
         tankSprite = new Sprite(tankRegion);
-        tankSprite.setSize(150, 150);
+        tankSprite.setSize(100, 100);
         if(PlayerNumber == 1){
-            tankSprite.setPosition(50, 300);
+            tankSprite.setPosition(120, 250);
         }
         else if(PlayerNumber == 2){
-            tankSprite.setPosition(850, 300);
+            tankSprite.setPosition(850, 250);
             tankSprite.flip(true, false);
         }
     }
     @Override
     public void act(float delta) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A) && PlayerNumber == 1) {
-            body.applyLinearImpulse(new Vector2(-100f, 0), body.getWorldCenter(), false);
+        if(Gdx.input.isKeyPressed(Input.Keys.A) && isEnabled == 1) {
+            body.applyLinearImpulse(new Vector2(-100f, 0), body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.D) && PlayerNumber == 1) {
-            body.applyLinearImpulse(new Vector2(100f, 0), body.getWorldCenter(), false);
+        if(Gdx.input.isKeyPressed(Input.Keys.D) && isEnabled == 1) {
+            body.applyLinearImpulse(new Vector2(100f, 0), body.getWorldCenter(), true);
 
         }
         this.body.setUserData(tankSprite);
@@ -50,6 +50,8 @@ public class TankCoalition extends Tank {
     public void setBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
+//        bodyDef.angularDamping = 1f;
+//        bodyDef.linearDamping = 1f;
         if(PlayerNumber ==1){
             bodyDef.position.set(-500, 0);
         }
@@ -59,12 +61,12 @@ public class TankCoalition extends Tank {
         FixtureDef fixturedef = new FixtureDef();
         CircleShape shape = new CircleShape();
         PolygonShape shape2 = new PolygonShape();
-        shape2.setAsBox(40f,12f);
+        shape2.setAsBox(35f,24f);
         shape.setPosition(new Vector2(0,0));
         shape.setRadius(3f);
         fixturedef.shape = shape2;
-        fixturedef.density = 1.0f;
-        fixturedef.friction = 0.3f;
+        fixturedef.density = 0.2f;
+        fixturedef.friction = 0.1f;
         this.body = world.createBody(bodyDef);
         this.body.setUserData(tankSprite);
         System.out.println(body.getPosition());
@@ -73,10 +75,10 @@ public class TankCoalition extends Tank {
     }
     @Override
     public void updateBodyPosition() {
-        this.tankSprite.setPosition(this.body.getPosition().x + 570, this.body.getPosition().y + 310);
+        this.tankSprite.setPosition(this.body.getPosition().x + 590, this.body.getPosition().y + 310);
         tankSprite.setOriginCenter();
         tankSprite.setRotation(this.body.getAngle()*70);
-        System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
+//        System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
         //this.body = world.createBody(bodyDef);
     }
 }
