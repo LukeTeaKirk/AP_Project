@@ -12,10 +12,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
+import java.io.Serializable;
+
 //health bar
 //fuel bar
 //switch weapon
-public class Tank extends Actor {
+public class Tank extends Actor implements Serializable {
     protected Sprite tank, fireButton, fuelBar, weaponSelect, healthBar;
     protected int health, fuel, weapon;
     protected TextureAtlas Atlas;

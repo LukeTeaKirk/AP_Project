@@ -2,9 +2,10 @@ package com.mananaajaystudios.tankgame;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 
-public class Weapon {
+public class Weapon implements Serializable {
     public int damage;
     public float damageDecayFactor;
     public int areaOfEffect;

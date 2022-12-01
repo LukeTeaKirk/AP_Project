@@ -1,6 +1,8 @@
 package com.mananaajaystudios.tankgame;
 
-public class player {
+import java.io.Serializable;
+
+public class player implements Serializable {
     private final Tank tank;
     private boolean isCurrentTurn;
     public player(Tank tank) {
