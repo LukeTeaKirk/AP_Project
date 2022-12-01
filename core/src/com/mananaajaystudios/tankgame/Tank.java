@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
@@ -24,6 +22,7 @@ public class Tank extends Actor implements Serializable {
     MoveToAction action = new MoveToAction();
     protected Body body;
     Integer PlayerNumber;
+    protected Sprite tankSprite;
 
     protected int isEnabled;
     protected TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
@@ -57,6 +56,34 @@ public class Tank extends Actor implements Serializable {
             healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
             isEnabled = 0;
         }
+    }
+    public void Fire(World world,Sprite tankSprite){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(tankSprite.getX()-600, tankSprite.getY()-300);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(10);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1f;
+        fixtureDef.friction = 0.4f;
+        fixtureDef.restitution = 0.6f;
+        Body body = world.createBody(bodyDef);
+        if(PlayerNumber == 1){
+            body.setLinearVelocity(100,0);
+        }
+        else if(PlayerNumber == 2){
+            body.setLinearVelocity(-100, 0);
+        }
+        body.createFixture(fixtureDef);
+
+    }
+
+    public void setTankSprite(Sprite tankSprite) {
+        this.tankSprite = tankSprite;
+    }
+    public Sprite getTankSprite() {
+        return tankSprite;
     }
     public void enableTank(){
         isEnabled = 1;
