@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f5ae3d0-f86e-4936-b469-2ce1b0b7dcca" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Background1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/GameWorld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/Tank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/TankCoalition.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/TankCoalition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/player.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/screens/MyTankGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/screens/MyTankGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/GamesDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mananaajaystudios/tankgame/GamesDatabase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,13 +41,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
-  }
-}</component>
   <component name="RunManager">
     <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.mananaajaystudios.tankgame.DesktopLauncher" />
@@ -96,5 +83,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

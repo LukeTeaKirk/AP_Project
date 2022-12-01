@@ -1,6 +1,8 @@
 package com.mananaajaystudios.tankgame;
 
-public class Game {
+import java.io.Serializable;
+
+public class Game implements Serializable {
 
     private final player player1, player2;
 
