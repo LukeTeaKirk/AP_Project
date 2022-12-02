@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -270,6 +271,24 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		//get the coordinates of the touch and print them
+		Vector3 touchPos = new Vector3();
+		touchPos.set(screenX, screenY, 0);
+		camera.unproject(touchPos);
+		System.out.println("x: " + (touchPos.x+640) + " y: " + (touchPos.y+360));
+		System.out.println("Tank1 x: " + (tank1.getTankSprite().getX()+50) + " y: " + (tank1.getTankSprite().getY()+50));
+		//calculate the angle between the tank and the touch
+		float forceX = (touchPos.x +640) - (tank1.getTankSprite().getX()+50);
+		//calculate the force to apply to the tank
+		float forceY = (touchPos.y +360) - (tank1.getTankSprite().getY()+50);
+		System.out.println("forceX: " + forceX + " forceY: " + forceY);
+
+		//calculate the angle between the tank and the touch in degrees
+		float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
+		System.out.println("angle: " + angle);
+
+
+		tank1.setAngleAndPower(forceX, forceY);
 		return false;
 	}
 

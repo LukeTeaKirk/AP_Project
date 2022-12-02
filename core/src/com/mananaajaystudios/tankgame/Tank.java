@@ -24,6 +24,7 @@ public class Tank extends Actor implements Serializable {
     Integer PlayerNumber;
     protected Sprite tankSprite;
 
+    protected float ForceX, ForceY;
     protected int isEnabled;
     protected TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
 
@@ -57,6 +58,10 @@ public class Tank extends Actor implements Serializable {
             isEnabled = 0;
         }
     }
+    public void setAngleAndPower(float forceX, float forceY){
+        this.ForceX = forceX;
+        this.ForceY = forceY;
+    }
     public void Fire(World world,Sprite tankSprite){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -65,15 +70,16 @@ public class Tank extends Actor implements Serializable {
         shape.setRadius(10);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 1f;
+        fixtureDef.density = 0.1f;
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         Body body = world.createBody(bodyDef);
         if(PlayerNumber == 1){
-            body.setLinearVelocity(100,0);
+            //set the angle and power
+            body.applyLinearImpulse(ForceX, ForceY, body.getPosition().x, body.getPosition().y, true);
         }
         else if(PlayerNumber == 2){
-            body.setLinearVelocity(-100, 0);
+            body.setLinearVelocity(-1000, 0);
         }
         body.createFixture(fixtureDef);
 
