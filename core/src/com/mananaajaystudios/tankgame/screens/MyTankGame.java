@@ -276,24 +276,39 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		touchPos.set(screenX, screenY, 0);
 		camera.unproject(touchPos);
 		System.out.println("x: " + (touchPos.x+640) + " y: " + (touchPos.y+360));
-		System.out.println("Tank1 x: " + (tank1.getTankSprite().getX()+50) + " y: " + (tank1.getTankSprite().getY()+50));
-		//calculate the angle between the tank and the touch
-		float forceX = (touchPos.x +640) - (tank1.getTankSprite().getX()+50);
-		//calculate the force to apply to the tank
-		float forceY = (touchPos.y +360) - (tank1.getTankSprite().getY()+50);
-		System.out.println("forceX: " + forceX + " forceY: " + forceY);
+		if(player1.isCurrentTurn()){
+			System.out.println("Tank1 x: " + (tank1.getTankSprite().getX()+50) + " y: " + (tank1.getTankSprite().getY()+50));
 
-		//calculate the angle between the tank and the touch in degrees
-		float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
-		System.out.println("angle: " + angle);
+			float forceX = (touchPos.x +640) - (tank1.getTankSprite().getX()+50);
 
+			float forceY = (touchPos.y +360) - (tank1.getTankSprite().getY()+50);
+			System.out.println("forceX: " + forceX + " forceY: " + forceY);
 
-		tank1.setAngleAndPower(forceX, forceY);
+			float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
+			System.out.println("angle: " + angle);
+
+			tank1.setAngleAndPower(forceX, forceY);
+		}
+		else{
+			System.out.println("Tank2 x: " + (tank2.getTankSprite().getX()+50) + " y: " + (tank2.getTankSprite().getY()+50));
+
+			float forceX = (touchPos.x +640) - (tank2.getTankSprite().getX()+50);
+
+			float forceY = (touchPos.y +360) - (tank2.getTankSprite().getY()+50);
+			System.out.println("forceX: " + forceX + " forceY: " + forceY);
+
+			float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
+			System.out.println("angle: " + angle);
+
+			tank2.setAngleAndPower(forceX, forceY);
+		}
+
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
 		return false;
 	}
 

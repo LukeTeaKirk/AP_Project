@@ -70,16 +70,17 @@ public class Tank extends Actor implements Serializable {
         shape.setRadius(10);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.1f;
+        fixtureDef.density = 1f;
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         Body body = world.createBody(bodyDef);
         if(PlayerNumber == 1){
-            //set the angle and power
+
             body.applyLinearImpulse(ForceX, ForceY, body.getPosition().x, body.getPosition().y, true);
         }
         else if(PlayerNumber == 2){
-            body.setLinearVelocity(-1000, 0);
+
+            body.applyLinearImpulse(ForceX, ForceY, body.getPosition().x, body.getPosition().y, true);
         }
         body.createFixture(fixtureDef);
 
