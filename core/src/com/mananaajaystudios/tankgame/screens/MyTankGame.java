@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,10 +16,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.*;
 import com.mananaajaystudios.tankgame.Game;
+
+import java.util.Iterator;
+
 //pause menu button to populate screen and close it
 public class MyTankGame extends ApplicationAdapter implements Screen, InputProcessor {
 	private Stage stage;
@@ -59,8 +64,8 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 	@Override
 	public void show() {
 		world = new World(new Vector2(0, -9.81f), true);
+		this.world.setContactListener(new CollisionDetector(world));
 		debugRenderer = new Box2DDebugRenderer();
-
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
@@ -238,6 +243,16 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		stage.draw();
 		debugRenderer.render(world, camera.combined);
 		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
+		//loop through all the bodies and search for projectiles
+		Array<Body> bodies = new Array<Body>();
+		for(world.getBodies(bodies); bodies.size > 0; bodies.pop()){
+			Body body = bodies.peek();
+			if(body.getUserData() != null && body.getUserData() instanceof Projectile){
+				if(((Projectile)body.getUserData()).isHit()){
+					world.destroyBody(body);
+				}
+			}
+		}
 		tank1.updateBodyPosition();
 		tank2.updateBodyPosition();
 	}
@@ -270,11 +285,44 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		//get the coordinates of the touch and print them
+		Vector3 touchPos = new Vector3();
+		touchPos.set(screenX, screenY, 0);
+		camera.unproject(touchPos);
+		System.out.println("x: " + (touchPos.x+640) + " y: " + (touchPos.y+360));
+		if(player1.isCurrentTurn()){
+			System.out.println("Tank1 x: " + (tank1.getTankSprite().getX()+50) + " y: " + (tank1.getTankSprite().getY()+50));
+
+			float forceX = (touchPos.x +640) - (tank1.getTankSprite().getX()+50);
+
+			float forceY = (touchPos.y +360) - (tank1.getTankSprite().getY()+50);
+			System.out.println("forceX: " + forceX + " forceY: " + forceY);
+
+			float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
+			System.out.println("angle: " + angle);
+
+			tank1.setAngleAndPower(forceX, forceY);
+		}
+		else{
+			System.out.println("Tank2 x: " + (tank2.getTankSprite().getX()+50) + " y: " + (tank2.getTankSprite().getY()+50));
+
+			float forceX = (touchPos.x +640) - (tank2.getTankSprite().getX()+50);
+
+			float forceY = (touchPos.y +360) - (tank2.getTankSprite().getY()+50);
+			System.out.println("forceX: " + forceX + " forceY: " + forceY);
+
+			float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
+			System.out.println("angle: " + angle);
+
+			tank2.setAngleAndPower(forceX, forceY);
+		}
+
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
 		return false;
 	}
 

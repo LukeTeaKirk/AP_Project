@@ -37,7 +37,7 @@ public class TankCoalition extends Tank {
             body.applyLinearImpulse(new Vector2(100f, 0), body.getWorldCenter(), true);
 
         }
-        this.body.setUserData(tankSprite);
+//        this.body.setUserData(tankSprite);
         super.act(delta);
     }
 
@@ -69,10 +69,10 @@ public class TankCoalition extends Tank {
         shape.setPosition(new Vector2(0,0));
         shape.setRadius(3f);
         fixturedef.shape = shape2;
-        fixturedef.density = 0.2f;
+        fixturedef.density = 0.3f;
         fixturedef.friction = 0.1f;
         this.body = world.createBody(bodyDef);
-        this.body.setUserData(tankSprite);
+        this.body.setUserData(this);
         System.out.println(body.getPosition());
         Fixture fix = body.createFixture(fixturedef);
         System.out.println("2");
