@@ -16,17 +16,16 @@ import java.io.Serializable;
 //fuel bar
 //switch weapon
 public class Tank extends Actor implements Serializable {
-    protected Sprite tank, fireButton, fuelBar, weaponSelect, healthBar;
+    protected transient Sprite tank, fireButton, fuelBar, weaponSelect, healthBar;
     protected int health, fuel, weapon;
-    protected TextureAtlas Atlas;
-    MoveToAction action = new MoveToAction();
-    protected Body body;
+    protected transient TextureAtlas Atlas;
+    protected transient Body body;
     Integer PlayerNumber;
-    protected Sprite tankSprite;
+    protected transient Sprite tankSprite;
 
     protected float ForceX, ForceY;
     protected int isEnabled;
-    protected TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
+    protected transient TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
 
     public Tank(Integer PlayerNumber) {
         this.PlayerNumber = PlayerNumber;
@@ -111,7 +110,7 @@ public class Tank extends Actor implements Serializable {
         this.body = world.createBody(bodyDef);
     }
 
-        @Override
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         if(PlayerNumber == 1){
             fuelBar.draw(batch);
@@ -129,5 +128,8 @@ public class Tank extends Actor implements Serializable {
     public void act(float delta) {
 
         super.act(delta);
+    }
+    public void onreload(){
+
     }
 }

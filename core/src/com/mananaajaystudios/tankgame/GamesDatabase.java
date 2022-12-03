@@ -8,15 +8,16 @@ public class GamesDatabase {
     static ArrayList<Game> games = new ArrayList<Game>();
 
     static public ArrayList<Game> getGames(){
+        if(games.size() == 0){
 
-        if(games == null){
             boolean exists = true;
             ArrayList<String> gameIds = new ArrayList<>();
             String gameId = "a" + 1;
             int n = 1;
             while(exists) {
-                File file = new File("myGame" + gameId + ".txt");
+                File file = new File("games/myGame" + gameId + ".txt");
                 exists = file.exists();
+                System.out.println(exists);
                 if(exists){
                     gameIds.add(gameId);
                 }
@@ -27,9 +28,25 @@ public class GamesDatabase {
         }
         return games;
     }
+    static public int getGameID(){
+        String gameId = "a" + 1;
+        int n = 1;
+        boolean exists = true;
+        while(exists) {
+            File file = new File("games/myGame" + gameId + ".txt");
+            exists = file.exists();
+            if(exists){
+                n = n + 1;
+            }
+            gameId = "a" + n;
+        }
+        return n;
+
+    }
     static public void saveGame(Game game){
+        game.gameID = "a" + getGameID();
         try {
-            FileOutputStream f = new FileOutputStream(new File("myGame" + game.gameID + ".txt"));
+            FileOutputStream f = new FileOutputStream(new File("games/myGame" + game.gameID + ".txt"));
             ObjectOutputStream o = new ObjectOutputStream(f);
             o.writeObject(game);
             o.close();
@@ -37,13 +54,14 @@ public class GamesDatabase {
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
+            System.out.println(e);
             System.out.println("Error initializing stream");
         }
     }
 
     static public Game loadGame(String gameID){
         try {
-            FileInputStream fi = new FileInputStream(new File("myGame" + gameID + ".txt"));
+            FileInputStream fi = new FileInputStream(new File("games/myGame" + gameID + ".txt"));
             ObjectInputStream oi = new ObjectInputStream(fi);
             Game game = (Game) oi.readObject();
             System.out.println(game.toString());
@@ -61,5 +79,4 @@ public class GamesDatabase {
         return null;
     }
 }
-
 

@@ -45,7 +45,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 	private TextureRegionDrawable pauseButtonDrawable, PauseMenuDrawable;
 	ImageButton pauseButtonImage;
 	private player player1, player2;
-
+	private Game game;
 	private TopDog parent;
 
 
@@ -55,7 +55,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		player1.setCurrentTurn(true);
 		this.player2 = game.getPlayer2();
 		player2.setCurrentTurn(false);
-
+		this.game = game;
 		/// create stage and set it as input processor
 		stage = new Stage(new ScreenViewport());
 	}
@@ -177,6 +177,12 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 					@Override
 					public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
 						super.clicked(event, x, y);
+						player1.setTank(tank1);
+						player2.setTank(tank2);
+						game.setPlayers(player1, player2);
+						GamesDatabase.saveGame(game);
+						parent.changeScreen("MAIN");
+
 						//save game actions
 					}
 				});

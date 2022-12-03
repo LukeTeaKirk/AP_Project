@@ -36,7 +36,6 @@ public class LoadGamePage implements Screen{
 
     @Override
     public void show() {
-        //parent.getMainPage().getBgMusic().stop(parent.getMainPage().getId());
         atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
@@ -97,19 +96,20 @@ public class LoadGamePage implements Screen{
 
         TextButton returnButton = new TextButton("RETURN", textButtonStyle);
         returnButton.setSize(300, 100);
-
         ChooseBackground = atlas.findRegion("PopUp");
         ChooseBackgroundDrawable = new TextureRegionDrawable(ChooseBackground);
         Texture ChoooseTankBackground = new Texture(Gdx.files.internal("ChooseTankBackground.png"));
         TextureRegionDrawable ChoooseTankBackgroundDrawable = new TextureRegionDrawable(ChoooseTankBackground);
-        ArrayList<Game> games = GamesDatabase.getGames();
-        games.forEach(s-> table2.add(getButton(s.gameID, s)));
         table2.setBackground(ChooseBackgroundDrawable);
+        table2.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
+        ArrayList<Game> games = GamesDatabase.getGames();
+        System.out.println(games);
+        table2.setBackground(ChooseBackgroundDrawable);
+        games.forEach(s-> getButton(s.gameID,s,table2));
         table2.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table2.row();
         table1.setBackground(ChoooseTankBackgroundDrawable);
         table1.add(TankGroupCoalition).size(200,200).pad(10).padLeft(20).padRight(10).align(Align.center);
-
         returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -120,7 +120,7 @@ public class LoadGamePage implements Screen{
         });
 
     }
-    public TextButton getButton(String gameID, Game game){
+    public void getButton(String gameID, Game game, Table table){
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = TextSkin.getDrawable("button_up");
         textButtonStyle.down = TextSkin.getDrawable("button_down");
@@ -137,7 +137,8 @@ public class LoadGamePage implements Screen{
                 parent.changeScreen("INGAME", game);
             }
         });
-        return returnButton;
+        table.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
+        table.row();
     }
     @Override
     public void render(float delta) {

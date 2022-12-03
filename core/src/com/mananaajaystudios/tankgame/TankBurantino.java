@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class TankBurantino extends Tank{
-    private Sprite tankSprite;
+    private transient Sprite tankSprite;
     public TankBurantino(Integer PlayerNumber) {
         super(PlayerNumber);
         super.tankRegion = Atlas.findRegion("Buratino");
@@ -77,4 +77,3 @@ public class TankBurantino extends Tank{
     }
 
 }
-
