@@ -17,6 +17,11 @@ public class TankCoalition extends Tank {
         super(PlayerNumber);
         super.tankRegion = Atlas.findRegion("Coalition");
         tankSprite = new Sprite(tankRegion);
+        weapons.add(new MachineGun());
+        weapons.add(new Rocket());
+        weapons.add(new SatelliteStrike());
+        currentWeapon = weapons.get(0);
+
         tankSprite.setSize(100, 100);
         if(PlayerNumber == 1){
             tankSprite.setPosition(120, 250);

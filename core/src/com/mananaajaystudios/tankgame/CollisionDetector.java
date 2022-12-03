@@ -13,21 +13,29 @@ public class CollisionDetector implements ContactListener {
         if (contact.getFixtureA().getBody().getUserData() instanceof Projectile && contact.getFixtureB().getBody().getUserData() instanceof Tank) {
             Projectile projectile = (Projectile) contact.getFixtureA().getBody().getUserData();
             Tank tank = (Tank) contact.getFixtureB().getBody().getUserData();
-            System.out.println("Tank " + tank.getPlayerNumber() + " hit by projectile");
-            //remove projectile
-            projectile.setHit(true);
+            if(projectile.getCanCauseDamage()){
+                System.out.println("Tank " + tank.getPlayerNumber() + " hit by projectile");
+                projectile.setHit(true);
+                tank.damageTaken(20);
+            }else{
+                projectile.setCanCauseDamage(true);
+            }
+
 //            tank.setHealth(tank.getHealth() - projectile.getDamage());
-//            projectile.setDamage(0);
         }
         if (contact.getFixtureB().getBody().getUserData() instanceof Projectile && contact.getFixtureA().getBody().getUserData() instanceof Tank) {
             Projectile projectile = (Projectile) contact.getFixtureB().getBody().getUserData();
             Tank tank = (Tank) contact.getFixtureA().getBody().getUserData();
-
-            System.out.println("Tank " + tank.getPlayerNumber() + " hit by projectile");
-            //remove projectile
-            projectile.setHit(true);
+            if(projectile.getCanCauseDamage()){
+                System.out.println("Tank " + tank.getPlayerNumber() + " hit by projectile");
+                projectile.setHit(true);
+                tank.damageTaken(20);
+            }else{
+                projectile.setCanCauseDamage(true);
+            }
+//            projectile.setHit(true);
+//            tank.damageTaken(20);
 //            tank.setHealth(tank.getHealth() - projectile.getDamage());
-//            projectile.setDamage(0);
         }
 
     }

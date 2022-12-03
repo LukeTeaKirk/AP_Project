@@ -6,22 +6,25 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Projectile extends Actor {
 
     private BodyDef bodyDef;
-    private CircleShape circleShape;
+
+    private boolean CanCauseDamage;
+
     private FixtureDef fixtureDef;
     private Body body;
-    private Tank ownerTank;
+    World world;
+
 
     private boolean Hit = false;
 
-    public Projectile(BodyDef bodyDef, CircleShape circleShape, FixtureDef fixtureDef, World world, float x, float y, Tank ownerTank) {
+    public Projectile(BodyDef bodyDef, FixtureDef fixtureDef, World world, int radius) {
         this.bodyDef = bodyDef;
-        this.circleShape = circleShape;
         this.fixtureDef = fixtureDef;
-        this.body = world.createBody(bodyDef);
-        this.body.setUserData(this);
-        body.applyLinearImpulse(x, y, body.getPosition().x, body.getPosition().y, true);
-        this.body.createFixture(fixtureDef);
-        this.ownerTank = ownerTank;
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius);
+        fixtureDef.shape = shape;
+        this.world = world;
+        CanCauseDamage = false;
+
     }
     public void setHit(boolean hit) {
         Hit = hit;
@@ -30,8 +33,17 @@ public class Projectile extends Actor {
         return Hit;
     }
 
-    public Tank getOwnerTank() {
-        return ownerTank;
+    public void setCanCauseDamage(boolean canCauseDamage) {
+        CanCauseDamage = canCauseDamage;
+    }
+    public boolean getCanCauseDamage(){
+        return CanCauseDamage;
+    }
+    public void Shoot(float x, float y){
+        this.body = world.createBody(bodyDef);
+        this.body.setUserData(this);
+        body.applyLinearImpulse(x, y, body.getPosition().x, body.getPosition().y, true);
+        this.body.createFixture(fixtureDef);
     }
 
     public Body getBody() {

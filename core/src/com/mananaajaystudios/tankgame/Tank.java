@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 //health bar
 //fuel bar
@@ -23,7 +24,9 @@ public class Tank extends Actor implements Serializable {
     protected Body body;
     Integer PlayerNumber;
     protected Sprite tankSprite;
+    protected ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 
+    protected Weapon currentWeapon;
     protected float ForceX, ForceY;
     protected int isEnabled;
     protected TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
@@ -38,27 +41,44 @@ public class Tank extends Actor implements Serializable {
         TextureRegion healthRegion = new TextureRegion(healthBarTexture);
         healthBar = new Sprite(healthRegion);
 
-
+        this.health = 100;
 
         if(PlayerNumber == 1){
             fuelBar = new Sprite(fuelRegion);
             fuelBar.setSize(240, 70);
             fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
-            weaponSelect = new Sprite(weaponRegion);
-            weaponSelect.setSize(75, 75);
-            weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/20)*6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) *24 - 35);
+//            weaponSelect = new Sprite(weaponRegion);
+//            weaponSelect.setSize(75, 75);
+//            weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/20)*6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) *24 - 35);
             healthBar.setSize(400, 50);
-            healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            healthBar.setPosition(175, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
             isEnabled = 1;
 
         }
         else if(PlayerNumber == 2){
             healthBar.setSize(400, 50);
-            healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            healthBar.setPosition(710, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
             isEnabled = 0;
         }
     }
 
+    public ArrayList<Weapon> getWeapons() {
+        return weapons;
+    }
+
+    public void switchWeapon(String weaponName) {
+        for (Weapon weapon : weapons) {
+            if (weapon.getName().equals(weaponName)) {
+                currentWeapon = weapon;
+            }
+        }
+    }
+
+    public void damageTaken(int damage){
+        this.health -= damage;
+        //change health bar width
+        healthBar.setSize(healthBar.getWidth() - (damage*4), healthBar.getHeight());
+    }
     public int getPlayerNumber(){
         return PlayerNumber;
     }
@@ -66,29 +86,17 @@ public class Tank extends Actor implements Serializable {
         this.ForceX = forceX;
         this.ForceY = forceY;
     }
-    public void Fire(World world,Sprite tankSprite){
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        //set position of projectile above tank
-        bodyDef.position.set(tankSprite.getX() -640 +50, tankSprite.getY() -360 +90);
-//        bodyDef.position.set(tankSprite.getX()-600, tankSprite.getY()-300);
-        CircleShape shape = new CircleShape();
-        shape.setRadius(10);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1f;
-        fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f;
-//        Body body = world.createBody(bodyDef);
+    public void FireWeapon(World world,Sprite tankSprite){
+
         if(PlayerNumber == 1){
-            Projectile projectile = new Projectile(bodyDef, shape, fixtureDef, world, ForceX, ForceY, this);
-//            body.applyLinearImpulse(ForceX, ForceY, body.getPosition().x, body.getPosition().y, true);
+            currentWeapon.Fire(world, ForceX, ForceY,tankSprite);
+
         }
         else if(PlayerNumber == 2){
-            Projectile projectile = new Projectile(bodyDef, shape, fixtureDef, world, ForceX, ForceY, this);
-//            body.applyLinearImpulse(ForceX, ForceY, body.getPosition().x, body.getPosition().y, true);
+            currentWeapon.Fire(world, ForceX, ForceY,tankSprite);
+
         }
-//        body.createFixture(fixtureDef);
+
 
     }
 
@@ -115,7 +123,7 @@ public class Tank extends Actor implements Serializable {
     public void draw(Batch batch, float parentAlpha) {
         if(PlayerNumber == 1){
             fuelBar.draw(batch);
-            weaponSelect.draw(batch);
+//            weaponSelect.draw(batch);
             healthBar.draw(batch);
         }
         else if(PlayerNumber == 2){
