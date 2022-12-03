@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mananaajaystudios.tankgame.Game;
+import com.mananaajaystudios.tankgame.GamesDatabase;
 import com.mananaajaystudios.tankgame.TopDog;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class LoadGamePage implements Screen{
 
     @Override
     public void show() {
-        parent.getMainPage().getBgMusic().stop(parent.getMainPage().getId());
+        //parent.getMainPage().getBgMusic().stop(parent.getMainPage().getId());
         atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
@@ -93,21 +95,22 @@ public class LoadGamePage implements Screen{
 
 
 
-        TextButton newGame = new TextButton("RETURN", textButtonStyle);
-        newGame.setSize(300, 100);
+        TextButton returnButton = new TextButton("RETURN", textButtonStyle);
+        returnButton.setSize(300, 100);
 
         ChooseBackground = atlas.findRegion("PopUp");
         ChooseBackgroundDrawable = new TextureRegionDrawable(ChooseBackground);
         Texture ChoooseTankBackground = new Texture(Gdx.files.internal("ChooseTankBackground.png"));
         TextureRegionDrawable ChoooseTankBackgroundDrawable = new TextureRegionDrawable(ChoooseTankBackground);
-
+        ArrayList<Game> games = GamesDatabase.getGames();
+        games.forEach(s-> table2.add(getButton(s.gameID, s)));
         table2.setBackground(ChooseBackgroundDrawable);
-        table2.add(newGame).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
+        table2.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table2.row();
         table1.setBackground(ChoooseTankBackgroundDrawable);
         table1.add(TankGroupCoalition).size(200,200).pad(10).padLeft(20).padRight(10).align(Align.center);
 
-        newGame.addListener(new ChangeListener() {
+        returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
@@ -116,6 +119,25 @@ public class LoadGamePage implements Screen{
             }
         });
 
+    }
+    public TextButton getButton(String gameID, Game game){
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.up = TextSkin.getDrawable("button_up");
+        textButtonStyle.down = TextSkin.getDrawable("button_down");
+        textButtonStyle.pressedOffsetX = 1;
+        textButtonStyle.pressedOffsetY = -1;
+        textButtonStyle.font = black;
+        TextButton returnButton = new TextButton(gameID, textButtonStyle);
+        returnButton.setSize(300, 100);
+        returnButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
+                sound.play(1F);
+                parent.changeScreen("INGAME", game);
+            }
+        });
+        return returnButton;
     }
     @Override
     public void render(float delta) {
