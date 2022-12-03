@@ -3,7 +3,7 @@ package com.mananaajaystudios.tankgame;
 import java.io.Serializable;
 
 public class Game implements Serializable {
-    public int gameID;
+    public String gameID;
     private final player player1, player2;
 
     public Game(player player1, player player2) {

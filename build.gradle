@@ -14,9 +14,9 @@ buildscript {
     }
 }
 
+
 allprojects {
     apply plugin: "eclipse"
-
     version = '1.0'
     ext {
         appName = "AP_Project"
@@ -37,6 +37,10 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
     }
+    apply plugin: 'java'
+    sourceCompatibility = 16
+    targetCompatibility = 16
+
 }
 
 project(":desktop") {
