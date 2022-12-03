@@ -134,7 +134,13 @@ public class LoadGamePage implements Screen{
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
                 sound.play(1F);
-                parent.changeScreen("INGAME", game);
+                //try catch block which prints all exceptions
+                try{
+                    game.loadedGame = true;
+                    parent.changeScreen("INGAME", game);
+                }catch(Exception e){
+                    throw(e);
+                }
             }
         });
         table.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);

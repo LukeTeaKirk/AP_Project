@@ -51,11 +51,17 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 	public MyTankGame(TopDog temp, Game game) {
 		parent = temp;
+		if(game.loadedGame == true){
+			//call readobject method in player tank objects in game class
+			game.getPlayer1().getTank().readObject();
+			game.getPlayer2().getTank().readObject();
+		}
 		this.player1 = game.getPlayer1();
 		player1.setCurrentTurn(true);
 		this.player2 = game.getPlayer2();
 		player2.setCurrentTurn(false);
 		this.game = game;
+		System.out.println("loaded");
 		/// create stage and set it as input processor
 		stage = new Stage(new ScreenViewport());
 	}
