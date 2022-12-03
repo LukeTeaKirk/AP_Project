@@ -16,16 +16,16 @@ import java.io.Serializable;
 //fuel bar
 //switch weapon
 public class Tank extends Actor implements Serializable {
-    protected Sprite tank, fireButton, fuelBar, weaponSelect, healthBar;
+    protected transient Sprite tank, fireButton, fuelBar, weaponSelect, healthBar;
     protected int health, fuel, weapon;
-    protected TextureAtlas Atlas;
-    MoveToAction action = new MoveToAction();
-    protected Body body;
+    protected transient TextureAtlas Atlas;
+    protected transient Body body;
     Integer PlayerNumber;
-    protected Sprite tankSprite;
+    protected transient Sprite tankSprite;
 
+    protected float ForceX, ForceY;
     protected int isEnabled;
-    protected TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
+    protected transient TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
 
     public Tank(Integer PlayerNumber) {
         this.PlayerNumber = PlayerNumber;
@@ -57,10 +57,20 @@ public class Tank extends Actor implements Serializable {
             isEnabled = 0;
         }
     }
+
+    public int getPlayerNumber(){
+        return PlayerNumber;
+    }
+    public void setAngleAndPower(float forceX, float forceY){
+        this.ForceX = forceX;
+        this.ForceY = forceY;
+    }
     public void Fire(World world,Sprite tankSprite){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(tankSprite.getX()-600, tankSprite.getY()-300);
+        //set position of projectile above tank
+        bodyDef.position.set(tankSprite.getX() -640 +50, tankSprite.getY() -360 +90);
+//        bodyDef.position.set(tankSprite.getX()-600, tankSprite.getY()-300);
         CircleShape shape = new CircleShape();
         shape.setRadius(10);
         FixtureDef fixtureDef = new FixtureDef();
@@ -68,14 +78,16 @@ public class Tank extends Actor implements Serializable {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
-        Body body = world.createBody(bodyDef);
+//        Body body = world.createBody(bodyDef);
         if(PlayerNumber == 1){
-            body.setLinearVelocity(100,0);
+            Projectile projectile = new Projectile(bodyDef, shape, fixtureDef, world, ForceX, ForceY, this);
+//            body.applyLinearImpulse(ForceX, ForceY, body.getPosition().x, body.getPosition().y, true);
         }
         else if(PlayerNumber == 2){
-            body.setLinearVelocity(-100, 0);
+            Projectile projectile = new Projectile(bodyDef, shape, fixtureDef, world, ForceX, ForceY, this);
+//            body.applyLinearImpulse(ForceX, ForceY, body.getPosition().x, body.getPosition().y, true);
         }
-        body.createFixture(fixtureDef);
+//        body.createFixture(fixtureDef);
 
     }
 
@@ -98,7 +110,7 @@ public class Tank extends Actor implements Serializable {
         this.body = world.createBody(bodyDef);
     }
 
-        @Override
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         if(PlayerNumber == 1){
             fuelBar.draw(batch);
@@ -116,5 +128,8 @@ public class Tank extends Actor implements Serializable {
     public void act(float delta) {
 
         super.act(delta);
+    }
+    public void onreload(){
+
     }
 }
