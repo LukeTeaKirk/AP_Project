@@ -125,14 +125,14 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 				if (player1.isCurrentTurn()) {
 //					tank1.fire();
 					player1.setCurrentTurn(false);
-					player1.getTank().FireWeapon(world, player1.getTank().getTankSprite());;
+					player1.getTank().FireWeapon(world, player1.getTank().getTankSprite(), stage);;
 					player1.getTank().disableTank();
 					player2.setCurrentTurn(true);
 					player2.getTank().enableTank();
 				} else {
 //					tank2.fire();
 					player2.setCurrentTurn(false);
-					player2.getTank().FireWeapon(world, player2.getTank().getTankSprite());
+					player2.getTank().FireWeapon(world, player2.getTank().getTankSprite(), stage);
 					player2.getTank().disableTank();
 					player1.setCurrentTurn(true);
 					player1.getTank().enableTank();
@@ -303,7 +303,9 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		for(world.getBodies(bodies); bodies.size > 0; bodies.pop()){
 			Body body = bodies.peek();
 			if(body.getUserData() != null && body.getUserData() instanceof Projectile){
+				((Projectile) body.getUserData()).syncSprite();
 				if(((Projectile)body.getUserData()).isHit()){
+					((Projectile) body.getUserData()).remove();
 					world.destroyBody(body);
 				}
 			}
