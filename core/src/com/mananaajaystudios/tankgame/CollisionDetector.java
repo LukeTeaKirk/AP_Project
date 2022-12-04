@@ -16,7 +16,7 @@ public class CollisionDetector implements ContactListener {
             if(projectile.getCanCauseDamage()){
                 System.out.println("Tank " + tank.getPlayerNumber() + " hit by projectile");
                 projectile.setHit(true);
-                tank.damageTaken(20);
+                tank.damageTaken(projectile.getProjectileDamage());
             }else{
                 projectile.setCanCauseDamage(true);
             }
@@ -29,7 +29,7 @@ public class CollisionDetector implements ContactListener {
             if(projectile.getCanCauseDamage()){
                 System.out.println("Tank " + tank.getPlayerNumber() + " hit by projectile");
                 projectile.setHit(true);
-                tank.damageTaken(20);
+                tank.damageTaken(projectile.getProjectileDamage());
             }else{
                 projectile.setCanCauseDamage(true);
             }

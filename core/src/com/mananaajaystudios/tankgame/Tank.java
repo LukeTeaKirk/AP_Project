@@ -25,7 +25,7 @@ public class Tank extends Actor implements Serializable {
     Integer PlayerNumber;
     protected Sprite tankSprite;
     protected ArrayList<Weapon> weapons = new ArrayList<Weapon>();
-
+    protected boolean isDead;
     protected Weapon currentWeapon;
     protected float ForceX, ForceY;
     protected int isEnabled;
@@ -42,7 +42,7 @@ public class Tank extends Actor implements Serializable {
         healthBar = new Sprite(healthRegion);
 
         this.health = 100;
-
+        this.isDead = false;
         if(PlayerNumber == 1){
             fuelBar = new Sprite(fuelRegion);
             fuelBar.setSize(240, 70);
@@ -62,6 +62,9 @@ public class Tank extends Actor implements Serializable {
         }
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
     public ArrayList<Weapon> getWeapons() {
         return weapons;
     }
@@ -76,8 +79,10 @@ public class Tank extends Actor implements Serializable {
 
     public void damageTaken(int damage){
         this.health -= damage;
-        //change health bar width
         healthBar.setSize(healthBar.getWidth() - (damage*4), healthBar.getHeight());
+        if(health <= 0){
+            isDead = true;
+        }
     }
     public int getPlayerNumber(){
         return PlayerNumber;

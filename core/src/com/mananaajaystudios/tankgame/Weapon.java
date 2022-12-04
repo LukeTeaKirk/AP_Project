@@ -1,5 +1,6 @@
 package com.mananaajaystudios.tankgame;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -22,7 +23,8 @@ public class Weapon implements Serializable {
     protected BodyDef bodyDef;
     FixtureDef fixtureDef;
     protected int totalAmmo;
-    protected Sprite TankSprite;
+
+    protected Sprite TankSprite, ProjectileSprite;
     public Weapon(){
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -36,7 +38,7 @@ public class Weapon implements Serializable {
     public void Fire(World world, float x, float y, Sprite tankSprite){
         this.TankSprite = tankSprite;
         bodyDef.position.set(tankSprite.getX() -640 +50, tankSprite.getY() -360 +60);
-        Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile);
+        Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile,ProjectileSprite, damage);
         projectile.Shoot(x, y);
     }
 }
@@ -58,7 +60,7 @@ class Rocket extends Weapon {
 
 class MachineGun extends Weapon {
     public MachineGun(){
-        damage = 10;
+        damage = 20;
         damageDecayFactor = 0.5f;
         areaOfEffect = 10;
         rateOfFall = 10;
@@ -68,13 +70,15 @@ class MachineGun extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 5;
+        Texture texture = new Texture("bullet.png");
+        ProjectileSprite = new Sprite(texture);
     }
 
 }
 
 class SatelliteStrike extends Weapon {
     public SatelliteStrike(){
-        damage = 100;
+        damage = 60;
         damageDecayFactor = 0.5f;
         areaOfEffect = 10;
         rateOfFall = 10;
