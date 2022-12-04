@@ -1,9 +1,10 @@
 package com.mananaajaystudios.tankgame;
-
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Projectile extends Actor {
 
@@ -19,7 +20,7 @@ public class Projectile extends Actor {
 
     private boolean Hit = false;
 
-    public Projectile(BodyDef bodyDef, FixtureDef fixtureDef, World world, int radius, Sprite projectileSprite, int projectileDamage) {
+    public Projectile(BodyDef bodyDef, FixtureDef fixtureDef, World world, int radius, Texture texture, int projectileDamage, Stage stage, int player) {
         this.bodyDef = bodyDef;
         this.fixtureDef = fixtureDef;
         CircleShape shape = new CircleShape();
@@ -27,8 +28,13 @@ public class Projectile extends Actor {
         fixtureDef.shape = shape;
         this.world = world;
         CanCauseDamage = false;
-        this.projectileSprite = projectileSprite;
+        this.projectileSprite = new Sprite(texture);
+        this.projectileSprite.setSize(100,30);
+        if(player == 2){
+            this.projectileSprite.setFlip(true,false);
+        }
         this.projectileDamage = projectileDamage;
+        stage.addActor(this);
     }
 
     public int getProjectileDamage() {
@@ -40,6 +46,19 @@ public class Projectile extends Actor {
     }
     public boolean isHit() {
         return Hit;
+    }
+    public Sprite getProjectileSprite(){
+        return projectileSprite;
+    }
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        projectileSprite.draw(batch);
+    }
+
+    public void syncSprite(){
+        System.out.println("updated");
+        projectileSprite.setPosition(body.getPosition().x + 585, body.getPosition().y+ 340);
     }
 
     public void setCanCauseDamage(boolean canCauseDamage) {
