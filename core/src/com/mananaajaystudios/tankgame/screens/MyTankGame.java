@@ -37,12 +37,12 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 	private Tank tank1;
 	private Tank tank2;
 	private TextButton.TextButtonStyle textButtonStyle1;
-	private Table table, PauseTable, ConfirmTable;
+	private Table table, PauseTable, ConfirmTable, SwitchWeaponTable,EndGameTable;
 	private TextButton buttonPause, buttonResume,buttonSave,buttonExit;
 	private SpriteBatch batch;
 	private Sprite sprite, ground, background;
-	private TextureRegion pauseButton, PauseMenu;
-	private TextureRegionDrawable pauseButtonDrawable, PauseMenuDrawable;
+	private TextureRegion pauseButton, PauseMenu, SwitchWeaponMenu,EndGameMenu;
+	private TextureRegionDrawable pauseButtonDrawable, PauseMenuDrawable, EndGameMenuDrawable;
 	ImageButton pauseButtonImage;
 	private player player1, player2;
 	private Game game;
@@ -125,14 +125,14 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 				if (player1.isCurrentTurn()) {
 //					tank1.fire();
 					player1.setCurrentTurn(false);
-					player1.getTank().Fire(world, player1.getTank().getTankSprite());
+					player1.getTank().FireWeapon(world, player1.getTank().getTankSprite());;
 					player1.getTank().disableTank();
 					player2.setCurrentTurn(true);
 					player2.getTank().enableTank();
 				} else {
 //					tank2.fire();
 					player2.setCurrentTurn(false);
-					player2.getTank().Fire(world, player2.getTank().getTankSprite());
+					player2.getTank().FireWeapon(world, player2.getTank().getTankSprite());
 					player2.getTank().disableTank();
 					player1.setCurrentTurn(true);
 					player1.getTank().enableTank();
@@ -140,6 +140,49 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 			}
 		});
 
+		buttonChangeWeapon.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				SwitchWeaponTable = new Table();
+				SwitchWeaponTable.setBounds(Gdx.graphics.getWidth()/2 - 150, Gdx.graphics.getHeight()/2 - 125, 250, 300);
+
+				SwitchWeaponMenu = atlas.findRegion("PausePopUp");
+				TextureRegionDrawable SwitchWeaponMenuDrawable = new TextureRegionDrawable(SwitchWeaponMenu);
+				SwitchWeaponTable.setBackground(SwitchWeaponMenuDrawable);
+
+				if (player1.isCurrentTurn()) {
+					for (int i = 0; i < player1.getTank().getWeapons().size(); i++) {
+						final TextButton button = new TextButton(player1.getTank().getWeapons().get(i).getName(), textButtonStyle1);
+						button.addListener(new ClickListener() {
+							@Override
+							public void clicked(InputEvent event, float x, float y) {
+								super.clicked(event, x, y);
+								player1.getTank().switchWeapon(button.getText().toString());
+								SwitchWeaponTable.remove();
+							}
+						});
+						SwitchWeaponTable.add(button).width(200).height(50).padBottom(10);
+						SwitchWeaponTable.row();
+					}
+				} else {
+					for (int i = 0; i < player2.getTank().getWeapons().size(); i++) {
+						final TextButton button = new TextButton(player2.getTank().getWeapons().get(i).getName(), textButtonStyle1);
+						button.addListener(new ClickListener() {
+							@Override
+							public void clicked(InputEvent event, float x, float y) {
+								super.clicked(event, x, y);
+								player2.getTank().switchWeapon(button.getText().toString());
+								SwitchWeaponTable.remove();
+							}
+						});
+						SwitchWeaponTable.add(button).width(200).height(50).padBottom(10);
+						SwitchWeaponTable.row();
+					}
+				}
+				stage.addActor(SwitchWeaponTable);
+			}
+		});
 
 		pauseIcon.addListener(new ClickListener(){
 			@Override
@@ -264,9 +307,59 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 					world.destroyBody(body);
 				}
 			}
+			if(body.getUserData() != null && body.getUserData() instanceof Tank){
+				if(((Tank)body.getUserData()).isDead()){
+					endGame();
+				}
+			}
 		}
 		tank1.updateBodyPosition();
 		tank2.updateBodyPosition();
+	}
+
+	public void endGame(){
+		tank1.disableTank();
+		tank2.disableTank();
+		EndGameTable = new Table();
+		EndGameTable.setBounds(Gdx.graphics.getWidth()/2 - 150, Gdx.graphics.getHeight()/2 - 100, 200, 250);
+
+		EndGameMenu = atlas.findRegion("PausePopUp");
+		EndGameMenuDrawable = new TextureRegionDrawable(EndGameMenu);
+		final ImageButton PauseMenuImage = new ImageButton(EndGameMenuDrawable);
+		EndGameTable.setBackground(EndGameMenuDrawable);
+
+
+		//add restart game TextButton
+		TextButton buttonRestart = new TextButton("Restart", textButtonStyle1);
+		buttonRestart.setSize(100, 50);
+		EndGameTable.add(buttonRestart).size(buttonRestart.getWidth(), buttonRestart.getHeight());
+		EndGameTable.row();
+
+		//add exit game TextButton
+		TextButton buttonExit = new TextButton("Exit", textButtonStyle1);
+		buttonExit.setSize(100, 50);
+		EndGameTable.add(buttonExit).size(buttonExit.getWidth(), buttonExit.getHeight());
+
+		stage.addActor(EndGameTable);
+
+		buttonRestart.addListener(new ClickListener(){
+			@Override
+			public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				parent.changeScreen("TANKP1");
+				//restart game
+			}
+		});
+
+		buttonExit.addListener(new ClickListener(){
+			@Override
+			public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				EndGameTable.remove();
+				parent.changeScreen("MAIN");
+			}
+		});
+
 	}
 	@Override
 	public void dispose() {
