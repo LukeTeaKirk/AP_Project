@@ -24,7 +24,7 @@ public class Weapon implements Serializable {
     protected BodyDef bodyDef;
     FixtureDef fixtureDef;
     protected int totalAmmo;
-
+    protected Texture texture;
     protected Sprite TankSprite, ProjectileSprite;
     public Weapon(){
         bodyDef = new BodyDef();
