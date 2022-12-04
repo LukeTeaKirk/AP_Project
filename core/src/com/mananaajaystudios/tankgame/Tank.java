@@ -17,19 +17,19 @@ import java.util.ArrayList;
 //fuel bar
 //switch weapon
 public class Tank extends Actor implements Serializable {
-    protected Sprite tank, fireButton, fuelBar, weaponSelect, healthBar;
+    protected transient Sprite tank, fireButton, fuelBar, weaponSelect, healthBar;
     protected int health, fuel, weapon;
-    protected TextureAtlas Atlas;
-    MoveToAction action = new MoveToAction();
-    protected Body body;
+    protected transient TextureAtlas Atlas;
+    protected transient Body body;
     Integer PlayerNumber;
-    protected Sprite tankSprite;
     protected ArrayList<Weapon> weapons = new ArrayList<Weapon>();
     protected boolean isDead;
     protected Weapon currentWeapon;
+    protected transient Sprite tankSprite;
+
     protected float ForceX, ForceY;
     protected int isEnabled;
-    protected TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
+    protected transient TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
 
     public Tank(Integer PlayerNumber) {
         this.PlayerNumber = PlayerNumber;
@@ -124,7 +124,7 @@ public class Tank extends Actor implements Serializable {
         this.body = world.createBody(bodyDef);
     }
 
-        @Override
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         if(PlayerNumber == 1){
             fuelBar.draw(batch);
@@ -142,5 +142,32 @@ public class Tank extends Actor implements Serializable {
     public void act(float delta) {
 
         super.act(delta);
+    }
+    //initialize all transient variables after deserialization
+    //called after deserialization
+    public void readObject(){
+        Atlas = new TextureAtlas("Spritesheets/Spritesheet1.atlas");
+        fuelRegion = Atlas.findRegion("FuelBar");
+        weaponRegion = Atlas.findRegion("SplitterChain");
+        Texture healthBarTexture = new Texture("HealthBar.jpeg");
+        TextureRegion healthRegion = new TextureRegion(healthBarTexture);
+        healthBar = new Sprite(healthRegion);
+        if(PlayerNumber == 1){
+            fuelBar = new Sprite(fuelRegion);
+            fuelBar.setSize(240, 70);
+            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
+            weaponSelect = new Sprite(weaponRegion);
+            weaponSelect.setSize(75, 75);
+            weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/20)*6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) *24 - 35);
+            healthBar.setSize(400, 50);
+            healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            isEnabled = 1;
+
+        }
+        else if(PlayerNumber == 2){
+            healthBar.setSize(400, 50);
+            healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            isEnabled = 0;
+        }
     }
 }

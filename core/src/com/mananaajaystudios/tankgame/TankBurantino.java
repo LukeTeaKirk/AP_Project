@@ -2,13 +2,16 @@ package com.mananaajaystudios.tankgame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class TankBurantino extends Tank{
-    private Sprite tankSprite;
+    private transient Sprite tankSprite;
     public TankBurantino(Integer PlayerNumber) {
         super(PlayerNumber);
         super.tankRegion = Atlas.findRegion("Buratino");
@@ -75,6 +78,39 @@ public class TankBurantino extends Tank{
         System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
         //this.body = world.createBody(bodyDef);
     }
+    //initialize all transient variables after deserialization
+    //called after deserialization
+    @Override
+    public void readObject() {
+        Atlas = new TextureAtlas("Spritesheets/Spritesheet1.atlas");
+        fuelRegion = Atlas.findRegion("FuelBar");
+        weaponRegion = Atlas.findRegion("SplitterChain");
+        Texture healthBarTexture = new Texture("HealthBar.jpeg");
+        TextureRegion healthRegion = new TextureRegion(healthBarTexture);
+        healthBar = new Sprite(healthRegion);
+        //reinitialize tankregion
+        tankRegion = Atlas.findRegion("Buratino");
+        tankSprite = new Sprite(tankRegion);
+        tankSprite.setSize(100, 100);
+        if (PlayerNumber == 1) {
+            tankSprite.setPosition(120, 250);
+            fuelBar = new Sprite(fuelRegion);
+            fuelBar.setSize(240, 70);
+            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 95 - 40);
+            weaponSelect = new Sprite(weaponRegion);
+            weaponSelect.setSize(75, 75);
+            weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) * 24 - 35);
+            healthBar.setSize(400, 50);
+            healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 12);
+            isEnabled = 1;
 
+        } else if (PlayerNumber == 2) {
+            tankSprite.setPosition(850, 250);
+            tankSprite.flip(true, false);
+            healthBar.setSize(400, 50);
+            healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 12);
+            isEnabled = 0;
+        }
+        setTankSprite(tankSprite);
+    }
 }
-

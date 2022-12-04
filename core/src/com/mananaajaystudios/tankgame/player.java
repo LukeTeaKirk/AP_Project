@@ -3,13 +3,16 @@ package com.mananaajaystudios.tankgame;
 import java.io.Serializable;
 
 public class player implements Serializable {
-    private final Tank tank;
+    private Tank tank;
     private boolean isCurrentTurn;
     public player(Tank tank) {
         this.tank = tank;
     }
     public Tank getTank(){
         return tank;
+    }
+    public void setTank(Tank tank) {
+        this.tank = tank;
     }
     public boolean isCurrentTurn() {
         return isCurrentTurn;
