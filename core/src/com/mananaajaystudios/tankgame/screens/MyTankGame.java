@@ -8,12 +8,10 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -37,7 +35,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 	private Tank tank1;
 	private Tank tank2;
 	private TextButton.TextButtonStyle textButtonStyle1;
-	private Table table, PauseTable, ConfirmTable, SwitchWeaponTable,EndGameTable;
+	private Table table, PauseTable, ConfirmTable, SwitchWeaponTable,EndGameTable,AngleForceTable;
 	private TextButton buttonPause, buttonResume,buttonSave,buttonExit;
 	private SpriteBatch batch;
 	private Sprite sprite, ground, background;
@@ -47,6 +45,8 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 	private player player1, player2;
 	private Game game;
 	private TopDog parent;
+
+	private BitmapFont black;
 
 
 	public MyTankGame(TopDog temp, Game game) {
@@ -105,7 +105,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		textButtonStyle1.down = buttonSkin.getDrawable("button_down");
 		textButtonStyle1.pressedOffsetX = 1;
 		textButtonStyle1.pressedOffsetY = -1;
-		BitmapFont black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
+		black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
 		textButtonStyle1.font = black;
 
 		//create change weapon button
@@ -404,7 +404,43 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 			System.out.println("forceX: " + forceX + " forceY: " + forceY);
 
 			float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
-			System.out.println("angle: " + angle);
+			//calculate the equivalent force
+			float force = (float) Math.sqrt(Math.pow(forceX, 2) + Math.pow(forceY, 2));
+			System.out.println("angle: " + angle + " force: " + force);
+			if(AngleForceTable != null){
+				AngleForceTable.remove();
+			}
+			//create an image button to display angle and force
+			AngleForceTable = new Table();
+			AngleForceTable.setBounds(50, 90, 200, 100);
+			Texture Background = new Texture(Gdx.files.internal("yellowRegion.png"));
+			Group Angle = new Group();
+			Group Force = new Group();
+			Image AngleImage = new Image(Background);
+			Image ForceImage = new Image(Background);
+			AngleImage.setSize(500, 280);
+			ForceImage.setSize(500, 280);
+			AngleImage.setPosition(-150, -125);
+			ForceImage.setPosition(-150, -130);
+			Angle.addActor(AngleImage);
+			Force.addActor(ForceImage);
+			//import label style
+			Label.LabelStyle labelStyle = new Label.LabelStyle();
+			labelStyle.font = black;
+			int angleInt = (int) angle;
+			int forceInt = (int) force;
+			Label angleLabel = new Label("Angle: " + angleInt,labelStyle);
+			Label forceLabel = new Label("Force: " + forceInt,labelStyle);
+			angleLabel.setPosition(25, 0);
+			forceLabel.setPosition(25, -5);
+			Angle.addActor(angleLabel);
+			Force.addActor(forceLabel);
+			AngleForceTable.add(Angle).size(100, 50);
+			AngleForceTable.row();
+			AngleForceTable.add(Force).size(100, 50);
+			AngleForceTable.row();
+
+			stage.addActor(AngleForceTable);
 
 			tank1.setAngleAndPower(forceX, forceY);
 		}
