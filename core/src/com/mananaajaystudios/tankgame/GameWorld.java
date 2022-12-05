@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
@@ -41,7 +38,6 @@ public class GameWorld extends Actor {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 0);
-
         ChainShape groundShape = new ChainShape();
         groundShape.createChain(new Vector2[]{
                 new Vector2(-640, -37),
@@ -93,7 +89,9 @@ public class GameWorld extends Actor {
         fixtureDef.friction = 0.5f;
         fixtureDef.restitution = 0;
 
-        world.createBody(bodyDef).createFixture(fixtureDef);
+        Body bodytemp = world.createBody(bodyDef);
+        bodytemp.createFixture(fixtureDef);
+        bodytemp.setUserData(this);
         groundShape.dispose();
 
         Texture vsImageTexture = new Texture("vs.png");
