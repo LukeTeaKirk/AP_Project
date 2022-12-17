@@ -57,17 +57,20 @@ public class Projectile extends Actor {
         System.out.println(dis);
         if(dis>60){
             assert tank != null;
-            int damage = (int) (projectileDamage-dis*2);
+            int damage = (int) (projectileDamage-(dis/10)*2);
             if(damage>0){
                 damage = damage;
             }
             else{
                 damage = 0;
             }
+            System.out.println(projectileDamage + " " + damage);
             tank.damageTaken(damage);
             return (int) (damage);
         }
         else{
+            System.out.println(projectileDamage);
+            tank.damageTaken(projectileDamage);
             return projectileDamage;
         }
     }
