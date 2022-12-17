@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public class Weapon implements Serializable {
     protected BodyDef bodyDef;
     FixtureDef fixtureDef;
     protected int totalAmmo;
-
+    protected Texture texture;
     protected Sprite TankSprite, ProjectileSprite;
     public Weapon(){
         bodyDef = new BodyDef();
@@ -35,10 +36,10 @@ public class Weapon implements Serializable {
         return name;
     }
 
-    public void Fire(World world, float x, float y, Sprite tankSprite){
+    public void Fire(World world, float x, float y, Sprite tankSprite, Stage stage, int Player){
         this.TankSprite = tankSprite;
         bodyDef.position.set(tankSprite.getX() -640 +50, tankSprite.getY() -360 +60);
-        Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile,ProjectileSprite, damage);
+        Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile,texture, damage, stage, Player);
         projectile.Shoot(x, y);
     }
 }
@@ -70,8 +71,7 @@ class MachineGun extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 5;
-        Texture texture = new Texture("bullet.png");
-        ProjectileSprite = new Sprite(texture);
+        texture = new Texture("bullet.png");
     }
 
 }

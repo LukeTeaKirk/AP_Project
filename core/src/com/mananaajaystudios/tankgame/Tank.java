@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -91,14 +92,14 @@ public class Tank extends Actor implements Serializable {
         this.ForceX = forceX;
         this.ForceY = forceY;
     }
-    public void FireWeapon(World world,Sprite tankSprite){
+    public void FireWeapon(World world,Sprite tankSprite, Stage stage){
 
         if(PlayerNumber == 1){
-            currentWeapon.Fire(world, ForceX, ForceY,tankSprite);
+            currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber);
 
         }
         else if(PlayerNumber == 2){
-            currentWeapon.Fire(world, ForceX, ForceY,tankSprite);
+            currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber);
 
         }
 
