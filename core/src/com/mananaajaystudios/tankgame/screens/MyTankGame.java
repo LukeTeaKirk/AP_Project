@@ -310,9 +310,19 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 				}
 			}
 			if(body.getUserData() != null && body.getUserData() instanceof Tank){
-				if(((Tank)body.getUserData()).isDead()){
+				if(((Tank)body.getUserData()).isDead()) {
 					endGame();
 				}
+				if((Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D))){
+					if(((Tank)body.getUserData()).getCanMove()==1) {
+////						System.out.println(((Tank) body.getUserData()).getBody().getLinearVelocity().x);
+//						if (((Tank) body.getUserData()).getBody().getLinearVelocity().x != 0) {
+////						((Tank)body.getUserData()).getBody().setLinearVelocity(0, ((Tank)body.getUserData()).getBody().getLinearVelocity().y);
+							((Tank) body.getUserData()).reduceFuel(1);
+//						}
+					}
+				}
+
 			}
 		}
 		tank1.updateBodyPosition();
