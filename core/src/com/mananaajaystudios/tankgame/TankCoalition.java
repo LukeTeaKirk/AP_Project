@@ -38,10 +38,10 @@ public class TankCoalition extends Tank {
     @Override
     public void act(float delta) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A) && isEnabled == 1) {
+        if(Gdx.input.isKeyPressed(Input.Keys.A) && this.canMove == 1){
             body.applyLinearImpulse(new Vector2(-100f, 0), body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.D) && isEnabled == 1) {
+        if(Gdx.input.isKeyPressed(Input.Keys.D) && this.canMove == 1) {
             body.applyLinearImpulse(new Vector2(100f, 0), body.getWorldCenter(), true);
 
         }
@@ -109,9 +109,9 @@ public class TankCoalition extends Tank {
             tankSprite.setSize(100, 100);
             if (PlayerNumber == 1) {
             tankSprite.setPosition(120, 250);
-            fuelBar = new Sprite(fuelRegion);
-            fuelBar.setSize(240, 70);
-            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 95 - 40);
+//            fuelBar = new Sprite(fuelRegion);
+//            fuelBar.setSize(240, 70);
+//            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 95 - 40);
             weaponSelect = new Sprite(weaponRegion);
             weaponSelect.setSize(75, 75);
             weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) * 24 - 35);

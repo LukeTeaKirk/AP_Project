@@ -18,7 +18,7 @@ import java.util.ArrayList;
 //fuel bar
 //switch weapon
 public class Tank extends Actor implements Serializable {
-    protected transient Sprite tank, fireButton, fuelBar, weaponSelect, healthBar;
+    protected transient Sprite tank, fireButton, fuelBar1,fuelBar2, weaponSelect, healthBar;
     protected int health, fuel, weapon;
     protected transient TextureAtlas Atlas;
     protected transient Body body;
@@ -29,7 +29,7 @@ public class Tank extends Actor implements Serializable {
     protected transient Sprite tankSprite;
 
     protected float ForceX, ForceY;
-    protected int isEnabled;
+    protected int isEnabled, canMove;
     protected transient TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
 
     public Tank(Integer PlayerNumber) {
@@ -41,26 +41,31 @@ public class Tank extends Actor implements Serializable {
         Texture healthBarTexture = new Texture("HealthBar.jpeg");
         TextureRegion healthRegion = new TextureRegion(healthBarTexture);
         healthBar = new Sprite(healthRegion);
-
+        fuelBar1 = new Sprite(fuelRegion);
+        fuelBar2 = new Sprite(fuelRegion);
         this.health = 100;
+        this.fuel = 240;
         this.isDead = false;
         if(PlayerNumber == 1){
-            fuelBar = new Sprite(fuelRegion);
-            fuelBar.setSize(240, 70);
-            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
-//            weaponSelect = new Sprite(weaponRegion);
-//            weaponSelect.setSize(75, 75);
-//            weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/20)*6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) *24 - 35);
+
             healthBar.setSize(400, 50);
             healthBar.setPosition(175, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
             isEnabled = 1;
-
+            canMove = 1;
+            fuelBar1.setSize(240, 70);
+            fuelBar1.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
         }
         else if(PlayerNumber == 2){
             healthBar.setSize(400, 50);
             healthBar.setPosition(710, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
             isEnabled = 0;
+            canMove = 0;
+            fuelBar2.setSize(0, 0);
+            fuelBar2.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*12, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
         }
+    }
+    public Body getBody() {
+        return body;
     }
 
     public boolean isDead() {
@@ -113,10 +118,51 @@ public class Tank extends Actor implements Serializable {
         return tankSprite;
     }
     public void enableTank(){
-        isEnabled = 1;
+        this.isEnabled = 1;
+        this.canMove = 1;
+        this.fuel=240;
+        if(PlayerNumber == 1){
+            fuelBar1.setSize(240, 70);
+        }
+        else if(PlayerNumber == 2){
+            fuelBar2.setSize(240, 70);
+
+        }
     }
     public void disableTank(){
-        isEnabled = 0;
+        this.isEnabled = 0;
+        this.canMove = 0;
+        if(PlayerNumber == 1){
+            fuelBar1.setSize(0, 0);
+        }
+        else if(PlayerNumber == 2){
+            fuelBar2.setSize(0, 0);
+        }
+    }
+    public int getCanMove(){
+        return canMove;
+    }
+
+    public void reduceFuel(int Fuel){
+        if(this.fuel > 0){
+            this.fuel -= Fuel;
+            if(PlayerNumber == 1){
+                System.out.println("Fuel: " + fuel);
+                System.out.println("FuelBar1: " + fuelBar1.getWidth());
+                fuelBar1.setSize(fuelBar1.getWidth() - (Fuel), fuelBar1.getHeight());
+            }
+            else if(PlayerNumber == 2){
+                System.out.println("Fuel: " + fuel);
+                System.out.println("FuelBar2: " + fuelBar2.getWidth());
+                fuelBar2.setSize(fuelBar2.getWidth() - (Fuel), fuelBar2.getHeight());
+            }
+        }
+        if(this.fuel <= 0){
+            canMove = 0;
+        }
+    }
+    public int getIsEnabled(){
+        return isEnabled;
     }
     public void setBody(World world) {
         BodyDef bodyDef = new BodyDef();
@@ -128,12 +174,13 @@ public class Tank extends Actor implements Serializable {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if(PlayerNumber == 1){
-            fuelBar.draw(batch);
+            fuelBar1.draw(batch);
 //            weaponSelect.draw(batch);
             healthBar.draw(batch);
         }
         else if(PlayerNumber == 2){
             healthBar.draw(batch);
+            fuelBar2.draw(batch);
         }
     }
     public void updateBodyPosition() {
@@ -154,9 +201,9 @@ public class Tank extends Actor implements Serializable {
         TextureRegion healthRegion = new TextureRegion(healthBarTexture);
         healthBar = new Sprite(healthRegion);
         if(PlayerNumber == 1){
-            fuelBar = new Sprite(fuelRegion);
-            fuelBar.setSize(240, 70);
-            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
+            fuelBar1 = new Sprite(fuelRegion);
+            fuelBar1.setSize(240, 70);
+            fuelBar1.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
             weaponSelect = new Sprite(weaponRegion);
             weaponSelect.setSize(75, 75);
             weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/20)*6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) *24 - 35);
