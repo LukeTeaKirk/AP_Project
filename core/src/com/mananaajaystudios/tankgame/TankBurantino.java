@@ -94,9 +94,9 @@ public class TankBurantino extends Tank{
         tankSprite.setSize(100, 100);
         if (PlayerNumber == 1) {
             tankSprite.setPosition(120, 250);
-            fuelBar = new Sprite(fuelRegion);
-            fuelBar.setSize(240, 70);
-            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 95 - 40);
+//            fuelBar = new Sprite(fuelRegion);
+//            fuelBar.setSize(240, 70);
+//            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 95 - 40);
             weaponSelect = new Sprite(weaponRegion);
             weaponSelect.setSize(75, 75);
             weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) * 24 - 35);
