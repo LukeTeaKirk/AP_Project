@@ -29,8 +29,9 @@ public class Tank extends Actor implements Serializable {
     protected transient Sprite tankSprite;
 
     protected float ForceX, ForceY;
-    protected int isEnabled, canMove;
+    protected int isEnabled, canMove, firedThisMove;
     protected transient TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
+    protected transient Projectile projectile;
 
     public Tank(Integer PlayerNumber) {
         this.PlayerNumber = PlayerNumber;
@@ -46,6 +47,7 @@ public class Tank extends Actor implements Serializable {
         this.health = 100;
         this.fuel = 240;
         this.isDead = false;
+        this.firedThisMove = 0;
         if(PlayerNumber == 1){
 
             healthBar.setSize(400, 50);
@@ -99,18 +101,22 @@ public class Tank extends Actor implements Serializable {
     }
     public void FireWeapon(World world,Sprite tankSprite, Stage stage){
 
-        if(PlayerNumber == 1){
-            currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber);
-
+        if(PlayerNumber == 1 && firedThisMove == 0){
+            this.projectile = currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber);
+            firedThisMove = 1;
         }
-        else if(PlayerNumber == 2){
-            currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber);
-
+        else if(PlayerNumber == 2 && firedThisMove == 0){
+            this.projectile = currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber);
+            firedThisMove = 1;
         }
 
 
     }
 
+    //return projectile
+    public Projectile getProjectile(){
+        return projectile;
+    }
     public void setTankSprite(Sprite tankSprite) {
         this.tankSprite = tankSprite;
     }
@@ -121,6 +127,7 @@ public class Tank extends Actor implements Serializable {
         this.isEnabled = 1;
         this.canMove = 1;
         this.fuel=240;
+        this.firedThisMove = 0;
         if(PlayerNumber == 1){
             fuelBar1.setSize(240, 70);
         }

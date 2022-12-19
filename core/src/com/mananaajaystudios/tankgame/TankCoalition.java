@@ -77,7 +77,7 @@ public class TankCoalition extends Tank {
         shape.setPosition(new Vector2(0,0));
         shape.setRadius(3f);
         fixturedef.shape = shape2;
-        fixturedef.density = 0.3f;
+        fixturedef.density = 0.1f;
         fixturedef.friction = 0.1f;
         this.body = world.createBody(bodyDef);
         this.body.setUserData(this);
