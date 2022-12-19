@@ -40,6 +40,8 @@ public class GameWorld extends Actor {
         bodyDef.position.set(0, 0);
         ChainShape groundShape = new ChainShape();
         groundShape.createChain(new Vector2[]{
+                new Vector2(-660, 360),
+                new Vector2(-660, 0),
                 new Vector2(-640, -37),
                 new Vector2(-600, -50),
                 new Vector2(-550, -55),
@@ -82,6 +84,8 @@ public class GameWorld extends Actor {
                 new Vector2(550, -52),
                 new Vector2(600, -69),
                 new Vector2(640, -80),
+                new Vector2(660, -80),
+                new Vector2(660, 360)
         });
 
         FixtureDef fixtureDef = new FixtureDef();

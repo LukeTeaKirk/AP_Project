@@ -17,25 +17,31 @@ public class TankHelios extends Tank{
         super(PlayerNumber);
         super.tankRegion = Atlas.findRegion("Helios");
         tankSprite = new Sprite(tankRegion);
-        tankSprite.setSize(150, 150);
+        weapons.add(new FireBall());
+        weapons.add(new DragonBall());
+        weapons.add(new Nuke());
+        currentWeapon = weapons.get(0);
+
+        tankSprite.setSize(110, 110);
         if(PlayerNumber == 1){
-            tankSprite.setPosition(50, 300);
+            tankSprite.setPosition(150, 200);
         }
         else if(PlayerNumber == 2){
-            tankSprite.setPosition(850, 300);
+            tankSprite.setPosition(850, 200);
             tankSprite.flip(true, false);
         }
+        setTankSprite(tankSprite);
     }
     @Override
     public void act(float delta) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A) && PlayerNumber == 1) {
-            body.applyLinearImpulse(new Vector2(-100f, 0), body.getWorldCenter(), false);
+        if(Gdx.input.isKeyPressed(Input.Keys.A) && this.canMove == 1) {
+            body.applyLinearImpulse(new Vector2(-100f, 0), body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.D) && PlayerNumber == 1) {
-            body.applyLinearImpulse(new Vector2(100f, 0), body.getWorldCenter(), false);
+        if(Gdx.input.isKeyPressed(Input.Keys.D) && this.canMove == 1) {
+            body.applyLinearImpulse(new Vector2(100f, 0), body.getWorldCenter(), true);
         }
-        this.body.setUserData(tankSprite);
+//        this.body.setUserData(tankSprite);
         super.act(delta);
     }
 
@@ -49,7 +55,9 @@ public class TankHelios extends Tank{
     public void setBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        if(PlayerNumber == 1) {
+//        bodyDef.angularDamping = 1f;
+//        bodyDef.linearDamping = 1f;
+        if(PlayerNumber ==1){
             bodyDef.position.set(-500, 0);
         }
         else{
@@ -58,24 +66,23 @@ public class TankHelios extends Tank{
         FixtureDef fixturedef = new FixtureDef();
         CircleShape shape = new CircleShape();
         PolygonShape shape2 = new PolygonShape();
-        shape2.setAsBox(40f,12f);
+        shape2.setAsBox(35f,24f);
         shape.setPosition(new Vector2(0,0));
         shape.setRadius(3f);
         fixturedef.shape = shape2;
-        fixturedef.density = 1.0f;
-        fixturedef.friction = 0.3f;
+        fixturedef.density = 0.1f;
+        fixturedef.friction = 0.1f;
         this.body = world.createBody(bodyDef);
-        this.body.setUserData(tankSprite);
+        this.body.setUserData(this);
         System.out.println(body.getPosition());
         Fixture fix = body.createFixture(fixturedef);
-        System.out.println("2");
     }
     @Override
     public void updateBodyPosition() {
-        this.tankSprite.setPosition(this.body.getPosition().x + 570, this.body.getPosition().y + 310);
+        this.tankSprite.setPosition(this.body.getPosition().x + 580, this.body.getPosition().y + 300);
         tankSprite.setOriginCenter();
         tankSprite.setRotation(this.body.getAngle()*70);
-        System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
+//        System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
         //this.body = world.createBody(bodyDef);
     }
     //initialize all transient variables after deserialization
