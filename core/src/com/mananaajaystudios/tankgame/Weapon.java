@@ -36,11 +36,12 @@ public class Weapon implements Serializable {
         return name;
     }
 
-    public void Fire(World world, float x, float y, Sprite tankSprite, Stage stage, int Player){
+    public Projectile Fire(World world, float x, float y, Sprite tankSprite, Stage stage, int Player){
         this.TankSprite = tankSprite;
         bodyDef.position.set(tankSprite.getX() -640 +50, tankSprite.getY() -360 +60);
         Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile,texture, damage, stage, Player);
         projectile.Shoot(x, y);
+        return projectile;
     }
 }
 class Rocket extends Weapon {
