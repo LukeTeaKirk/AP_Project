@@ -18,6 +18,7 @@ public class Projectile extends Actor {
     private Sprite projectileSprite;
     private int projectileDamage;
     private boolean Hit = false;
+    private transient player otherPlayer;
 
     public Projectile(BodyDef bodyDef, FixtureDef fixtureDef, World world, int radius, Texture texture, int projectileDamage, Stage stage, int player) {
         this.bodyDef = bodyDef;
@@ -49,14 +50,13 @@ public class Projectile extends Actor {
                 if(((Tank) body.getUserData()).getPlayerNumber() != playerNumber){
                     tankpos = body.getPosition();
                     tank = (Tank) body.getUserData();
+                    System.out.println("Tank found");
                 }
             }
         }
         //return distance between tankpos and bodypos
         float dis = distance(bodypos.x, bodypos.y, tankpos.x, tankpos.y);
-        System.out.println(dis);
-        if(dis>60){
-            assert tank != null;
+        if(dis>60 && tank != null){
             int damage = (int) (projectileDamage-(dis/10)*2);
             if(damage>0){
                 damage = damage;
@@ -64,13 +64,11 @@ public class Projectile extends Actor {
             else{
                 damage = 0;
             }
-            System.out.println(projectileDamage + " " + damage);
+            System.out.println(tank);
             tank.damageTaken(damage);
             return (int) (damage);
         }
         else{
-            System.out.println(projectileDamage);
-            tank.damageTaken(projectileDamage);
             return projectileDamage;
         }
     }
@@ -82,6 +80,9 @@ public class Projectile extends Actor {
     }
     public void setHit(boolean hit) {
         Hit = hit;
+        otherPlayer.setCurrentTurn(true);
+        otherPlayer.getTank().enableTank();
+
     }
     public boolean isHit() {
         return Hit;
@@ -110,6 +111,10 @@ public class Projectile extends Actor {
         this.body.setUserData(this);
         body.applyLinearImpulse(x, y, body.getPosition().x, body.getPosition().y, true);
         this.body.createFixture(fixtureDef);
+    }
+    //set player2
+    public void setPlayer2(player otherPlayer) {
+        this.otherPlayer = otherPlayer;
     }
 
     public Body getBody() {
