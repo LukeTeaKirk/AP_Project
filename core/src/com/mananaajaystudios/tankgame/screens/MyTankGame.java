@@ -115,13 +115,16 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		stage.addActor(buttonChangeWeapon);
 
 		TextButton buttonFireWeapon = new TextButton("Fire!", textButtonStyle1);
-		buttonFireWeapon.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3 - 50, 25);
+		buttonFireWeapon.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/3 - 150, 25);
 		buttonFireWeapon.setSize(120, 100);
 		stage.addActor(buttonFireWeapon);
 
 		buttonFireWeapon.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				if(AngleForceTable != null){
+					AngleForceTable.remove();
+				}
 				if (player1.isCurrentTurn()) {
 //					tank1.fire();
 					player1.setCurrentTurn(false);
@@ -407,6 +410,18 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		touchPos.set(screenX, screenY, 0);
 		camera.unproject(touchPos);
 		System.out.println("x: " + (touchPos.x+640) + " y: " + (touchPos.y+360));
+		if(AngleForceTable != null){
+			AngleForceTable.remove();
+		}
+		//create an image button to display angle and force
+		AngleForceTable = new Table();
+		Texture Background = new Texture(Gdx.files.internal("yellowRegion.png"));
+		Group Angle = new Group();
+		Group Force = new Group();
+		Image AngleImage = new Image(Background);
+		Image ForceImage = new Image(Background);
+		AngleImage.setSize(500, 280);
+		ForceImage.setSize(500, 280);
 		if(player1.isCurrentTurn()){
 			System.out.println("Tank1 x: " + (tank1.getTankSprite().getX()+50) + " y: " + (tank1.getTankSprite().getY()+50));
 
@@ -416,22 +431,23 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 			System.out.println("forceX: " + forceX + " forceY: " + forceY);
 
 			float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
+
+			if((angle <= 90 && angle >=0) || (angle >= -90 && angle <= 0)){
+				if(tank1.getTankSprite().isFlipX()){
+					tank1.getTankSprite().flip(true, false);
+				}
+			}
+			else if((angle <= 180 && angle >= 90) || (angle >= -180 && angle <= -90)){
+				if(!tank1.getTankSprite().isFlipX()){
+					tank1.getTankSprite().flip(true, false);
+				}
+			}
 			//calculate the equivalent force
 			float force = (float) Math.sqrt(Math.pow(forceX, 2) + Math.pow(forceY, 2));
 			System.out.println("angle: " + angle + " force: " + force);
-			if(AngleForceTable != null){
-				AngleForceTable.remove();
-			}
-			//create an image button to display angle and force
-			AngleForceTable = new Table();
+
 			AngleForceTable.setBounds(50, 90, 200, 100);
-			Texture Background = new Texture(Gdx.files.internal("yellowRegion.png"));
-			Group Angle = new Group();
-			Group Force = new Group();
-			Image AngleImage = new Image(Background);
-			Image ForceImage = new Image(Background);
-			AngleImage.setSize(500, 280);
-			ForceImage.setSize(500, 280);
+			AngleForceTable.debug();
 			AngleImage.setPosition(-150, -125);
 			ForceImage.setPosition(-150, -130);
 			Angle.addActor(AngleImage);
@@ -464,8 +480,43 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 			float forceY = (touchPos.y +360) - (tank2.getTankSprite().getY()+50);
 			System.out.println("forceX: " + forceX + " forceY: " + forceY);
 
+
 			float angle = (float) Math.toDegrees(Math.atan2(forceY, forceX));
-			System.out.println("angle: " + angle);
+			float force = (float) Math.sqrt(Math.pow(forceX, 2) + Math.pow(forceY, 2));
+			System.out.println("angle: " + angle + " force: " + force);
+			if((angle <= 90 && angle >=0) || (angle >= -90 && angle <= 0)){
+				if(tank2.getTankSprite().isFlipX()){
+					tank2.getTankSprite().flip(true, false);
+				}
+			}
+			else if((angle <= 180 && angle >= 90) || (angle >= -180 && angle <= -90)){
+				if(!tank2.getTankSprite().isFlipX()){
+					tank2.getTankSprite().flip(true, false);
+				}
+			}
+			AngleForceTable.setBounds(1100, 90, 150, 100);
+			AngleForceTable.debug();
+			AngleImage.setPosition(-280, -125);
+			ForceImage.setPosition(-280, -130);
+			Angle.addActor(AngleImage);
+			Force.addActor(ForceImage);
+			//import label style
+			Label.LabelStyle labelStyle = new Label.LabelStyle();
+			labelStyle.font = black;
+			int angleInt = (int) angle;
+			int forceInt = (int) force;
+			Label angleLabel = new Label("Angle: " + angleInt,labelStyle);
+			Label forceLabel = new Label("Force: " + forceInt,labelStyle);
+			angleLabel.setPosition(-95, 0);
+			forceLabel.setPosition(-95, -5);
+			Angle.addActor(angleLabel);
+			Force.addActor(forceLabel);
+			AngleForceTable.add(Angle).size(100, 50);
+			AngleForceTable.row();
+			AngleForceTable.add(Force).size(100, 50);
+			AngleForceTable.row();
+
+			stage.addActor(AngleForceTable);
 
 			tank2.setAngleAndPower(forceX, forceY);
 		}
