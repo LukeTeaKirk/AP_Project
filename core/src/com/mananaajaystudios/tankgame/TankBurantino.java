@@ -16,6 +16,11 @@ public class TankBurantino extends Tank{
         super(PlayerNumber);
         super.tankRegion = Atlas.findRegion("Buratino");
         tankSprite = new Sprite(tankRegion);
+        weapons.add(new MachineGun());
+        weapons.add(new Rocket());
+        weapons.add(new SatelliteStrike());
+        currentWeapon = weapons.get(0);
+
         tankSprite.setSize(150, 150);
         if(PlayerNumber == 1){
             tankSprite.setPosition(50, 300);
@@ -24,14 +29,15 @@ public class TankBurantino extends Tank{
             tankSprite.setPosition(850, 300);
             tankSprite.flip(true, false);
         }
+        setTankSprite(tankSprite);
     }
     @Override
     public void act(float delta) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A) && PlayerNumber == 1) {
+        if(Gdx.input.isKeyPressed(Input.Keys.A) && this.canMove == 1) {
             body.applyLinearImpulse(new Vector2(-1000f, 0), body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.D) && PlayerNumber == 1) {
+        if(Gdx.input.isKeyPressed(Input.Keys.D) && this.canMove == 1) {
             body.applyLinearImpulse(new Vector2(1000f, 0), body.getWorldCenter(), true);
 
         }
@@ -75,7 +81,6 @@ public class TankBurantino extends Tank{
         this.tankSprite.setPosition(this.body.getPosition().x + 570, this.body.getPosition().y + 310);
         tankSprite.setOriginCenter();
         tankSprite.setRotation(this.body.getAngle()*70);
-        System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
         //this.body = world.createBody(bodyDef);
     }
     //initialize all transient variables after deserialization

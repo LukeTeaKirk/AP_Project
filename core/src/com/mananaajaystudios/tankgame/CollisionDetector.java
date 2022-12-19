@@ -55,9 +55,6 @@ public class CollisionDetector implements ContactListener {
             } else {
                 projectile.setCanCauseDamage(true);
             }
-//            projectile.setHit(true);
-//            tank.damageTaken(20);
-//            tank.setHealth(tank.getHealth() - projectile.getDamage());
         }
 
     }

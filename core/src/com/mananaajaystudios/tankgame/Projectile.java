@@ -49,14 +49,13 @@ public class Projectile extends Actor {
                 if(((Tank) body.getUserData()).getPlayerNumber() != playerNumber){
                     tankpos = body.getPosition();
                     tank = (Tank) body.getUserData();
+                    System.out.println("Tank found");
                 }
             }
         }
         //return distance between tankpos and bodypos
         float dis = distance(bodypos.x, bodypos.y, tankpos.x, tankpos.y);
-        System.out.println(dis);
-        if(dis>60){
-            assert tank != null;
+        if(dis>60 && tank != null){
             int damage = (int) (projectileDamage-(dis/10)*2);
             if(damage>0){
                 damage = damage;
@@ -64,13 +63,11 @@ public class Projectile extends Actor {
             else{
                 damage = 0;
             }
-            System.out.println(projectileDamage + " " + damage);
+            System.out.println(tank);
             tank.damageTaken(damage);
             return (int) (damage);
         }
         else{
-            System.out.println(projectileDamage);
-            tank.damageTaken(projectileDamage);
             return projectileDamage;
         }
     }
