@@ -105,8 +105,9 @@ public class TankBurantino extends Tank{
             weaponSelect = new Sprite(weaponRegion);
             weaponSelect.setSize(75, 75);
             weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) * 24 - 35);
-            healthBar.setSize(healthBarPosition, 50);
+            healthBar.setSize(400, 50);
             healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 12);
+            healthBar.setSize(healthBarPosition, 50);
             isEnabled = 1;
 
         } else if (PlayerNumber == 2) {
@@ -115,8 +116,9 @@ public class TankBurantino extends Tank{
             fuelBar2.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*12, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
             tankSprite.setPosition(850, 250);
             tankSprite.flip(true, false);
-            healthBar.setSize(healthBarPosition, 50);
+            healthBar.setSize(400, 50);
             healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 12);
+            healthBar.setSize(healthBarPosition, 50);
             isEnabled = 0;
         }
         weapons.forEach(Weapon::readObject);

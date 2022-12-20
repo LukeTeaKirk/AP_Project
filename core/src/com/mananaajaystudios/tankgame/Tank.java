@@ -54,6 +54,7 @@ public class Tank extends Actor implements Serializable {
 
             healthBar.setSize(400, 50);
             healthBar.setPosition(175, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            healthBarPosition = (int) healthBar.getWidth();
             isEnabled = 1;
             canMove = 1;
             fuelBar1.setSize(240, 70);
@@ -62,6 +63,7 @@ public class Tank extends Actor implements Serializable {
         else if(PlayerNumber == 2){
             healthBar.setSize(400, 50);
             healthBar.setPosition(710, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            healthBarPosition = (int) healthBar.getWidth();
             isEnabled = 0;
             canMove = 0;
             fuelBar2.setSize(0, 0);
