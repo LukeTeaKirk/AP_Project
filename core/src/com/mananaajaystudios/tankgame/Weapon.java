@@ -63,6 +63,7 @@ class Rocket extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 10;
+        texture = new Texture("Missile.png");
     }
     //initialize all transient variables after deserialization
     //called after deserialization
@@ -75,7 +76,7 @@ class Rocket extends Weapon {
 
 class MachineGun extends Weapon {
     public MachineGun(){
-        damage = 20;
+        damage = 200;
         damageDecayFactor = 0.5f;
         areaOfEffect = 10;
         rateOfFall = 10;
@@ -98,7 +99,7 @@ class MachineGun extends Weapon {
 }
 
 class SatelliteStrike extends Weapon {
-    public SatelliteStrike(){
+    public SatelliteStrike() {
         damage = 60;
         damageDecayFactor = 0.5f;
         areaOfEffect = 10;
@@ -109,12 +110,59 @@ class SatelliteStrike extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 20;
+        texture = new Texture("Sattellite.png");
     }
     @Override
     public void readObject(){
         super.readObject();
         //texture = new Texture("SatelliteStrike.png");
     }
-
-
 }
+class FireBall extends Weapon {
+    public FireBall() {
+        damage = 60;
+        damageDecayFactor = 0.5f;
+        areaOfEffect = 10;
+        rateOfFall = 10;
+        totalAmmo = 1;
+        name = "FireBall";
+        fixtureDef.density = 1f;
+        fixtureDef.friction = 0.4f;
+        fixtureDef.restitution = 0.6f;
+        radiusOfProjectile = 20;
+        texture = new Texture("FireBall.png");
+    }
+}
+
+class DragonBall extends Weapon {
+    public DragonBall() {
+        damage = 60;
+        damageDecayFactor = 0.5f;
+        areaOfEffect = 10;
+        rateOfFall = 10;
+        totalAmmo = 1;
+        name = "DragonBall";
+        fixtureDef.density = 1f;
+        fixtureDef.friction = 0.4f;
+        fixtureDef.restitution = 0.6f;
+        radiusOfProjectile = 20;
+        texture = new Texture("DragonBall.png");
+    }
+}
+class Nuke extends Weapon {
+    public Nuke() {
+        damage = 60;
+        damageDecayFactor = 0.5f;
+        areaOfEffect = 10;
+        rateOfFall = 10;
+        totalAmmo = 1;
+        name = "Nuke";
+        fixtureDef.density = 1f;
+        fixtureDef.friction = 0.4f;
+        fixtureDef.restitution = 0.6f;
+        radiusOfProjectile = 20;
+        texture = new Texture("Nuke.png");
+    }
+}
+
+
