@@ -97,6 +97,12 @@ public class Projectile extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         projectileSprite.draw(batch);
+        System.out.println(body.getPosition());
+        if(body.getPosition().x > 600 || body.getPosition().x < -700 || body.getPosition().y > 1000 || body.getPosition().y < -1000){
+            body.setActive(false);
+            setHit(true);
+            this.remove();
+        }
     }
 
     public void syncSprite(){
