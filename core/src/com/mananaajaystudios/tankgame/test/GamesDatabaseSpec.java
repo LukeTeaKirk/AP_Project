@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,6 +29,18 @@ public class GamesDatabaseSpec {
         gamesDatabaseSpec.testGetGames();
         gamesDatabaseSpec.testSaveGame();
         gamesDatabaseSpec.testLoadGame();
+        //cleanup after tests
+        gamesDatabaseSpec.deleteAllFiles();
+    }
+    //function to delete all files in games folder
+    public void deleteAllFiles(){
+        File folder = new File("games");
+        File[] listOfFiles = folder.listFiles();
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                file.delete();
+            }
+        }
     }
     @Test
     public void testGetGames() {
