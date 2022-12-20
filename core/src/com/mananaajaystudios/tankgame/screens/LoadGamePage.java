@@ -106,8 +106,8 @@ public class LoadGamePage implements Screen{
         System.out.println(games);
         table2.setBackground(ChooseBackgroundDrawable);
         games.forEach(s-> getButton(s.gameID,s,table2));
-        table2.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table2.row();
+        table2.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table1.setBackground(ChoooseTankBackgroundDrawable);
         table1.add(TankGroupCoalition).size(200,200).pad(10).padLeft(20).padRight(10).align(Align.center);
         returnButton.addListener(new ChangeListener() {
@@ -143,8 +143,8 @@ public class LoadGamePage implements Screen{
                 }
             }
         });
-        table.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table.row();
+        table.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
     }
     @Override
     public void render(float delta) {
