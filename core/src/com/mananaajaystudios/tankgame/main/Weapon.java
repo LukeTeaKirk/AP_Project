@@ -19,7 +19,10 @@ public class Weapon implements Serializable {
     protected Projectile projectile;
     protected transient BodyDef bodyDef;
     transient FixtureDef fixtureDef;
-    protected int totalAmmo;
+    protected int totalAmmo, width, height;
+    protected int degrees = 0;
+    protected int degrees2 = 0;
+    protected int offsetX = 0;
     protected transient Texture texture;
     protected transient Sprite TankSprite, ProjectileSprite;
     public Weapon(){
@@ -35,7 +38,11 @@ public class Weapon implements Serializable {
     public Projectile Fire(World world, float x, float y, Sprite tankSprite, Stage stage, int Player){
         this.TankSprite = tankSprite;
         bodyDef.position.set(tankSprite.getX() -640 +50, tankSprite.getY() -360 +60);
-        Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile,texture, damage, stage, Player);
+        Sprite temp = new Sprite(texture);
+        temp.setSize(width,height);
+        temp.setOriginCenter();
+        temp.rotate(-40 + degrees);
+        Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile,texture, damage, stage, Player, temp, degrees2,offsetX);
         projectile.Shoot(x, y);
         return projectile;
     }
@@ -59,6 +66,11 @@ class Rocket extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 10;
+        width = 40;
+        height = 80;
+        degrees = -45;
+        degrees2 = 80;
+        offsetX = 60;
         texture = new Texture("Missile.png");
     }
     //initialize all transient variables after deserialization
@@ -82,6 +94,8 @@ class MachineGun extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 5;
+        width = 100;
+        height = 100;
         texture = new Texture("bullet.png");
     }
     //initialize all transient variables after deserialization
@@ -106,12 +120,14 @@ class SatelliteStrike extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 20;
+        width = 100;
+        height = 100;
         texture = new Texture("Sattellite.png");
     }
     @Override
     public void readObject(){
         super.readObject();
-        texture = new Texture("SatelliteStrike.png");
+        texture = new Texture("Sattellite.png");
     }
 }
 class FireBall extends Weapon {
@@ -126,6 +142,8 @@ class FireBall extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 20;
+        width = 100;
+        height = 100;
         texture = new Texture("FireBall.png");
     }
     @Override
@@ -148,6 +166,8 @@ class DragonBall extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 20;
+        width = 100;
+        height = 100;
         texture = new Texture("DragonBall.png");
     }
     @Override
@@ -169,6 +189,8 @@ class Nuke extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 20;
+        width = 100;
+        height = 100;
         texture = new Texture("Nuke.png");
     }
     @Override

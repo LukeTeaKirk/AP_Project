@@ -19,8 +19,9 @@ public class Projectile extends Actor {
     private int projectileDamage;
     private boolean Hit = false;
     private transient player otherPlayer;
+    private int offsetX;
 
-    public Projectile(BodyDef bodyDef, FixtureDef fixtureDef, World world, int radius, Texture texture, int projectileDamage, Stage stage, int player) {
+    public Projectile(BodyDef bodyDef, FixtureDef fixtureDef, World world, int radius, Texture texture, int projectileDamage, Stage stage, int player, Sprite sprite2, int degrees, int offsetX) {
         this.bodyDef = bodyDef;
         this.fixtureDef = fixtureDef;
         CircleShape shape = new CircleShape();
@@ -28,11 +29,12 @@ public class Projectile extends Actor {
         fixtureDef.shape = shape;
         this.world = world;
         CanCauseDamage = false;
-        this.projectileSprite = new Sprite(texture);
-        this.projectileSprite.setSize(100,30);
+        this.offsetX = offsetX;
         playerNumber = player;
+        this.projectileSprite = sprite2;
         if(player == 2){
             this.projectileSprite.setFlip(true,false);
+            this.projectileSprite.rotate(90 + degrees);
         }
         this.projectileDamage = projectileDamage;
         stage.addActor(this);
@@ -106,7 +108,12 @@ public class Projectile extends Actor {
     }
 
     public void syncSprite(){
-        projectileSprite.setPosition(body.getPosition().x + 585, body.getPosition().y+ 340);
+        if(playerNumber ==1){
+            projectileSprite.setPosition(body.getPosition().x + 580, body.getPosition().y+ 310);
+        }
+        else {
+            projectileSprite.setPosition(body.getPosition().x + 580 + offsetX, body.getPosition().y+ 310);
+        }
     }
 
     public void setCanCauseDamage(boolean canCauseDamage) {
