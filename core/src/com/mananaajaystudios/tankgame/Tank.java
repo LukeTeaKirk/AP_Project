@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
@@ -34,6 +35,7 @@ public class Tank extends Actor implements Serializable {
     protected int firedThisMove = 0;
     protected transient TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
     protected transient Projectile projectile;
+    protected Vector2 lastPositionTank;
 
     public Tank(Integer PlayerNumber) {
         this.PlayerNumber = PlayerNumber;
@@ -177,6 +179,7 @@ public class Tank extends Actor implements Serializable {
         return isEnabled;
     }
     public void setBody(World world) {
+        System.out.println("running setBody");
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 0);

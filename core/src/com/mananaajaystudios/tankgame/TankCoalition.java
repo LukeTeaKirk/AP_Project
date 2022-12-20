@@ -65,10 +65,20 @@ public class TankCoalition extends Tank {
 //        bodyDef.angularDamping = 1f;
 //        bodyDef.linearDamping = 1f;
         if(PlayerNumber ==1){
-            bodyDef.position.set(-500, 0);
+            if(lastPositionTank != null){
+                bodyDef.position.set(lastPositionTank);
+            }
+            else{
+                bodyDef.position.set(-500, 0);
+            }
         }
         else{
-            bodyDef.position.set(500, 0);
+            if(lastPositionTank != null){
+                bodyDef.position.set(lastPositionTank);
+            }
+            else{
+                bodyDef.position.set(500, 0);
+            }
         }
         FixtureDef fixturedef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -83,13 +93,13 @@ public class TankCoalition extends Tank {
         this.body.setUserData(this);
         System.out.println(body.getPosition());
         Fixture fix = body.createFixture(fixturedef);
-        System.out.println("2");
     }
     @Override
     public void updateBodyPosition() {
         this.tankSprite.setPosition(this.body.getPosition().x + 590, this.body.getPosition().y + 310);
         tankSprite.setOriginCenter();
         tankSprite.setRotation(this.body.getAngle()*70);
+        lastPositionTank = this.body.getPosition();
 //        System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
         //this.body = world.createBody(bodyDef);
     }

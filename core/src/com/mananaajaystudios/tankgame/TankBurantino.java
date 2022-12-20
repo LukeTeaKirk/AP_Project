@@ -55,11 +55,21 @@ public class TankBurantino extends Tank{
     public void setBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        if(PlayerNumber == 1){
-            bodyDef.position.set(-500, 0);
+        if(PlayerNumber ==1){
+            if(lastPositionTank != null){
+                bodyDef.position.set(lastPositionTank);
+            }
+            else{
+                bodyDef.position.set(-500, 0);
+            }
         }
         else{
-            bodyDef.position.set(500, 0);
+            if(lastPositionTank != null){
+                bodyDef.position.set(lastPositionTank);
+            }
+            else{
+                bodyDef.position.set(500, 0);
+            }
         }
         FixtureDef fixturedef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -81,6 +91,7 @@ public class TankBurantino extends Tank{
         this.tankSprite.setPosition(this.body.getPosition().x + 570, this.body.getPosition().y + 310);
         tankSprite.setOriginCenter();
         tankSprite.setRotation(this.body.getAngle()*70);
+        lastPositionTank = this.body.getPosition();
         //this.body = world.createBody(bodyDef);
     }
     //initialize all transient variables after deserialization
