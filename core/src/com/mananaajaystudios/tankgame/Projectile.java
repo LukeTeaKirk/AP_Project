@@ -38,7 +38,7 @@ public class Projectile extends Actor {
         stage.addActor(this);
     }
 
-    public int getProjectileDamage() {
+    public int getProjectileDamage(boolean aoe) {
         Vector2 bodypos = body.getPosition();
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
@@ -56,6 +56,9 @@ public class Projectile extends Actor {
         }
         //return distance between tankpos and bodypos
         float dis = distance(bodypos.x, bodypos.y, tankpos.x, tankpos.y);
+        if(!aoe){
+            return projectileDamage;
+        }
         if(dis>60 && tank != null){
             int damage = (int) (projectileDamage-(dis/10)*2);
             if(damage>0){
