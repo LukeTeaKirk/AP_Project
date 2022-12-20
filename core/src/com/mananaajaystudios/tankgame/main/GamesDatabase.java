@@ -1,7 +1,6 @@
-package com.mananaajaystudios.tankgame;
+package com.mananaajaystudios.tankgame.main;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GamesDatabase {

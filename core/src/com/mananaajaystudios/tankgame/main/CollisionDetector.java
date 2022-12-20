@@ -1,4 +1,4 @@
-package com.mananaajaystudios.tankgame;
+package com.mananaajaystudios.tankgame.main;
 
 import com.badlogic.gdx.physics.box2d.*;
 

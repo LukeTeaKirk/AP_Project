@@ -1,4 +1,4 @@
-package com.mananaajaystudios.tankgame;
+package com.mananaajaystudios.tankgame.main;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -72,7 +72,7 @@ class Rocket extends Weapon {
 
 class MachineGun extends Weapon {
     public MachineGun(){
-        damage = 200;
+        damage = 20;
         damageDecayFactor = 0.5f;
         areaOfEffect = 10;
         rateOfFall = 10;

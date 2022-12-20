@@ -1,4 +1,4 @@
-package com.mananaajaystudios.tankgame.screens;
+package com.mananaajaystudios.tankgame.main.screens;
 
 
 import com.badlogic.gdx.Gdx;
@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mananaajaystudios.tankgame.TopDog;
+import com.mananaajaystudios.tankgame.main.TopDog;
 
 public class EndGame implements Screen{
 

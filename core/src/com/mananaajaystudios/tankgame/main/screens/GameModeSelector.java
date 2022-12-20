@@ -1,4 +1,5 @@
-package com.mananaajaystudios.tankgame.screens;
+package com.mananaajaystudios.tankgame.main.screens;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -12,13 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mananaajaystudios.tankgame.Game;
-import com.mananaajaystudios.tankgame.GamesDatabase;
-import com.mananaajaystudios.tankgame.TopDog;
+import com.mananaajaystudios.tankgame.main.TopDog;
 
 import java.util.ArrayList;
 
-public class LoadGamePage implements Screen{
+public class GameModeSelector implements Screen{
     private TopDog parent;
     private Stage stage;
 
@@ -26,9 +25,9 @@ public class LoadGamePage implements Screen{
     private TextureAtlas atlas;
     private TextureRegion ChooseBackground;
     private TextureRegionDrawable ChooseBackgroundDrawable;
-    Skin TextSkin,skin;
+    private Skin TextSkin,skin;
     private BitmapFont white, black;
-    public LoadGamePage(TopDog temp){
+    public GameModeSelector(TopDog temp){
         parent = temp;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -40,6 +39,8 @@ public class LoadGamePage implements Screen{
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
         TextSkin = new Skin(atlas);
+
+        //Load Tank Images
         TextureRegion TankCoalition = atlas.findRegion("Coalition");
         TextureRegion TankBuratino = atlas.findRegion("Buratino");
         TextureRegion TankHelios = atlas.findRegion("Helios");
@@ -94,57 +95,39 @@ public class LoadGamePage implements Screen{
 
 
 
-        TextButton returnButton = new TextButton("RETURN", textButtonStyle);
-        returnButton.setSize(300, 100);
+        TextButton newGame = new TextButton("1 V 1", textButtonStyle);
+        newGame.setSize(300, 100);
+        TextButton exit = new TextButton("P V COMP", textButtonStyle);
+        exit.setSize(300, 100);
+
         ChooseBackground = atlas.findRegion("PopUp");
         ChooseBackgroundDrawable = new TextureRegionDrawable(ChooseBackground);
         Texture ChoooseTankBackground = new Texture(Gdx.files.internal("ChooseTankBackground.png"));
         TextureRegionDrawable ChoooseTankBackgroundDrawable = new TextureRegionDrawable(ChoooseTankBackground);
+
         table2.setBackground(ChooseBackgroundDrawable);
-        table2.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
-        ArrayList<Game> games = GamesDatabase.getGames();
-        System.out.println(games);
-        table2.setBackground(ChooseBackgroundDrawable);
-        games.forEach(s-> getButton(s.gameID,s,table2));
+        table2.add(newGame).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table2.row();
-        table2.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
+        table2.add(exit).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
+        table2.row();
         table1.setBackground(ChoooseTankBackgroundDrawable);
         table1.add(TankGroupCoalition).size(200,200).pad(10).padLeft(20).padRight(10).align(Align.center);
-        returnButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
-                sound.play(1F);
-                parent.changeScreen("MAIN");
-            }
-        });
 
-    }
-    public void getButton(String gameID, Game game, Table table){
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = TextSkin.getDrawable("button_up");
-        textButtonStyle.down = TextSkin.getDrawable("button_down");
-        textButtonStyle.pressedOffsetX = 1;
-        textButtonStyle.pressedOffsetY = -1;
-        textButtonStyle.font = black;
-        TextButton returnButton = new TextButton(gameID, textButtonStyle);
-        returnButton.setSize(300, 100);
-        returnButton.addListener(new ChangeListener() {
+        exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
-                sound.play(1F);
-                //try catch block which prints all exceptions
-                try{
-                    game.loadedGame = true;
-                    parent.changeScreen("INGAME", game);
-                }catch(Exception e){
-                    throw(e);
-                }
+//                sound.play(1F);
             }
         });
-        table.row();
-        table.add(returnButton).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
+        newGame.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
+//                sound.play(1F);
+                parent.changeScreen("TANKP1");
+            }
+        });
     }
     @Override
     public void render(float delta) {
@@ -155,7 +138,7 @@ public class LoadGamePage implements Screen{
         stage.draw();
         stage.getBatch().begin();
         stage.getBatch().enableBlending();
-        stage.getBatch().draw(logoSprite, 200, 475, 300, 200);
+        stage.getBatch().draw(logoSprite, 200, 475, 350, 200);
         stage.getBatch().end();
     }
 
@@ -184,6 +167,7 @@ public class LoadGamePage implements Screen{
 
     @Override
     public void dispose() {
+
         stage.dispose();
     }
 
