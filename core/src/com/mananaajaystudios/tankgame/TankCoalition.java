@@ -117,6 +117,7 @@ public class TankCoalition extends Tank {
             weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) * 24 - 35);
             healthBar.setSize(400, 50);
             healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 12);
+            healthBar.setSize(healthBarPosition, 50);
             isEnabled = 1;
 
         } else if (PlayerNumber == 2) {
@@ -127,6 +128,7 @@ public class TankCoalition extends Tank {
             tankSprite.flip(true, false);
             healthBar.setSize(400, 50);
             healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 12);
+            healthBar.setSize(healthBarPosition, 50);
             isEnabled = 0;
         }
         weapons.forEach(Weapon::readObject);

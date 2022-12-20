@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class Tank extends Actor implements Serializable {
     protected transient Sprite tank, fireButton, fuelBar1,fuelBar2, weaponSelect, healthBar;
     protected int health, fuel, weapon;
+    protected int healthBarPosition;
     protected transient TextureAtlas Atlas;
     protected transient Body body;
     Integer PlayerNumber;
@@ -89,6 +90,7 @@ public class Tank extends Actor implements Serializable {
     public void damageTaken(int damage){
         this.health -= damage;
         healthBar.setSize(healthBar.getWidth() - (damage*4), healthBar.getHeight());
+        healthBarPosition = (int) healthBar.getWidth();
         if(health <= 0){
             isDead = true;
         }
