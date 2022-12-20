@@ -1,4 +1,4 @@
-package com.mananaajaystudios.tankgame;
+package com.mananaajaystudios.tankgame.main;
 
 import java.io.Serializable;
 

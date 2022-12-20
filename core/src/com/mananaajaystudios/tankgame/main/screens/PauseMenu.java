@@ -1,4 +1,4 @@
-package com.mananaajaystudios.tankgame;
+package com.mananaajaystudios.tankgame.main.screens;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;

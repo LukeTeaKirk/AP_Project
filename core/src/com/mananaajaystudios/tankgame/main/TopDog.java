@@ -1,7 +1,7 @@
-package com.mananaajaystudios.tankgame;
+package com.mananaajaystudios.tankgame.main;
 
 import com.badlogic.gdx.Game;
-import com.mananaajaystudios.tankgame.screens.*;
+import com.mananaajaystudios.tankgame.main.screens.*;
 
 public class TopDog extends Game {
     private SplashScreen splashScreen;
@@ -48,13 +48,13 @@ public class TopDog extends Game {
                 break;
             case "LOAD":
                 if(loadGame == null) loadGame = new LoadGamePage(this);
-                System.out.println("test");
+                System.out.println("com/mananaajaystudios/tankgame/test");
                 this.setScreen(loadGame);
                 break;
 
         }
     }
-    public void changeScreen(String screen, com.mananaajaystudios.tankgame.Game game){
+    public void changeScreen(String screen, com.mananaajaystudios.tankgame.main.Game game){
         switch(screen){
             case "INGAME":
                 tankGame = new MyTankGame(this, game);

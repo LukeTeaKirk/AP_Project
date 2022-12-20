@@ -1,5 +1,4 @@
-package com.mananaajaystudios.tankgame.screens;
-
+package com.mananaajaystudios.tankgame.main.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -13,11 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mananaajaystudios.tankgame.TopDog;
+import com.mananaajaystudios.tankgame.main.TopDog;
 
 import java.util.ArrayList;
 
-public class GameModeSelector implements Screen{
+public class MainPage implements Screen{
     private TopDog parent;
     private Stage stage;
 
@@ -27,20 +26,33 @@ public class GameModeSelector implements Screen{
     private TextureRegionDrawable ChooseBackgroundDrawable;
     private Skin TextSkin,skin;
     private BitmapFont white, black;
-    public GameModeSelector(TopDog temp){
+
+    private Sound BgMusic;
+    long id;
+
+    public MainPage(TopDog temp){
         parent = temp;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
 
+    public long getId() {
+        return id;
+    }
+    public Sound getBgMusic() {
+        return BgMusic;
+    }
     @Override
     public void show() {
+//        BgMusic = Gdx.audio.newSound(Gdx.files.internal("Assets/TankStarsBGM.mp3"));
+//        id = BgMusic.play();
+//        BgMusic.setLooping(id,true);
+
         atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));
         white = new BitmapFont(Gdx.files.internal("fonts/white.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("fonts/black.fnt"), false);
         TextSkin = new Skin(atlas);
 
-        //Load Tank Images
         TextureRegion TankCoalition = atlas.findRegion("Coalition");
         TextureRegion TankBuratino = atlas.findRegion("Buratino");
         TextureRegion TankHelios = atlas.findRegion("Helios");
@@ -95,9 +107,11 @@ public class GameModeSelector implements Screen{
 
 
 
-        TextButton newGame = new TextButton("1 V 1", textButtonStyle);
+        TextButton newGame = new TextButton("NEW GAME", textButtonStyle);
         newGame.setSize(300, 100);
-        TextButton exit = new TextButton("P V COMP", textButtonStyle);
+        TextButton load = new TextButton("LOAD", textButtonStyle);
+        load.setSize(300, 100);
+        TextButton exit = new TextButton("EXIT", textButtonStyle);
         exit.setSize(300, 100);
 
         ChooseBackground = atlas.findRegion("PopUp");
@@ -107,6 +121,8 @@ public class GameModeSelector implements Screen{
 
         table2.setBackground(ChooseBackgroundDrawable);
         table2.add(newGame).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
+        table2.row();
+        table2.add(load).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table2.row();
         table2.add(exit).size(300,100).pad(10).padLeft(20).padRight(10).align(Align.center);
         table2.row();
@@ -118,6 +134,7 @@ public class GameModeSelector implements Screen{
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
 //                sound.play(1F);
+                Gdx.app.exit();
             }
         });
         newGame.addListener(new ChangeListener() {
@@ -125,9 +142,19 @@ public class GameModeSelector implements Screen{
             public void changed(ChangeEvent event, Actor actor) {
                 Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
 //                sound.play(1F);
-                parent.changeScreen("TANKP1");
+                parent.changeScreen("GAMEMODE");
             }
         });
+        load.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("com/mananaajaystudios/tankgame/test");
+                Sound sound = Gdx.audio.newSound(Gdx.files.internal("assets/buttonClick.mp3"));
+//                sound.play(1F);
+                parent.changeScreen("LOAD");
+            }
+        });
+
     }
     @Override
     public void render(float delta) {
@@ -167,7 +194,7 @@ public class GameModeSelector implements Screen{
 
     @Override
     public void dispose() {
-
+        BgMusic.dispose();
         stage.dispose();
     }
 
