@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 public class Tank extends Actor implements Serializable {
     protected transient Sprite tank, fireButton, fuelBar1,fuelBar2, weaponSelect, healthBar;
     protected int health, fuel, weapon;
+    protected int healthBarPosition;
     protected transient TextureAtlas Atlas;
     protected transient Body body;
     Integer PlayerNumber;
@@ -29,9 +31,11 @@ public class Tank extends Actor implements Serializable {
     protected transient Sprite tankSprite;
 
     protected float ForceX, ForceY;
-    protected int isEnabled, canMove, firedThisMove;
+    protected int isEnabled, canMove;
+    protected int firedThisMove = 0;
     protected transient TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
     protected transient Projectile projectile;
+    protected Vector2 lastPositionTank;
 
     public Tank(Integer PlayerNumber) {
         this.PlayerNumber = PlayerNumber;
@@ -52,6 +56,7 @@ public class Tank extends Actor implements Serializable {
 
             healthBar.setSize(400, 50);
             healthBar.setPosition(175, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            healthBarPosition = (int) healthBar.getWidth();
             isEnabled = 1;
             canMove = 1;
             fuelBar1.setSize(240, 70);
@@ -60,6 +65,7 @@ public class Tank extends Actor implements Serializable {
         else if(PlayerNumber == 2){
             healthBar.setSize(400, 50);
             healthBar.setPosition(710, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
+            healthBarPosition = (int) healthBar.getWidth();
             isEnabled = 0;
             canMove = 0;
             fuelBar2.setSize(0, 0);
@@ -88,6 +94,7 @@ public class Tank extends Actor implements Serializable {
     public void damageTaken(int damage){
         this.health -= damage;
         healthBar.setSize(healthBar.getWidth() - (damage*4), healthBar.getHeight());
+        healthBarPosition = (int) healthBar.getWidth();
         if(health <= 0){
             isDead = true;
         }
@@ -172,6 +179,7 @@ public class Tank extends Actor implements Serializable {
         return isEnabled;
     }
     public void setBody(World world) {
+        System.out.println("running setBody");
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 0);
@@ -208,6 +216,7 @@ public class Tank extends Actor implements Serializable {
         TextureRegion healthRegion = new TextureRegion(healthBarTexture);
         healthBar = new Sprite(healthRegion);
         if(PlayerNumber == 1){
+            System.out.println("reinit tank1");
             fuelBar1 = new Sprite(fuelRegion);
             fuelBar1.setSize(240, 70);
             fuelBar1.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
@@ -220,6 +229,7 @@ public class Tank extends Actor implements Serializable {
 
         }
         else if(PlayerNumber == 2){
+            System.out.println("reinit tank2");
             healthBar.setSize(400, 50);
             healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
             isEnabled = 0;

@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mananaajaystudios.tankgame.*;
 import com.mananaajaystudios.tankgame.Game;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 //pause menu button to populate screen and close it
@@ -230,7 +231,11 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 						player1.setTank(tank1);
 						player2.setTank(tank2);
 						game.setPlayers(player1, player2);
-						GamesDatabase.saveGame(game);
+						try {
+							GamesDatabase.saveGame(game);
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
 						parent.changeScreen("MAIN");
 
 						//save game actions

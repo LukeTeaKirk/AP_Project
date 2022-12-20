@@ -9,13 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 public class Projectile extends Actor {
-    private BodyDef bodyDef;
+    private transient BodyDef bodyDef;
     private int playerNumber;
     private boolean CanCauseDamage;
     private FixtureDef fixtureDef;
-    private Body body;
+    private transient Body body;
     World world;
-    private Sprite projectileSprite;
+    private transient Sprite projectileSprite;
     private int projectileDamage;
     private boolean Hit = false;
     private transient player otherPlayer;
@@ -38,7 +38,7 @@ public class Projectile extends Actor {
         stage.addActor(this);
     }
 
-    public int getProjectileDamage() {
+    public int getProjectileDamage(boolean aoe) {
         Vector2 bodypos = body.getPosition();
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
@@ -56,6 +56,9 @@ public class Projectile extends Actor {
         }
         //return distance between tankpos and bodypos
         float dis = distance(bodypos.x, bodypos.y, tankpos.x, tankpos.y);
+        if(!aoe){
+            return projectileDamage;
+        }
         if(dis>60 && tank != null){
             int damage = (int) (projectileDamage-(dis/10)*2);
             if(damage>0){
@@ -94,6 +97,12 @@ public class Projectile extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         projectileSprite.draw(batch);
+        System.out.println(body.getPosition());
+        if(body.getPosition().x > 600 || body.getPosition().x < -700 || body.getPosition().y > 1000 || body.getPosition().y < -1000){
+            body.setActive(false);
+            setHit(true);
+            this.remove();
+        }
     }
 
     public void syncSprite(){
