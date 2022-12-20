@@ -3,14 +3,10 @@ package com.mananaajaystudios.tankgame;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
-
 import java.io.Serializable;
-import java.lang.reflect.Array;
 
 public class Weapon implements Serializable {
     protected String name;
@@ -115,7 +111,7 @@ class SatelliteStrike extends Weapon {
     @Override
     public void readObject(){
         super.readObject();
-        //texture = new Texture("SatelliteStrike.png");
+        texture = new Texture("SatelliteStrike.png");
     }
 }
 class FireBall extends Weapon {
@@ -132,6 +128,12 @@ class FireBall extends Weapon {
         radiusOfProjectile = 20;
         texture = new Texture("FireBall.png");
     }
+    @Override
+    public void readObject(){
+        super.readObject();
+        texture = new Texture("FireBall.png");
+    }
+
 }
 
 class DragonBall extends Weapon {
@@ -148,6 +150,12 @@ class DragonBall extends Weapon {
         radiusOfProjectile = 20;
         texture = new Texture("DragonBall.png");
     }
+    @Override
+    public void readObject(){
+        super.readObject();
+        texture = new Texture("DragonBall.png");
+    }
+
 }
 class Nuke extends Weapon {
     public Nuke() {
@@ -163,6 +171,12 @@ class Nuke extends Weapon {
         radiusOfProjectile = 20;
         texture = new Texture("Nuke.png");
     }
+    @Override
+    public void readObject(){
+        super.readObject();
+        texture = new Texture("Nuke.png");
+    }
+
 }
 
 
