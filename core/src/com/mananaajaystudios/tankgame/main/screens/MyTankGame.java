@@ -1,4 +1,4 @@
-package com.mananaajaystudios.tankgame.screens;
+package com.mananaajaystudios.tankgame.main.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,11 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mananaajaystudios.tankgame.*;
-import com.mananaajaystudios.tankgame.Game;
+import com.mananaajaystudios.tankgame.main.*;
+import com.mananaajaystudios.tankgame.main.Game;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 //pause menu button to populate screen and close it
 public class MyTankGame extends ApplicationAdapter implements Screen, InputProcessor {

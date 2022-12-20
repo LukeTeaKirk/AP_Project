@@ -1,5 +1,4 @@
-package com.mananaajaystudios.tankgame;
-
+package com.mananaajaystudios.tankgame.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -11,26 +10,23 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-import javax.annotation.processing.SupportedSourceVersion;
-
-public class TankCoalition extends Tank {
+public class TankBurantino extends Tank{
     private transient Sprite tankSprite;
-
-    public TankCoalition(Integer PlayerNumber) {
+    public TankBurantino(Integer PlayerNumber) {
         super(PlayerNumber);
-        super.tankRegion = Atlas.findRegion("Coalition");
+        super.tankRegion = Atlas.findRegion("Buratino");
         tankSprite = new Sprite(tankRegion);
         weapons.add(new MachineGun());
         weapons.add(new Rocket());
         weapons.add(new SatelliteStrike());
         currentWeapon = weapons.get(0);
 
-        tankSprite.setSize(100, 100);
+        tankSprite.setSize(150, 150);
         if(PlayerNumber == 1){
-            tankSprite.setPosition(120, 250);
+            tankSprite.setPosition(50, 300);
         }
         else if(PlayerNumber == 2){
-            tankSprite.setPosition(850, 250);
+            tankSprite.setPosition(850, 300);
             tankSprite.flip(true, false);
         }
         setTankSprite(tankSprite);
@@ -38,17 +34,16 @@ public class TankCoalition extends Tank {
     @Override
     public void act(float delta) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A) && this.canMove == 1){
-            body.applyLinearImpulse(new Vector2(-100f, 0), body.getWorldCenter(), true);
+        if(Gdx.input.isKeyPressed(Input.Keys.A) && this.canMove == 1) {
+            body.applyLinearImpulse(new Vector2(-1000f, 0), body.getWorldCenter(), true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D) && this.canMove == 1) {
-            body.applyLinearImpulse(new Vector2(100f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(1000f, 0), body.getWorldCenter(), true);
 
         }
-//        this.body.setUserData(tankSprite);
+        this.body.setUserData(tankSprite);
         super.act(delta);
     }
-
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -56,14 +51,10 @@ public class TankCoalition extends Tank {
         tankSprite.draw(batch);
     }
 
-
-
     @Override
     public void setBody(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-//        bodyDef.angularDamping = 1f;
-//        bodyDef.linearDamping = 1f;
         if(PlayerNumber ==1){
             if(lastPositionTank != null){
                 bodyDef.position.set(lastPositionTank);
@@ -83,37 +74,37 @@ public class TankCoalition extends Tank {
         FixtureDef fixturedef = new FixtureDef();
         CircleShape shape = new CircleShape();
         PolygonShape shape2 = new PolygonShape();
-        shape2.setAsBox(35f,24f);
+        shape2.setAsBox(40f,12f);
         shape.setPosition(new Vector2(0,0));
         shape.setRadius(3f);
         fixturedef.shape = shape2;
-        fixturedef.density = 0.1f;
-        fixturedef.friction = 0.1f;
+        fixturedef.density = 1.0f;
+        fixturedef.friction = 0.3f;
         this.body = world.createBody(bodyDef);
-        this.body.setUserData(this);
+        this.body.setUserData(tankSprite);
         System.out.println(body.getPosition());
         Fixture fix = body.createFixture(fixturedef);
+        System.out.println("2");
     }
     @Override
     public void updateBodyPosition() {
-        this.tankSprite.setPosition(this.body.getPosition().x + 590, this.body.getPosition().y + 310);
+        this.tankSprite.setPosition(this.body.getPosition().x + 570, this.body.getPosition().y + 310);
         tankSprite.setOriginCenter();
         tankSprite.setRotation(this.body.getAngle()*70);
         lastPositionTank = this.body.getPosition();
-//        System.out.println(this.body.getAngle() + " " + tankSprite.getRotation());
         //this.body = world.createBody(bodyDef);
     }
     //initialize all transient variables after deserialization
     //called after deserialization
     @Override
-    public void readObject(){
+    public void readObject() {
         Atlas = new TextureAtlas("Spritesheets/Spritesheet1.atlas");
         fuelRegion = Atlas.findRegion("FuelBar");
         weaponRegion = Atlas.findRegion("SplitterChain");
         Texture healthBarTexture = new Texture("HealthBar.jpeg");
         TextureRegion healthRegion = new TextureRegion(healthBarTexture);
         //reinitialize tankregion
-        tankRegion = Atlas.findRegion("Coalition");
+        tankRegion = Atlas.findRegion("Burantino");
         healthBar = new Sprite(healthRegion);
         tankSprite = new Sprite(tankRegion);
         tankSprite.setSize(100, 100);
@@ -145,4 +136,3 @@ public class TankCoalition extends Tank {
         setTankSprite(tankSprite);
     }
 }
-
