@@ -29,7 +29,8 @@ public class Tank extends Actor implements Serializable {
     protected transient Sprite tankSprite;
 
     protected float ForceX, ForceY;
-    protected int isEnabled, canMove, firedThisMove;
+    protected int isEnabled, canMove;
+    protected int firedThisMove = 0;
     protected transient TextureRegion tankRegion, fuelRegion, weaponRegion, fireRegion;
     protected transient Projectile projectile;
 
@@ -208,6 +209,7 @@ public class Tank extends Actor implements Serializable {
         TextureRegion healthRegion = new TextureRegion(healthBarTexture);
         healthBar = new Sprite(healthRegion);
         if(PlayerNumber == 1){
+            System.out.println("reinit tank1");
             fuelBar1 = new Sprite(fuelRegion);
             fuelBar1.setSize(240, 70);
             fuelBar1.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
@@ -220,6 +222,7 @@ public class Tank extends Actor implements Serializable {
 
         }
         else if(PlayerNumber == 2){
+            System.out.println("reinit tank2");
             healthBar.setSize(400, 50);
             healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*12);
             isEnabled = 0;

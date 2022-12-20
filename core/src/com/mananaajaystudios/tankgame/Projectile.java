@@ -9,13 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 public class Projectile extends Actor {
-    private BodyDef bodyDef;
+    private transient BodyDef bodyDef;
     private int playerNumber;
     private boolean CanCauseDamage;
     private FixtureDef fixtureDef;
-    private Body body;
+    private transient Body body;
     World world;
-    private Sprite projectileSprite;
+    private transient Sprite projectileSprite;
     private int projectileDamage;
     private boolean Hit = false;
     private transient player otherPlayer;

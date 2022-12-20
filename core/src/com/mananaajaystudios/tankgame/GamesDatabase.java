@@ -43,7 +43,7 @@ public class GamesDatabase {
         return n;
 
     }
-    static public void saveGame(Game game){
+    static public void saveGame(Game game) throws IOException {
         game.gameID = "a" + getGameID();
         try {
             FileOutputStream f = new FileOutputStream(new File("games/myGame" + game.gameID + ".txt"));
@@ -55,7 +55,8 @@ public class GamesDatabase {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println(e);
-            System.out.println("Error initializing stream");
+            throw(e);
+            //System.out.println("Error initializing stream");
         }
     }
 

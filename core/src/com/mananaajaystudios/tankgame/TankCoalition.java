@@ -106,12 +106,12 @@ public class TankCoalition extends Tank {
         tankRegion = Atlas.findRegion("Coalition");
         healthBar = new Sprite(healthRegion);
         tankSprite = new Sprite(tankRegion);
-            tankSprite.setSize(100, 100);
-            if (PlayerNumber == 1) {
+        tankSprite.setSize(100, 100);
+        if (PlayerNumber == 1) {
             tankSprite.setPosition(120, 250);
-//            fuelBar = new Sprite(fuelRegion);
-//            fuelBar.setSize(240, 70);
-//            fuelBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 95 - 40);
+            fuelBar1 = new Sprite(fuelRegion);
+            fuelBar1.setSize(240, 70);
+            fuelBar1.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 48, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 95 - 40);
             weaponSelect = new Sprite(weaponRegion);
             weaponSelect.setSize(75, 75);
             weaponSelect.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 6 - 200, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 25) * 24 - 35);
@@ -120,12 +120,16 @@ public class TankCoalition extends Tank {
             isEnabled = 1;
 
         } else if (PlayerNumber == 2) {
+            fuelBar2 = new Sprite(fuelRegion);
+            fuelBar2.setSize(0, 0);
+            fuelBar2.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/50)*12, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100)*95 -40);
             tankSprite.setPosition(850, 250);
             tankSprite.flip(true, false);
             healthBar.setSize(400, 50);
             healthBar.setPosition(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 50) * 22, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 100) * 12);
             isEnabled = 0;
         }
+        weapons.forEach(Weapon::readObject);
         setTankSprite(tankSprite);
     }
 }

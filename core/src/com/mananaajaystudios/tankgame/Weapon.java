@@ -21,11 +21,11 @@ public class Weapon implements Serializable {
     protected int radiusOfProjectile;
     protected int NoOfProjectiles;
     protected Projectile projectile;
-    protected BodyDef bodyDef;
-    FixtureDef fixtureDef;
+    protected transient BodyDef bodyDef;
+    transient FixtureDef fixtureDef;
     protected int totalAmmo;
-    protected Texture texture;
-    protected Sprite TankSprite, ProjectileSprite;
+    protected transient Texture texture;
+    protected transient Sprite TankSprite, ProjectileSprite;
     public Weapon(){
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -43,6 +43,13 @@ public class Weapon implements Serializable {
         projectile.Shoot(x, y);
         return projectile;
     }
+    //initialize all transient variables after deserialization
+    //called after deserialization
+    public void readObject(){
+        bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        fixtureDef = new FixtureDef();
+    }
 }
 class Rocket extends Weapon {
     public Rocket() {
@@ -57,7 +64,13 @@ class Rocket extends Weapon {
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 10;
     }
-
+    //initialize all transient variables after deserialization
+    //called after deserialization
+    @Override
+    public void readObject(){
+        super.readObject();
+        //texture = new Texture("rocket.png");
+    }
 }
 
 class MachineGun extends Weapon {
@@ -72,6 +85,13 @@ class MachineGun extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 5;
+        texture = new Texture("bullet.png");
+    }
+    //initialize all transient variables after deserialization
+    //called after deserialization
+    @Override
+    public void readObject(){
+        super.readObject();
         texture = new Texture("bullet.png");
     }
 
@@ -89,6 +109,11 @@ class SatelliteStrike extends Weapon {
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
         radiusOfProjectile = 20;
+    }
+    @Override
+    public void readObject(){
+        super.readObject();
+        //texture = new Texture("SatelliteStrike.png");
     }
 
 
