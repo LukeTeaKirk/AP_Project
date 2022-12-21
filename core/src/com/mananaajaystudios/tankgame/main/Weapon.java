@@ -35,14 +35,14 @@ public class Weapon implements Serializable {
         return name;
     }
 
-    public Projectile Fire(World world, float x, float y, Sprite tankSprite, Stage stage, int Player){
+    public Projectile Fire(World world, float x, float y, Sprite tankSprite, Stage stage, int Player, Tank tank){
         this.TankSprite = tankSprite;
         bodyDef.position.set(tankSprite.getX() -640 +50, tankSprite.getY() -360 +60);
         Sprite temp = new Sprite(texture);
         temp.setSize(width,height);
         temp.setOriginCenter();
         temp.rotate(-40 + degrees);
-        Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile,texture, damage, stage, Player, temp, degrees2,offsetX);
+        Projectile projectile = new Projectile(bodyDef, fixtureDef, world, radiusOfProjectile,texture, damage, stage, Player, temp, degrees2,offsetX, tank);
         projectile.Shoot(x, y);
         return projectile;
     }
@@ -141,7 +141,7 @@ class FireBall extends Weapon {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
-        radiusOfProjectile = 10;
+        radiusOfProjectile = 20;
         width = 100;
         height = 100;
         texture = new Texture("FireBall.png");
@@ -162,9 +162,9 @@ class DragonBall extends Weapon {
         rateOfFall = 10;
         totalAmmo = 1;
         name = "DragonBall";
-        fixtureDef.density = 1f;
+        fixtureDef.density = 3f;
         fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f;
+        fixtureDef.restitution = 2f;
         radiusOfProjectile = 20;
         width = 100;
         height = 100;
@@ -187,10 +187,10 @@ class Nuke extends Weapon {
         name = "Nuke";
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f;
-        radiusOfProjectile = 15;
-        width = 100;
-        height = 100;
+        fixtureDef.restitution = 3f;
+        radiusOfProjectile = 10;
+        width = 10;
+        height = 10;
         texture = new Texture("Nuke.png");
     }
     @Override

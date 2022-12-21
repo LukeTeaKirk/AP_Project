@@ -20,8 +20,9 @@ public class Projectile extends Actor {
     private boolean Hit = false;
     private transient player otherPlayer;
     private int offsetX;
+    private Tank tank;
 
-    public Projectile(BodyDef bodyDef, FixtureDef fixtureDef, World world, int radius, Texture texture, int projectileDamage, Stage stage, int player, Sprite sprite2, int degrees, int offsetX) {
+    public Projectile(BodyDef bodyDef, FixtureDef fixtureDef, World world, int radius, Texture texture, int projectileDamage, Stage stage, int player, Sprite sprite2, int degrees, int offsetX, Tank tank) {
         this.bodyDef = bodyDef;
         this.fixtureDef = fixtureDef;
         CircleShape shape = new CircleShape();
@@ -37,6 +38,7 @@ public class Projectile extends Actor {
             this.projectileSprite.rotate(90 + degrees);
         }
         this.projectileDamage = projectileDamage;
+        this.tank = tank;
         stage.addActor(this);
     }
 
@@ -86,6 +88,7 @@ public class Projectile extends Actor {
     public void setHit(boolean hit) {
         Hit = hit;
         otherPlayer.setCurrentTurn(true);
+        tank.projectile = null;
         otherPlayer.getTank().enableTank();
 
     }
