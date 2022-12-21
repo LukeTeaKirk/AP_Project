@@ -3,10 +3,7 @@ package com.mananaajaystudios.tankgame.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -20,6 +17,12 @@ public class TankBurantino extends Tank{
         weapons.add(new Rocket());
         weapons.add(new SatelliteStrike());
         currentWeapon = weapons.get(0);
+        effect = new ParticleEffect();
+        effect.load(Gdx.files.internal("smoke"), Gdx.files.internal(""));
+        effect.getEmitters().first();
+        effect.scaleEffect(0.3f);
+        effect.setDuration(10000);
+        effect.start();
 
         tankSprite.setSize(150, 150);
         if(PlayerNumber == 1){
@@ -41,14 +44,28 @@ public class TankBurantino extends Tank{
             body.applyLinearImpulse(new Vector2(1000f, 0), body.getWorldCenter(), true);
 
         }
-        this.body.setUserData(tankSprite);
+        //this.body.setUserData(tankSprite);
         super.act(delta);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        if(PlayerNumber == 2){
+            effect.setPosition(tankSprite.getX()+120, tankSprite.getY()+50);
+        }
+        else{
+            effect.setPosition(tankSprite.getX()+20, tankSprite.getY()+50);
+        }
+        if(this.canMove == 1){
+            effect.update(Gdx.graphics.getDeltaTime());
+            effect.draw(batch);
+        }
         tankSprite.draw(batch);
+        if(effect.isComplete()){
+            effect.reset();
+            effect.scaleEffect(0.3f);
+        }
     }
 
     @Override
@@ -81,7 +98,7 @@ public class TankBurantino extends Tank{
         fixturedef.density = 1.0f;
         fixturedef.friction = 0.3f;
         this.body = world.createBody(bodyDef);
-        this.body.setUserData(tankSprite);
+        this.body.setUserData(this);
         System.out.println(body.getPosition());
         Fixture fix = body.createFixture(fixturedef);
         System.out.println("2");
@@ -108,6 +125,12 @@ public class TankBurantino extends Tank{
         healthBar = new Sprite(healthRegion);
         tankSprite = new Sprite(tankRegion);
         tankSprite.setSize(150, 150);
+        effect = new ParticleEffect();
+        effect.load(Gdx.files.internal("smoke"), Gdx.files.internal(""));
+        effect.getEmitters().first();
+        effect.scaleEffect(0.3f);
+        effect.setDuration(10000);
+        effect.start();
         if (PlayerNumber == 1) {
             tankSprite.setPosition(120, 250);
             fuelBar1 = new Sprite(fuelRegion);
