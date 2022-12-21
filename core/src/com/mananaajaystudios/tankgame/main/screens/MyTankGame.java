@@ -342,7 +342,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		tank1.disableTank();
 		tank2.disableTank();
 		EndGameTable = new Table();
-		EndGameTable.setBounds(Gdx.graphics.getWidth()/2 - 150, Gdx.graphics.getHeight()/2 - 100, 200, 250);
+		EndGameTable.setBounds(Gdx.graphics.getWidth()/2 - 150, Gdx.graphics.getHeight()/2 - 100, 250, 250);
 
 		EndGameMenu = atlas.findRegion("PausePopUp");
 		EndGameMenuDrawable = new TextureRegionDrawable(EndGameMenu);
@@ -352,13 +352,13 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 
 		//add restart game TextButton
 		TextButton buttonRestart = new TextButton("Restart", textButtonStyle1);
-		buttonRestart.setSize(100, 50);
+		buttonRestart.setSize(150, 75);
 		EndGameTable.add(buttonRestart).size(buttonRestart.getWidth(), buttonRestart.getHeight());
 		EndGameTable.row();
 
 		//add exit game TextButton
 		TextButton buttonExit = new TextButton("Exit", textButtonStyle1);
-		buttonExit.setSize(100, 50);
+		buttonExit.setSize(150, 75);
 		EndGameTable.add(buttonExit).size(buttonExit.getWidth(), buttonExit.getHeight());
 
 		stage.addActor(EndGameTable);

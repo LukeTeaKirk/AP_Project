@@ -2,6 +2,7 @@ package com.mananaajaystudios.tankgame.main;
 
 import com.badlogic.gdx.Game;
 import com.mananaajaystudios.tankgame.main.screens.*;
+import com.sun.tools.javac.Main;
 
 public class TopDog extends Game {
     private SplashScreen splashScreen;
@@ -26,12 +27,14 @@ public class TopDog extends Game {
     public void changeScreen(String screen){
         switch(screen){
             case "MAIN":
-                if(mainPage == null) mainPage = new MainPage(this);
+                mainPage = MainPage.getInstance();
+                mainPage.setTopDog(this);
                 this.setScreen(mainPage);
                 break;
             case "GAMEMODE":
                 System.out.println("switch");
-                if(gameMode == null) gameMode = new GameModeSelector(this);
+                gameMode = GameModeSelector.getInstance();
+                gameMode.setTopDog(this);
                 this.setScreen(gameMode);
                 break;
             case "TANKP1":
