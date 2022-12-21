@@ -27,12 +27,22 @@ public class GameModeSelector implements Screen{
     private TextureRegionDrawable ChooseBackgroundDrawable;
     private Skin TextSkin,skin;
     private BitmapFont white, black;
-    public GameModeSelector(TopDog temp){
-        parent = temp;
+
+    private static GameModeSelector instance = null;
+    private GameModeSelector(){
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
+    public static GameModeSelector getInstance(){
+        if(instance == null){
+            instance = new GameModeSelector();
+        }
+        return instance;
+    }
 
+    public void setTopDog(TopDog topDog){
+        parent = topDog;
+    }
     @Override
     public void show() {
         atlas = new TextureAtlas(Gdx.files.internal("Spritesheets/Spritesheet1.atlas"));

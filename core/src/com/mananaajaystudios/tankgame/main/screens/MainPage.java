@@ -30,12 +30,21 @@ public class MainPage implements Screen{
     private Sound BgMusic;
     long id;
 
-    public MainPage(TopDog temp){
-        parent = temp;
+    private static MainPage instance = null;
+
+    private MainPage(){
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
-
+    public void setTopDog(TopDog topDog){
+        parent = topDog;
+    }
+    public static MainPage getInstance(){
+        if(instance == null){
+            instance = new MainPage();
+        }
+        return instance;
+    }
     public long getId() {
         return id;
     }
