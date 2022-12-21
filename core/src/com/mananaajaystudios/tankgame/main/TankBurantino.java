@@ -104,10 +104,10 @@ public class TankBurantino extends Tank{
         Texture healthBarTexture = new Texture("HealthBar.jpeg");
         TextureRegion healthRegion = new TextureRegion(healthBarTexture);
         //reinitialize tankregion
-        tankRegion = Atlas.findRegion("Burantino");
+        tankRegion = Atlas.findRegion("Buratino");
         healthBar = new Sprite(healthRegion);
         tankSprite = new Sprite(tankRegion);
-        tankSprite.setSize(100, 100);
+        tankSprite.setSize(150, 150);
         if (PlayerNumber == 1) {
             tankSprite.setPosition(120, 250);
             fuelBar1 = new Sprite(fuelRegion);

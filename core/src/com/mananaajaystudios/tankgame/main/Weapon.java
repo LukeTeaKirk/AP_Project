@@ -78,7 +78,7 @@ class Rocket extends Weapon {
     @Override
     public void readObject(){
         super.readObject();
-        //texture = new Texture("rocket.png");
+        texture = new Texture("Missile.png");
     }
 }
 
@@ -141,7 +141,7 @@ class FireBall extends Weapon {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
-        radiusOfProjectile = 20;
+        radiusOfProjectile = 10;
         width = 100;
         height = 100;
         texture = new Texture("FireBall.png");
@@ -188,7 +188,7 @@ class Nuke extends Weapon {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
-        radiusOfProjectile = 20;
+        radiusOfProjectile = 15;
         width = 100;
         height = 100;
         texture = new Texture("Nuke.png");

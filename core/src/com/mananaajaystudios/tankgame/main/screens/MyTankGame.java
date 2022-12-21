@@ -130,13 +130,17 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 					player1.getTank().FireWeapon(world, player1.getTank().getTankSprite(), stage);
 					player1.getTank().disableTank();
 					player2.getTank().disableTank();
-					player1.getTank().getProjectile().setPlayer2(player2);
+					if(player1.getTank().getProjectile() != null) {
+						player1.getTank().getProjectile().setPlayer2(player2);
+					}
 				} else {
 					player2.setCurrentTurn(false);
 					player2.getTank().FireWeapon(world, player2.getTank().getTankSprite(), stage);
 					player2.getTank().disableTank();
 					player1.getTank().disableTank();
-					player2.getTank().getProjectile().setPlayer2(player1);
+					if(player2.getTank().getProjectile() != null) {
+						player2.getTank().getProjectile().setPlayer2(player1);
+					}
 				}
 			}
 		});
