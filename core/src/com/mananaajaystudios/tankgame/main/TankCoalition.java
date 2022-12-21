@@ -67,7 +67,6 @@ public class TankCoalition extends Tank {
             effectSmoke.setPosition(tankSprite.getX()+10, tankSprite.getY()+50);
         }
         if(this.canMove == 0 && projectile != null){
-            System.out.println("projectile motion");
             if(PlayerNumber == 1){
                 //effect.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
                 effectFire.setPosition(projectile.getProjectileSprite().getX()+80, projectile.getProjectileSprite().getY()+50);

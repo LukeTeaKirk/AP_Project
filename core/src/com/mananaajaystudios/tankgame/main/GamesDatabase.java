@@ -16,7 +16,6 @@ public class GamesDatabase {
             while(exists) {
                 File file = new File("games/myGame" + gameId + ".txt");
                 exists = file.exists();
-                System.out.println(exists);
                 if(exists){
                     gameIds.add(gameId);
                 }

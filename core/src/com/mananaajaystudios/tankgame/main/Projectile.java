@@ -71,7 +71,6 @@ public class Projectile extends Actor {
             else{
                 damage = 0;
             }
-            System.out.println(tank);
             tank.damageTaken(damage);
             return (int) (damage);
         }
@@ -102,7 +101,6 @@ public class Projectile extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         projectileSprite.draw(batch);
-        System.out.println(body.getPosition());
         if(body.getPosition().x > 600 || body.getPosition().x < -700 || body.getPosition().y > 1000 || body.getPosition().y < -1000){
             body.setActive(false);
             setHit(true);
