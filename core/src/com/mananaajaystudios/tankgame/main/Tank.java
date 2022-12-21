@@ -95,7 +95,8 @@ public class Tank extends Actor implements Serializable {
         healthBar.setSize(healthBar.getWidth() - (damage*4), healthBar.getHeight());
         healthBarPosition = (int) healthBar.getWidth();
         if(health <= 0){
-            isDead = true;
+            this.isDead = true;
+            healthBar.setSize(0, 0);
         }
     }
     public int getPlayerNumber(){

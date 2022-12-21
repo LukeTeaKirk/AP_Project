@@ -122,10 +122,10 @@ class FireBall extends Weapon {
         rateOfFall = 10;
         totalAmmo = 1;
         name = "FireBall";
-        fixtureDef.density = 1f;
+        fixtureDef.density = 0.5f;
         fixtureDef.friction = 0.4f;
         fixtureDef.restitution = 0.6f;
-        radiusOfProjectile = 20;
+        radiusOfProjectile = 10;
         texture = new Texture("FireBall.png");
     }
     @Override
