@@ -2,10 +2,7 @@ package com.mananaajaystudios.tankgame.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -28,6 +25,7 @@ public class Tank extends Actor implements Serializable {
     protected boolean isDead;
     protected Weapon currentWeapon;
     protected transient Sprite tankSprite;
+    protected transient ParticleEffect effectSmoke, effectFire;
 
     protected float ForceX, ForceY;
     protected int isEnabled, canMove;
@@ -106,13 +104,12 @@ public class Tank extends Actor implements Serializable {
         this.ForceY = forceY;
     }
     public void FireWeapon(World world,Sprite tankSprite, Stage stage){
-
         if(PlayerNumber == 1 && firedThisMove == 0){
-            this.projectile = currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber);
+            this.projectile = currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber, this);
             firedThisMove = 1;
         }
         else if(PlayerNumber == 2 && firedThisMove == 0){
-            this.projectile = currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber);
+            this.projectile = currentWeapon.Fire(world, ForceX, ForceY,tankSprite, stage, PlayerNumber, this);
             firedThisMove = 1;
         }
 
@@ -189,7 +186,6 @@ public class Tank extends Actor implements Serializable {
     public void draw(Batch batch, float parentAlpha) {
         if(PlayerNumber == 1){
             fuelBar1.draw(batch);
-//            weaponSelect.draw(batch);
             healthBar.draw(batch);
         }
         else if(PlayerNumber == 2){

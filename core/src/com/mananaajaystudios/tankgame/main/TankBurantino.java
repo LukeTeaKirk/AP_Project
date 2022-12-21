@@ -3,10 +3,7 @@ package com.mananaajaystudios.tankgame.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -20,6 +17,18 @@ public class TankBurantino extends Tank{
         weapons.add(new Rocket());
         weapons.add(new SatelliteStrike());
         currentWeapon = weapons.get(0);
+        effectSmoke = new ParticleEffect();
+        effectFire = new ParticleEffect();
+        effectSmoke.load(Gdx.files.internal("smoke"), Gdx.files.internal(""));
+        effectFire.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
+        effectSmoke.getEmitters().first();
+        effectSmoke.scaleEffect(0.3f);
+        effectSmoke.setDuration(10000);
+        effectSmoke.start();
+        effectFire.getEmitters().first();
+        effectFire.scaleEffect(0.1f);
+        effectFire.setDuration(10000);
+        effectFire.start();
 
         tankSprite.setSize(150, 150);
         if(PlayerNumber == 1){
@@ -41,14 +50,49 @@ public class TankBurantino extends Tank{
             body.applyLinearImpulse(new Vector2(1000f, 0), body.getWorldCenter(), true);
 
         }
-        this.body.setUserData(tankSprite);
+        //this.body.setUserData(tankSprite);
         super.act(delta);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        if(PlayerNumber == 2){
+            effectSmoke.setPosition(tankSprite.getX()+120, tankSprite.getY()+50);
+        }
+        else{
+            effectSmoke.setPosition(tankSprite.getX()+20, tankSprite.getY()+50);
+        }
+        if(this.canMove == 0 && projectile != null){
+            System.out.println("projectile motion");
+            if(PlayerNumber == 1){
+                //effect.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
+                effectFire.setPosition(projectile.getProjectileSprite().getX()+80, projectile.getProjectileSprite().getY()+50);
+            }
+            else{
+                //effect.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
+                effectFire.setPosition(projectile.getProjectileSprite().getX()+20, projectile.getProjectileSprite().getY()+50);
+            }
+        }
+        if(this.canMove == 1){
+            effectSmoke.update(Gdx.graphics.getDeltaTime());
+            effectSmoke.draw(batch);
+        }
+        if(this.canMove == 0 && projectile != null){
+            effectFire.update(Gdx.graphics.getDeltaTime());
+            effectFire.draw(batch);
+        }
+
         tankSprite.draw(batch);
+        if(effectSmoke.isComplete()){
+            effectSmoke.reset();
+            effectSmoke.scaleEffect(0.3f);
+        }
+        if(effectFire.isComplete()){
+            effectFire.reset();
+            effectFire.scaleEffect(0.1f);
+        }
+
     }
 
     @Override
@@ -81,7 +125,7 @@ public class TankBurantino extends Tank{
         fixturedef.density = 1.0f;
         fixturedef.friction = 0.3f;
         this.body = world.createBody(bodyDef);
-        this.body.setUserData(tankSprite);
+        this.body.setUserData(this);
         System.out.println(body.getPosition());
         Fixture fix = body.createFixture(fixturedef);
         System.out.println("2");
@@ -104,10 +148,22 @@ public class TankBurantino extends Tank{
         Texture healthBarTexture = new Texture("HealthBar.jpeg");
         TextureRegion healthRegion = new TextureRegion(healthBarTexture);
         //reinitialize tankregion
-        tankRegion = Atlas.findRegion("Burantino");
+        tankRegion = Atlas.findRegion("Buratino");
         healthBar = new Sprite(healthRegion);
         tankSprite = new Sprite(tankRegion);
-        tankSprite.setSize(100, 100);
+        tankSprite.setSize(150, 150);
+        effectSmoke = new ParticleEffect();
+        effectFire = new ParticleEffect();
+        effectSmoke.load(Gdx.files.internal("smoke"), Gdx.files.internal(""));
+        effectFire.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
+        effectSmoke.getEmitters().first();
+        effectSmoke.scaleEffect(0.3f);
+        effectSmoke.setDuration(10000);
+        effectSmoke.start();
+        effectFire.getEmitters().first();
+        effectFire.scaleEffect(0.1f);
+        effectFire.setDuration(10000);
+        effectFire.start();
         if (PlayerNumber == 1) {
             tankSprite.setPosition(120, 250);
             fuelBar1 = new Sprite(fuelRegion);

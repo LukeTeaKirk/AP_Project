@@ -4,10 +4,7 @@ package com.mananaajaystudios.tankgame.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -22,6 +19,18 @@ public class TankCoalition extends Tank {
         weapons.add(new Rocket());
         weapons.add(new SatelliteStrike());
         currentWeapon = weapons.get(0);
+        effectSmoke = new ParticleEffect();
+        effectFire = new ParticleEffect();
+        effectSmoke.load(Gdx.files.internal("smoke"), Gdx.files.internal(""));
+        effectFire.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
+        effectSmoke.getEmitters().first();
+        effectSmoke.scaleEffect(0.3f);
+        effectSmoke.setDuration(10000);
+        effectSmoke.start();
+        effectFire.getEmitters().first();
+        effectFire.scaleEffect(0.1f);
+        effectFire.setDuration(10000);
+        effectFire.start();
 
         tankSprite.setSize(100, 100);
         if(PlayerNumber == 1){
@@ -51,7 +60,42 @@ public class TankCoalition extends Tank {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        if(PlayerNumber == 2){
+            effectSmoke.setPosition(tankSprite.getX()+100, tankSprite.getY()+50);
+        }
+        else{
+            effectSmoke.setPosition(tankSprite.getX()+10, tankSprite.getY()+50);
+        }
+        if(this.canMove == 0 && projectile != null){
+            System.out.println("projectile motion");
+            if(PlayerNumber == 1){
+                //effect.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
+                effectFire.setPosition(projectile.getProjectileSprite().getX()+80, projectile.getProjectileSprite().getY()+50);
+            }
+            else{
+                //effect.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
+                effectFire.setPosition(projectile.getProjectileSprite().getX()+20, projectile.getProjectileSprite().getY()+50);
+            }
+        }
+        if(this.canMove == 1){
+            effectSmoke.update(Gdx.graphics.getDeltaTime());
+            effectSmoke.draw(batch);
+        }
+        if(this.canMove == 0 && projectile != null){
+            effectFire.update(Gdx.graphics.getDeltaTime());
+            effectFire.draw(batch);
+        }
+
         tankSprite.draw(batch);
+        if(effectSmoke.isComplete()){
+            effectSmoke.reset();
+            effectSmoke.scaleEffect(0.3f);
+        }
+        if(effectFire.isComplete()){
+            effectFire.reset();
+            effectFire.scaleEffect(0.1f);
+        }
+
     }
 
 
@@ -114,6 +158,20 @@ public class TankCoalition extends Tank {
         tankRegion = Atlas.findRegion("Coalition");
         healthBar = new Sprite(healthRegion);
         tankSprite = new Sprite(tankRegion);
+        effectSmoke = new ParticleEffect();
+        effectFire = new ParticleEffect();
+        effectSmoke.load(Gdx.files.internal("smoke"), Gdx.files.internal(""));
+        effectFire.load(Gdx.files.internal("flame"), Gdx.files.internal(""));
+        effectSmoke.getEmitters().first();
+        effectSmoke.scaleEffect(0.3f);
+        effectSmoke.setDuration(10000);
+        effectSmoke.start();
+        effectFire.getEmitters().first();
+        effectFire.scaleEffect(0.1f);
+        effectFire.setDuration(10000);
+        effectFire.start();
+
+
         tankSprite.setSize(100, 100);
         if (PlayerNumber == 1) {
             tankSprite.setPosition(120, 250);

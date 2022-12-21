@@ -130,13 +130,17 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 					player1.getTank().FireWeapon(world, player1.getTank().getTankSprite(), stage);
 					player1.getTank().disableTank();
 					player2.getTank().disableTank();
-					player1.getTank().getProjectile().setPlayer2(player2);
+					if(player1.getTank().getProjectile() != null) {
+						player1.getTank().getProjectile().setPlayer2(player2);
+					}
 				} else {
 					player2.setCurrentTurn(false);
 					player2.getTank().FireWeapon(world, player2.getTank().getTankSprite(), stage);
 					player2.getTank().disableTank();
 					player1.getTank().disableTank();
-					player2.getTank().getProjectile().setPlayer2(player1);
+					if(player2.getTank().getProjectile() != null) {
+						player2.getTank().getProjectile().setPlayer2(player1);
+					}
 				}
 			}
 		});
@@ -301,7 +305,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-		debugRenderer.render(world, camera.combined);
+		//debugRenderer.render(world, camera.combined);
 		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
 		//loop through all the bodies and search for projectiles
 		Array<Body> bodies = new Array<Body>();
@@ -449,7 +453,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 			System.out.println("angle: " + angle + " force: " + force);
 
 			AngleForceTable.setBounds(50, 90, 200, 100);
-			AngleForceTable.debug();
+			//AngleForceTable.debug();
 			AngleImage.setPosition(-150, -125);
 			ForceImage.setPosition(-150, -130);
 			Angle.addActor(AngleImage);
@@ -497,7 +501,7 @@ public class MyTankGame extends ApplicationAdapter implements Screen, InputProce
 				}
 			}
 			AngleForceTable.setBounds(1100, 90, 150, 100);
-			AngleForceTable.debug();
+			//AngleForceTable.debug();
 			AngleImage.setPosition(-280, -125);
 			ForceImage.setPosition(-280, -130);
 			Angle.addActor(AngleImage);
