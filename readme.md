@@ -26,3 +26,7 @@ Controls:
 
 Credits:
 This game was developed by Aajay Devaraj and Manan Gupta as a project for the Advanced Programming course.
+
+Ingame Footage:
+![image](https://user-images.githubusercontent.com/21257876/228223017-cf0019f3-4fac-40bc-84d7-84940302ace8.png)
+![image](https://user-images.githubusercontent.com/21257876/228223043-d7a24adc-a420-46fe-bc38-96249000c4d4.png)
